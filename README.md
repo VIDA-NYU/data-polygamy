@@ -55,7 +55,7 @@ We use [Apache Maven](https://maven.apache.org/) 3.3.9 to build the code for the
     $ cd data-polygamy/
     $ mvn clean package
 
-All the dependencies are taken care of by Maven, except for [JIDT](http://jlizier.github.io/jidt/), [Java-ML](http://java-ml.sourceforge.net/), and [JavaMI](http://www.cs.man.ac.uk/~pococka4/JavaMI.html), since these libraries are not available in the central repository. Therefore, we include these libraries, as well as their corresponding licenses, under ``data_polygamy/lib``. Please note that we **do not** make modifications to any of these libraries.
+All the dependencies are taken care of by Maven, except for [JIDT](http://jlizier.github.io/jidt/), [Java-ML](http://java-ml.sourceforge.net/), and [JavaMI](http://www.cs.man.ac.uk/~pococka4/JavaMI.html), since these libraries are not available in the central repository. Therefore, we include these libraries, as well as their corresponding licenses, under [``data_polygamy/lib``](data_polygamy/lib). Please note that we **do not** make modifications to any of these libraries.
 
 ## How To Use
 
