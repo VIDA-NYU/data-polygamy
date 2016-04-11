@@ -17,6 +17,6 @@ hs_err_pid*
 ._*
 
 
-data-polygamy/.settings/*
+.settings/
 .classpath
 .project
