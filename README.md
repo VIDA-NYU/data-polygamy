@@ -277,7 +277,7 @@ where:
 
 This step supports the general form of the *relationship query*:
 
-<p style="text-align: center;"><b>Find relationships between G1 and G2 satisfying CLAUSE.</b></p>
+<center><b>Find relationships between G1 and G2 satisfying CLAUSE.</b></center>
 
 The results are stored under the ``relationships`` directory if flag ``-id`` is not used; otherwise, results are stored under the ``relationships-ids`` directory.
 
