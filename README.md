@@ -6,20 +6,20 @@ Data Polygamy is a scalable topology-based framework that allows users to query 
 
 This README file is divided into the following sections:
 
-* [Links and References](#Links)
-* [Dependencies][]
-* [Repository Overview][]
-* [How To Build][]
-* [How To Run][]
-    * [Preliminaries][]
-    * [Common Arguments][]
-    * [Pre-Processing Step][]
-    * [Step 1: Scalar Function Computation][]
-    * [Step 2: Feature Identification][]
-    * [Step 3: Relationship Computation][]
-* [Paper Experiments][]
+* [Links and References](#links-and-references)
+* [Dependencies](#dependencies)
+* [Repository Overview](#repository-overview)
+* [How To Build](#how-to-build)
+* [How To Run](#how-to-run)
+    * [Preliminaries](#preliminaries)
+    * [Common Arguments](#common-arguments)
+    * [Pre-Processing Step](#pre-processing-step)
+    * [Step 1: Scalar Function Computation](#step-1-scalar-function-computation)
+    * [Step 2: Feature Identification](#step-2-feature-identification)
+    * [Step 3: Relationship Computation](#step-3-relationship-computation)
+* [Paper Experiments](#paper-experiments)
 
-## Links and References [Links]
+## Links and References
 
 For more detailed information about the our framework, please refer to our SIGMOD paper:
 
