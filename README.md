@@ -277,7 +277,9 @@ where:
 
 This step supports the general form of the *relationship query*:
 
-<center><b>Find relationships between G1 and G2 satisfying CLAUSE.</b></center>
+<b><i>Find relationships between G1 and G2 satisfying CLAUSE.</i></b>
+
+*G1* and *G2* are the groups of datasets corresponding to arguments ``-g1`` and ``-g2``: all the possible relationships between *G1* and *G2* are evaluated; if *G2* is not provided, we assume that *G2* encompasses all the datasets in the corpus (i.e., under the ``data`` directory), thus allowing hypothesis generation. The remaining arguments and flags are part of the *CLAUSE* sentence. If users want to specify custom thresholds for computing salient and extreme features, instead of doing so as part of the *CLAUSE* sentence, it is better to first re-execute the feature identification step (specifying the desired thresholds), and then execute the relationship computation step.
 
 The results are stored under the ``relationships`` directory if flag ``-id`` is not used; otherwise, results are stored under the ``relationships-ids`` directory.
 

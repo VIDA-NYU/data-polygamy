@@ -236,8 +236,28 @@ public class Relationship {
     	String scoreThreshold = hasScoreThreshold ? cmd.getOptionValue("sc") : "";
     	String strengthThreshold = hasStrengthThreshold ? cmd.getOptionValue("st") : "";
     	
+    	// all datasets
+    	ArrayList<String> all_datasets = new ArrayList<String>();
+    	if (s3) {
+            path = new Path(s3bucket + FrameworkUtils.datasetsIndexDir);
+            fs = FileSystem.get(path.toUri(), s3conf);
+        } else {
+            path = new Path (fs.getHomeDirectory() + "/" + FrameworkUtils.datasetsIndexDir);
+        }
+        BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(path)));
+        String line = br.readLine();
+        while (line != null) {
+            all_datasets.add(line.split("\t")[0]);
+            line = br.readLine();
+        }
+        br.close();
+        if (s3)
+            fs.close();
+        String[] all_datasets_array = new String[all_datasets.size()];
+        all_datasets.toArray(all_datasets_array);
+    	
     	String[] firstGroupCmd = cmd.getOptionValues("g1");
-    	String[] secondGroupCmd = cmd.hasOption("g2") ? cmd.getOptionValues("g2") : new String[0];
+    	String[] secondGroupCmd = cmd.hasOption("g2") ? cmd.getOptionValues("g2") : all_datasets_array;
     	addDatasets(firstGroupCmd, firstGroup, shortDataset, datasetAgg, path, fs, s3conf, s3, s3bucket);
     	addDatasets(secondGroupCmd, secondGroup, shortDataset, datasetAgg, path, fs, s3conf, s3, s3bucket);
     	
@@ -247,18 +267,16 @@ public class Relationship {
     	}
     	
     	if (firstGroup.isEmpty()) {
-    	    System.out.println("First group of datasets (G1) is empty. "
-    	            + "Doing G1 = G2.");
-    	    firstGroup.addAll(secondGroup);
+    	    System.out.println("No indices from datasets in G1.");
+    	    System.exit(0);
     	}
     	
     	if (secondGroup.isEmpty()) {
-            System.out.println("Second group of datasets (G2) is empty. "
-                    + "Doing G2 = G1.");
-            secondGroup.addAll(firstGroup);
+    	    System.out.println("No indices from datasets in G2.");
+            System.exit(0);
         }
-        
-        // getting dataset ids
+    	
+    	// getting dataset ids
         
         String datasetNames = "";
         String datasetIds = "";
@@ -274,10 +292,11 @@ public class Relationship {
         } else {
             path = new Path (fs.getHomeDirectory() + "/" + FrameworkUtils.datasetsIndexDir);
         }
-        BufferedReader br = new BufferedReader(new InputStreamReader(fs.open(path)));
-        String line = br.readLine();
+        br = new BufferedReader(new InputStreamReader(fs.open(path)));
+        line = br.readLine();
         while (line != null) {
             String[] dt = line.split("\t");
+            all_datasets.add(dt[0]);
             if (datasetId.containsKey(dt[0])) {
                 datasetId.put(dt[0], dt[1]);
                 datasetNames += dt[0] + ",";
