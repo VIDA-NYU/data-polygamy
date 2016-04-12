@@ -2,7 +2,7 @@
 
 # Data Polygamy
 
-Data Polygamy is a scalable topology-based framework that allows users to query for statistically significant relationships between spatio-temporal data sets.
+Data Polygamy is a scalable topology-based framework that allows users to query for statistically significant relationships between spatio-temporal datasets.
 
 This README file is divided into the following sections:
 
@@ -12,11 +12,7 @@ This README file is divided into the following sections:
 * [How To Build](#how-to-build)
 * [How To Run](#how-to-run)
     * [Preliminaries](#preliminaries)
-    * [Common Arguments](#common-arguments)
-    * [Pre-Processing Step](#pre-processing-step)
-    * [Step 1: Scalar Function Computation](#step-1-scalar-function-computation)
-    * [Step 2: Feature Identification](#step-2-feature-identification)
-    * [Step 3: Relationship Computation](#step-3-relationship-computation)
+    * [Framework Steps](#framework-steps)
 * [Paper Experiments](#paper-experiments)
 
 ## Links and References
@@ -84,7 +80,9 @@ We strongly suggest users to read our [paper](#Links) before using our code.
 
 ### Preliminaries
 
-The code assumes that the HDFS has the following structure:
+#### HDFS Directory
+
+The code assumes that the HDFS home directory has the following structure:
 
     .
     +-- data/
@@ -111,51 +109,84 @@ The code assumes that the HDFS has the following structure:
 
 where:
 
-* **``pre-processing/``** is a directory that stores the results from the pre-processing step;
-* **``aggregates/``** is a directory that stores the results from the scalar function computation step;
-* **``index/``** is a directory that stores the results from the feature identification step;
+* **``data``** is a directory containing all the datasets and metadata associated to the datasets (more information [later](#datasets));
+* **``pre-processing/``** is a directory that stores the results from the [pre-processing step](#pre-processing-step);
+* **``aggregates/``** is a directory that stores the results from the [scalar function computation step](#step-1-scalar-function-computation);
+* **``index/``** is a directory that stores the results from the [feature identification step](#step-2-feature-identification);
 * **``mergetree/``** is a directory that stores the previously computed merge trees;
-* **``relationships/``** is a directory that stores the results from the relationship computation step, i.e., the topology-based relationships between data sets;
-* **``relationships-ids/``** is a directory similar to ``relationships/``, but the relationships are stored with the data sets ids, instead of the data sets names;
-* **``correlations/``** is a directory that stores the results of standard correlation techniques (Pearson's correlation, mutual information, and DTW) when applied to the data sets;
-* **``neighborhood``** and **``zipcode``** are files that contain the polygons corresponding to the neighborhood and zipcode resolutions, respectively;
-* **``neighborhood-graph``** and **``zipcode-graph``** are files that contain the graph structure of the neighborhood and zipcode resolutions, respectively.
+* **``relationships/``** is a directory that stores the results from the [relationship computation step](#step-3-relationship-computation), i.e., the topology-based relationships between datasets;
+* **``relationships-ids/``** is a directory similar to ``relationships/``, but the relationships are stored with the datasets ids, instead of the datasets names;
+* **``correlations/``** is a directory that stores the results from the standard correlation techniques step;
+* **``neighborhood``** and **``zipcode``** are files that contain the polygons corresponding to the neighborhood and zipcode resolutions, respectively (more information [later](#spatial-structures));
+* **``neighborhood-graph``** and **``zipcode-graph``** are files that contain the graph structure of the neighborhood and zipcode resolutions, respectively (more information [later](#spatial-structures)).
 
-Directory structure, data sets, header files, defaults files, ...
+#### Spatial Structures
 
-### Common Arguments
+The current implementation of Data Polygamy has support for five spatial resolutions: *GPS*, *neighborhood*, *zipcode*, *grid*, and *city*. The grid resolution has only been used for testing, and not in our final experiments. Note that the framework assumes that all the data fed to the pre-processing step corresponds to a single city; therefore, if you are handling data from more than one city, you probably need to provide a suitable resolution conversion under the [``resolution``](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/resolution/) directory.
+
+To use the neighborhood and zipcode resolutions, two files must be provided for each:
+
+* A **polygons** file, containing all the polygons that represent the different regions of the resolution (e.g.: neighborhoods or zipcodes) with their corresponding ids. A polygon, in this case, is represented by a set of GPS points, where the last point is the same as the first one. The format is the following:
+
+    <region-id>              # first region
+    <number-of-polygons>
+    <number-of-data-points>  # first polygon
+    <point-1>
+    <point-2>
+    .
+    .
+    .
+    <number-of-data-points>  # second polygon
+    .
+    .
+    .
+    <region-id>              # second region
+    .
+    .
+    .
+
+The files [``neighborhood.txt``](data/neighborhood.txt) and [``zipcode.txt``](data/zipcode.txt) are examples of such file for New York City.
+* A **graph** file, where each region of the resolution is a node, and there is an edge between two regions if these are neighboring regions. The first line of this file contains the number of nodes and number of edges, and the following lines represent the edges of the graph (one line per edge). The files [``neighborhood-graph.txt``](data/neighborhood-graph.txt) and [``zipcode-graph.txt``](data/zipcode.txt) are examples of such file for New York City.
+
+#### Datasets
+
+Datasets, header files, defaults files, ...
+
+### Framework Steps
+
+#### Common Arguments
 
 The following command-line arguments are available in all the steps of the framework:
 
 *Required Arguments*:
 
-* **-m**: identifier for the machine configuration of the Hadoop cluster nodes. These identifiers are defined in the class Machine in file [FrameworkUtils.java](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/utils/FrameworkUtils.java). For each identifier, information related to the corresponding machine is declared (e.g.: number of cores, amount of memory, and number of disks). Such information is used to set a few Hadoop configuration parameters.
-* **-n**: number of nodes in the Hadoop cluster.
+* **``-m``**: identifier for the machine configuration of the Hadoop cluster nodes. These identifiers are defined in the class Machine in file [FrameworkUtils.java](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/utils/FrameworkUtils.java). For each identifier, information related to the corresponding machine is declared (e.g.: number of cores, amount of memory, and number of disks). Such information is used to set a few Hadoop configuration parameters.
+* **``-n``**: number of nodes in the Hadoop cluster.
 
 *Optional Arguments*:
 
-* **-f**: flag that forces the execution of the step for all the input data sets, even if the results for these data sets already exist. In other words, existing results or output files are deleted and the step is re-executed for all input data sets.
-* **-s3**: flag that indicates that the execution will read data from and write data to a bucket on [Amazon S3](https://aws.amazon.com/s3/) storage service.
-* **-aws_id**: the AWS Access Key Id. This argument is required if the **s3** flag is used.
-* **-aws_key**: the AWS Secret Access Key. This argument is required if the **s3** flag is used.
-* **-b**: the bucket on S3 where data will be read from and write to. This argument is required if the **s3** flag is used.
-* **-h**: flag that displays a help message.
+* **``-f``**: flag that forces the execution of the step for all the input datasets, even if the results for these datasets already exist. In other words, existing results or output files are deleted and the step is re-executed for all input datasets.
+* **``-s3``**: flag that indicates that the execution will read data from and write data to a bucket on [Amazon S3](https://aws.amazon.com/s3/) storage service.
+* **``-aws_id``**: the AWS Access Key Id. This argument is required if the s3 flag is used.
+* **``-aws_key``**: the AWS Secret Access Key. This argument is required if the ``s3`` flag is used.
+* **``-b``**: the bucket on S3 where data will be read from and write to. This argument is required if the ``s3`` flag is used.
+* **``-h``**: flag that displays a help message.
 
-### Pre-Processing Step
+#### Pre-Processing Step
 
-The Pre-Processing step is responsible for selecting data (from a data set) that correspond to spatial, temporal, identifier, and numerical attributes. This step also does a pre-aggregation that is fed to the scalar function computation step.
+The Pre-Processing step is responsible for selecting data (from a dataset) that correspond to spatial, temporal, identifier, and numerical attributes. This step also does a pre-aggregation that is fed to the scalar function computation step.
 
 To run the pre-processing step, run:
 
-    $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -dn <data set name> -dh <data set header file> -dd <data set defaults file> -t <temporal resolution> -s <spatial resolution> -cs <current spatial resolution> -i <temporal index> <spatial indices> ...
+    $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -dn <dataset name> -dh <dataset header file> -dd <dataset defaults file> -t <temporal resolution> -s <spatial resolution> -cs <current spatial resolution> -i <temporal index> <spatial indices> ...
     
 where: 
 
-### Step 1: Scalar Function Computation
+#### Step 1: Scalar Function Computation
 
-### Step 2: Feature Identification
+#### Step 2: Feature Identification
 
-### Step 3: Relationship Computation
+#### Step 3: Relationship Computation
 
 ## Paper Experiments
 
