@@ -288,9 +288,49 @@ This step supports the general form of the *relationship query*:
 
 The results are stored under the ``relationships`` directory if flag ``-id`` is not used; otherwise, results are stored under the ``relationships-ids`` directory.
 
+Consider datasets *taxi*, *weather*, and *311*, and assume that there is only one possible spatio-temporal resolution, *hour-city*, for simplicity. The results are stored in the following structure:
+
+    .
+    +-- relationships/
+    |   +-- taxi-weather/
+    |       +-- hour-city-events-restricted/
+    |           +-- ...
+    |       +-- hour-city-outliers-restricted/
+    |           +-- ...
+    |   +-- taxi-311/
+    |       +-- hour-city-events-restricted/
+    |           +-- ...
+    |       +-- hour-city-outliers-restricted/
+    |           +-- ...
+    |   +-- 311-weather/
+    |       +-- hour-city-events-restricted/
+    |           +-- ...
+    |       +-- hour-city-outliers-restricted/
+    |           +-- ...
+
+Relationships are computed for both salient features (regarded in the results as ``events``) and extreme features (regarded in the results as ``outliers``). If flag ``-c`` is used (i.e., complete randomization), ``restricted`` is replaced with ``complete`` in the results.
+
+To download the results for, say, taxi and weather with salient features:
+
+    $ hdfs dfs -getmerge relationships/taxi-weather/hour-city-events-restricted output
+    
+For each relationship (pair of scalar functions), the following values are outputted (in this order): *relationship score*, *relationship strength*, *p-value*, *number of matched events*, *number of matched positive events*, *number of matched negative events*, *number of positive events on the first scalar function only*, *number of negative events on the first scalar function only*, *number of positive events on the second scalar function only*, and *number of negative events on the second scalar function only*.
+
 ### Alternate Step: Correlation Computation
 
+The Correlation Computation step, which is not an "official" step of our framework, is used to compute relationships among datasets that are based on standard correlation techniques (rather than on topology features): Pearson's correlation coefficient (PCC), mutual information (MI), and dynamic time warping (DTW). We use this step for comparison purposes only.
+
+This should be executed after the scalar function computation step:
+
 <img src="framework-standard-techniques.png" height="110">
+
+To run the correlation computation step:
+
+    $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.standard_techniques.CorrelationTechniques -m <machine> -n <number-nodes> -g1 <datasets> -g2 <datasets>
+
+where ``-g1`` and ``-g2`` are equivalent to the arguments in [the relationship computation step](#step-3-relationship-computation-query-evaluation).
+
+The results are stored in a similar structure as in [the relationship computation step](#step-3-relationship-computation-query-evaluation), except that there are no salient and extreme features, and Monte Carlo tests are always restricted. For each pair of scalar functions, the following values are outputted (in this order): *PCC*, *MI*, *DTW*, *p-value for PCC*, *p-value for MI*, and *p-value for DTW*.
 
 ## Experiments
 
