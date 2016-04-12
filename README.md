@@ -125,17 +125,11 @@ To use the neighborhood and zipcode resolutions, two files must be provided for 
     <number-of-data-points>  # first polygon
     <point-1>
     <point-2>
-    .
-    .
-    .
+    ...    
     <number-of-data-points>  # second polygon
-    .
-    .
-    .
+    ...
     <region-id>              # second region
-    .
-    .
-    .
+    ...
 
 The files [``neighborhood.txt``](data/neighborhood.txt) and [``zipcode.txt``](data/zipcode.txt) are examples of such file for New York City.
 
@@ -166,7 +160,7 @@ For each dataset, three files are required and must be located under the ``data`
 * **``taxi.header``**: a CSV file containing a single line, which is the header of the dataset.
 * **``taxi.defaults``**: a CSV file with a single line containing the default values for each attribute of the dataset. If an attribute does not have a default value, ``NONE`` should be used. Note that default values are *ignored* by the framework.
 
-In addition to these dataset files, a file named ``datasets`` must be created under the ``data`` directory, containing a mapping between dataset name and dataset id. An example of such file is available [here](data/datasets).
+In addition to these dataset files, a file named ``datasets`` must be created under the ``data`` directory, containing a mapping between dataset name and dataset id. An example of such file is available [here](data/datasets.txt).
 
 ## How To Build
 
