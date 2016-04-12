@@ -36,7 +36,7 @@ This README file is divided into the following sections:
     * [Pre-Processing Step](#pre-processing-step)
     * [Step 1: Scalar Function Computation](#step-1-scalar-function-computation)
     * [Step 2: Feature Identification](#step-2-feature-identification)
-    * [Step 3: Relationship Computation](#step-3-relationship-computation)
+    * [Step 3: Relationship Computation](#step-3-relationship-computation-query-evaluation)
 * [Paper Experiments](#paper-experiments)
 
 ## Repository Overview
@@ -106,7 +106,7 @@ where:
 * **``aggregates/``** is a directory that stores the results from the [scalar function computation step](#step-1-scalar-function-computation);
 * **``index/``** is a directory that stores the results from the [feature identification step](#step-2-feature-identification);
 * **``mergetree/``** is a directory that stores the previously computed merge trees;
-* **``relationships/``** is a directory that stores the results from the [relationship computation step](#step-3-relationship-computation), i.e., the topology-based relationships between datasets;
+* **``relationships/``** is a directory that stores the results from the [relationship computation step](#step-3-relationship-computation-query-evaluation), i.e., the topology-based relationships between datasets;
 * **``relationships-ids/``** is a directory similar to ``relationships/``, but the relationships are stored with the datasets ids, instead of the datasets names;
 * **``correlations/``** is a directory that stores the results from the standard correlation techniques step;
 * **``neighborhood``** and **``zipcode``** are files that contain the polygons corresponding to the neighborhood and zipcode resolutions, respectively (more information [later](#spatial-structures));
@@ -257,7 +257,7 @@ In this file, values in a line are separated by the tab character (i.e., ``\t``)
 
 The results (set of features for each scalar function at different resolutions) are stored under the ``index`` directory. Merge tree indices are stored under the ``mergetree`` directory.
 
-### Step 3: Relationship Computation
+### Step 3: Relationship Computation (Query Evaluation)
 
 The Relationship Computation step evaluates the relationships between all the possible pairs of functions corresponding to the input query, i.e., the query evaluation happens in this step.
 
@@ -279,7 +279,7 @@ This step supports the general form of the *relationship query*:
 
 <b><i>Find relationships between G1 and G2 satisfying CLAUSE.</i></b>
 
-*G1* and *G2* are the groups of datasets corresponding to arguments ``-g1`` and ``-g2``: all the possible relationships between *G1* and *G2* are evaluated; if *G2* is not provided, we assume that *G2* encompasses all the datasets in the corpus (i.e., under the ``data`` directory), thus allowing hypothesis generation. The remaining arguments and flags are part of the *CLAUSE* sentence. If users want to specify custom thresholds for computing salient and extreme features, instead of doing so as part of the *CLAUSE* sentence, it is better to first re-execute the feature identification step (specifying the desired thresholds), and then execute the relationship computation step.
+*G1* and *G2* are the groups of datasets corresponding to arguments ``-g1`` and ``-g2``: all the possible relationships between *G1* and *G2* are evaluated; if *G2* is not provided, we assume that *G2* encompasses all the datasets in the corpus (i.e., under the ``data`` directory), thus allowing hypothesis generation. The remaining arguments and flags are part of the *CLAUSE* sentence. If users want to specify custom thresholds for computing salient and extreme features, instead of doing so as part of the *CLAUSE* sentence, it is better to first re-execute [the feature identification step](#step-2-feature-identification) (specifying the desired thresholds), and then execute the relationship computation step.
 
 The results are stored under the ``relationships`` directory if flag ``-id`` is not used; otherwise, results are stored under the ``relationships-ids`` directory.
 
