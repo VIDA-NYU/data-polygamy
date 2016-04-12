@@ -1,5 +1,3 @@
-# In Construction...
-
 # Data Polygamy
 
 Data Polygamy is a scalable topology-based framework that allows users to query for statistically significant relationships between spatio-temporal datasets.
@@ -33,7 +31,11 @@ The team includes:
 [td]: http://www2.warwick.ac.uk/fac/sci/statistics/staff/academic-research/damoulas
 [jf]: http://vgc.poly.edu/~juliana/
 
-Our code and data is available under the [BSD](LICENSE) license.
+Our code and data in this repository is available under the [BSD](LICENSE) license.
+
+## Repository Overview
+
+
 
 ## Dependencies
 
@@ -57,10 +59,6 @@ The Data Polygamy framework uses Java 1.7.0_45 and has the following dependencie
 
 The plots ...
 
-## Repository Overview
-
-
-
 ## How To Build
 
 We use [Apache Maven](https://maven.apache.org/) 3.3.9 to build the Data Polygamy framework:
@@ -76,7 +74,7 @@ Note that all the dependencies are taken care of by Maven, except for [JIDT](htt
 
 To run the different steps of the framework, you will need [Apache Hadoop](http://hadoop.apache.org/). We have used v2.2.0 for our final experiments (more information [later](#paper-experiments)).
 
-We strongly suggest users to read our [paper](#Links) before using our code.
+We strongly suggest users to read our [paper](#links-and-references) before using our code.
 
 ### Preliminaries
 
