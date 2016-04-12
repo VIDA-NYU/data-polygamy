@@ -288,6 +288,8 @@ This step supports the general form of the *relationship query*:
 
 The results are stored under the ``relationships`` directory if flag ``-id`` is not used; otherwise, results are stored under the ``relationships-ids`` directory.
 
+#### Relationship Output
+
 Consider datasets *taxi*, *weather*, and *311*, and assume that there is only one possible spatio-temporal resolution, *hour-city*, for simplicity. The results are stored in the following structure:
 
     .
@@ -329,6 +331,8 @@ To run the correlation computation step:
     $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.standard_techniques.CorrelationTechniques -m <machine> -n <number-nodes> -g1 <datasets> -g2 <datasets>
 
 where ``-g1`` and ``-g2`` are equivalent to the arguments in [the relationship computation step](#step-3-relationship-computation-query-evaluation).
+
+#### Correlation Output
 
 The results are stored in a similar structure as in [the relationship computation step](#step-3-relationship-computation-query-evaluation), except that there are no salient and extreme features, and Monte Carlo tests are always restricted. For each pair of scalar functions, the following values are outputted (in this order): *PCC*, *MI*, *DTW*, *p-value for PCC*, *p-value for MI*, and *p-value for DTW*.
 
