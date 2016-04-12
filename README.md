@@ -74,7 +74,7 @@ Note that all the dependencies are taken care of by Maven, except for [JIDT](htt
 
 ## How To Run
 
-To run the different steps of the framework, you will need [Apache Hadoop](http://hadoop.apache.org/).
+To run the different steps of the framework, you will need [Apache Hadoop](http://hadoop.apache.org/). We have used v2.2.0 for our final experiments (more information [later](#paper-experiments)).
 
 We strongly suggest users to read our [paper](#Links) before using our code.
 
@@ -87,6 +87,9 @@ The code assumes that the HDFS home directory has the following structure:
     .
     +-- data/
     |   +-- datasets
+    |   +-- dataset
+    |   +-- dataset.header
+    |   +-- dataset.defaults
     |   +-- ...
     +-- pre-processing/
     |   +-- ...
@@ -109,7 +112,7 @@ The code assumes that the HDFS home directory has the following structure:
 
 where:
 
-* **``data``** is a directory containing all the datasets and metadata associated to the datasets (more information [later](#datasets));
+* **``data``** is a directory containing all the datasets and metadata associated to the datasets (more information [later](#data));
 * **``pre-processing/``** is a directory that stores the results from the [pre-processing step](#pre-processing-step);
 * **``aggregates/``** is a directory that stores the results from the [scalar function computation step](#step-1-scalar-function-computation);
 * **``index/``** is a directory that stores the results from the [feature identification step](#step-2-feature-identification);
@@ -120,7 +123,9 @@ where:
 * **``neighborhood``** and **``zipcode``** are files that contain the polygons corresponding to the neighborhood and zipcode resolutions, respectively (more information [later](#spatial-structures));
 * **``neighborhood-graph``** and **``zipcode-graph``** are files that contain the graph structure of the neighborhood and zipcode resolutions, respectively (more information [later](#spatial-structures)).
 
-#### Spatial Structures
+To automatically create the required directories, take a look at the [``load-hdfs-structure``](data/load-hdfs-structure) script.
+
+#### Spatial Resolutions
 
 The current implementation of Data Polygamy has support to five spatial resolutions: *GPS*, *neighborhood*, *zipcode*, *grid*, and *city*. The grid resolution has only been used for testing, and not in our final experiments. Note that the framework assumes that all the data fed to the pre-processing step corresponds to a single city; therefore, if you are handling data from more than one city, you probably need to provide a suitable resolution conversion under the [``resolution``](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/resolution/) directory.
 
@@ -147,9 +152,30 @@ The files [``neighborhood.txt``](data/neighborhood.txt) and [``zipcode.txt``](da
 
 The **graph** file represents a graph for the resolution, where each region of the resolution is a node, and there is an edge between two regions if these are neighboring regions. The first line of this file contains the number of nodes and number of edges, and the following lines represent the edges of the graph (one line per edge). The files [``neighborhood-graph.txt``](data/neighborhood-graph.txt) and [``zipcode-graph.txt``](data/zipcode-graph.txt) are examples of such file for New York City.
 
-#### Datasets
+The script [``load-spatial``](data/load-spatial) can be used to automatically upload our spatial resolutions files to HDFS. 
 
-Datasets, header files, defaults files, ...
+#### Data
+
+The ``data`` directory under HDFS contains all the datasets used by the framework.
+
+##### Dataset Attributes
+
+We assume the following types of attributes for a dataset:
+
+* **Spatial attributes** represent the spatial component of the data (e.g.: a GPS point, or a neighborhood region).
+* **Temporal attributes** represent the temporal component of the data (e.g.: a GPS point, or a neighborhood region). Such attribute *must* have values that represent the number of seconds since Epoch time, in UTC.
+* **Identifier attributes** represent unique identifiers for the dataset (e.g.: Twitter user id, or taxi medallion). The header for these attributes *must* contain either *id*, *name*, or *key*.
+* **Numerical attributes** represent the real-valued attributes of the datasets, which are the attributes of interest for the relationships.
+
+All the other attributes can be ignored by enclosing their values by either double quotes (e.g.: ``"ignore me!"``) or the symbol `$` (e.g.: ``$ignore me!$``). Alternatively, you can also simply delete these attributes before executing the framework.
+
+##### Dataset Files
+
+For each dataset, three files are required and must be located under the ``data`` directory. For the purpose of this documentation, assume a dataset named *taxi*:
+
+* **``taxi``**: a CSV file containing the data corresponding to the dataset (without any headers).
+* **``taxi.header``**: a CSV file containing a single line, which is the header of the dataset.
+* **``taxi.defaults``**: a CSV file with a single line containing the default values for each attribute of the dataset. If an attribute does not have a default value, ``NONE`` should be used. Note that default values are *ignored* by the framework.
 
 ### Framework Steps
 
