@@ -290,7 +290,7 @@ The results are stored under the ``relationships`` directory if flag ``-id`` is 
 
 ### Alternate Step: Correlation Computation
 
-<img src="framework-standard-techniques.png" height="125">
+<img src="framework-standard-techniques.png" height="110">
 
 ## Experiments
 
