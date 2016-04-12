@@ -178,7 +178,7 @@ Note that all the dependencies are taken care of by Maven, except for [JIDT](htt
 
 To run our framework, you will need [Apache Hadoop](http://hadoop.apache.org/). The framework can be summarized as follows:
 
-![alt tag](framework.png =x125)
+<img src="framework.png" height="125">
 
 Each step of the framework is represented by a map-reduce job. The Pre-Processing step is executed once for each dataset, while the other steps can be executed once for multiple datasets.
 
@@ -290,7 +290,7 @@ The results are stored under the ``relationships`` directory if flag ``-id`` is 
 
 ### Alternate Step: Correlation Computation
 
-![alt tag](framework-standard-techniques.png =x125)
+<img src="framework-standard-techniques.png" height="125">
 
 ## Experiments
 
