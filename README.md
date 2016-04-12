@@ -118,8 +118,8 @@ where:
 * **``relationships/``** is a directory that stores the results from the relationship computation step, i.e., the topology-based relationships between data sets;
 * **``relationships-ids/``** is a directory similar to ``relationships/``, but the relationships are stored with the data sets ids, instead of the data sets names;
 * **``correlations/``** is a directory that stores the results of standard correlation techniques (Pearson's correlation, mutual information, and DTW) when applied to the data sets;
-* **neighborhood** and **zipcode** are files that contain the polygons corresponding to the neighborhood and zipcode resolutions, respectively;
-* **neighborhood-graph** and **zipcode-graph** are files that contain the graph structure of the neighborhood and zipcode resolutions, respectively.
+* **``neighborhood``** and **``zipcode``** are files that contain the polygons corresponding to the neighborhood and zipcode resolutions, respectively;
+* **``neighborhood-graph``** and **``zipcode-graph``** are files that contain the graph structure of the neighborhood and zipcode resolutions, respectively.
 
 Directory structure, data sets, header files, defaults files, ...
 
