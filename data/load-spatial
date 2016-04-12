@@ -1,0 +1,4 @@
+hdfs dfs -put neighborhood.txt neighborhood
+hdfs dfs -put neighborhood-graph.txt neighborhood-graph
+hdfs dfs -put zipcode.txt zipcode
+hdfs dfs -put zipcode-graph.txt zipcode-graph

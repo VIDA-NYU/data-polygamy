@@ -37,7 +37,7 @@ The team includes:
 [td]: http://www2.warwick.ac.uk/fac/sci/statistics/staff/academic-research/damoulas
 [jf]: http://vgc.poly.edu/~juliana/
 
-Our code is available under the [BSD](LICENSE) license.
+Our code and data is available under the [BSD](LICENSE) license.
 
 ## Dependencies
 
@@ -83,6 +83,43 @@ To run the different steps of the framework, you will need [Apache Hadoop](http:
 We strongly suggest users to read our [paper](#Links) before using our code.
 
 ### Preliminaries
+
+The code assumes that the HDFS has the following structure:
+
+    .
+    +-- data/
+    |   +-- datasets
+    |   +-- ...
+    +-- pre-processing/
+    |   +-- ...
+    +-- aggregates/
+    |   +-- ...
+    +-- index/
+    |   +-- ...
+    +-- mergetree/
+    |   +-- ...
+    +-- relationships/
+    |   +-- ...
+    +-- relationships-ids/
+    |   +-- ...
+    +-- correlations/
+    |   +-- ...
+    +-- neighborhood
+    +-- neighborhood-graph
+    +-- zipcode
+    +-- zipcode-graph
+
+where:
+
+* **``pre-processing/``** is a directory that stores the results from the pre-processing step;
+* **``aggregates/``** is a directory that stores the results from the scalar function computation step;
+* **``index/``** is a directory that stores the results from the feature identification step;
+* **``mergetree/``** is a directory that stores the previously computed merge trees;
+* **``relationships/``** is a directory that stores the results from the relationship computation step, i.e., the topology-based relationships between data sets;
+* **``relationships-ids/``** is a directory similar to ``relationships/``, but the relationships are stored with the data sets ids, instead of the data sets names;
+* **``correlations/``** is a directory that stores the results of standard correlation techniques (Pearson's correlation, mutual information, and DTW) when applied to the data sets;
+* **neighborhood** and **zipcode** are files that contain the polygons corresponding to the neighborhood and zipcode resolutions, respectively;
+* **neighborhood-graph** and **zipcode-graph** are files that contain the graph structure of the neighborhood and zipcode resolutions, respectively.
 
 Directory structure, data sets, header files, defaults files, ...
 
