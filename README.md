@@ -18,7 +18,7 @@ The team includes:
 [td]: http://www2.warwick.ac.uk/fac/sci/statistics/staff/academic-research/damoulas
 [jf]: http://vgc.poly.edu/~juliana/
 
-Our code and data are this repository is available under the [BSD](LICENSE) license.
+Our code and data in this repository are available under the [BSD](LICENSE) license.
 
 ## Contents
 
@@ -102,7 +102,7 @@ The code originally reads from and writes to HDFS. It assumes that the HDFS home
 
 where:
 
-* **``data``** is a directory containing all the datasets and metadata associated to the datasets (more information [later](#data));
+* **``data``** is a directory containing all the datasets and metadata associated with the datasets (more information [later](#data));
 * **``pre-processing/``** is a directory that stores the results from the [pre-processing step](#pre-processing-step);
 * **``aggregates/``** is a directory that stores the results from the [scalar function computation step](#step-1-scalar-function-computation);
 * **``index/``** is a directory that stores the results from the [feature identification step](#step-2-feature-identification);
