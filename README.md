@@ -166,6 +166,8 @@ For each dataset, three files are required and must be located under the ``data`
 * **``taxi.header``**: a CSV file containing a single line, which is the header of the dataset.
 * **``taxi.defaults``**: a CSV file with a single line containing the default values for each attribute of the dataset. If an attribute does not have a default value, ``NONE`` should be used. Note that default values are *ignored* by the framework.
 
+In addition to these dataset files, a file named ``datasets`` must be created under the ``data`` directory, containing a mapping between dataset name and dataset id. An example of such file is available [here](data/datasets).
+
 ## How To Build
 
 We use [Apache Maven](https://maven.apache.org/) 3.3.9 to build the Data Polygamy framework:
