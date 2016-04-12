@@ -71,7 +71,7 @@ This section describes information about the data used by the framework that *mu
 
 ### HDFS Directory
 
-The code assumes that the HDFS home directory has the following structure:
+The code originally reads from and writes to HDFS. It assumes that the HDFS home directory has the following structure:
 
     .
     +-- data/
@@ -164,7 +164,7 @@ In addition to these dataset files, a file named ``datasets`` must be created un
 
 ## How To Build
 
-We use [Apache Maven](https://maven.apache.org/) 3.3.9 to build the Data Polygamy framework:
+We use [Apache Maven](https://maven.apache.org/) to build the Data Polygamy framework:
 
     $ cd data-polygamy/
     $ mvn clean package
@@ -175,7 +175,7 @@ Note that all the dependencies are taken care of by Maven, except for [JIDT](htt
 
 ## How To Run
 
-To run the different steps of the framework, you will need [Apache Hadoop](http://hadoop.apache.org/). We have used v2.2.0 for our final experiments (more information [later](#paper-experiments)).
+To run our framework, you will need [Apache Hadoop](http://hadoop.apache.org/): each step of our framework is represented by a map-reduce job.
 
 ### Common Arguments
 
@@ -197,20 +197,93 @@ The following command-line arguments are available in all the steps of the frame
 
 ### Pre-Processing Step
 
-The Pre-Processing step is responsible for selecting data (from a dataset) that correspond to spatial, temporal, identifier, and numerical attributes. This step also does a pre-aggregation that is fed to the scalar function computation step.
+The Pre-Processing step is responsible for selecting data (from a dataset) that correspond to spatial, temporal, identifier, and numerical [attributes](#dataset-attributes). This step also does a pre-aggregation that is fed to the scalar function computation step.
 
-To run the pre-processing step, run:
+To run the pre-processing step:
 
-    $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -dn <dataset name> -dh <dataset header file> -dd <dataset defaults file> -t <temporal resolution> -s <spatial resolution> -cs <current spatial resolution> -i <temporal index> <spatial indices> ...
+    $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m <machine> -n <number-nodes> -dn <dataset name> -dh <dataset header file> -dd <dataset defaults file> -t <temporal resolution> -s <spatial resolution> -cs <current spatial resolution> -i <temporal index> <spatial indices> ...
     
-where: 
+where:
+
+* **``-dn``** indicates the dataset name, which should match the dataset file under the ``data`` directory.
+* **``-dh``** indicates the dataset header file, located under the ``data`` directory.
+* **``-dd``** indicates the dataset defaults file, located under the ``data`` directory.
+* **``-t``** indicates the minimum temporal resolution that this data should be aggregated. This can take the following values: *hour*, *day*, *week*, or *month*. We recommend setting this to *hour*.
+* **``-cs``** indicates the current spatial resolution of the data, i.e., *points* (for GPS points), *nbhd* (for neighborhood), *zip* (for zipcode), or *city*.
+* **``-s``** indicates the minimum spatial resolution that this data should be aggregated. For instance, if the current spatial resolution is *points*, the minimum spatial resolution could be *nbhd* or *zip*.
+* **``-i``** indicates the indices for the temporal and spatial attributes. For instance, if the temporal attribute is on index 0, and the x and y components of the spatial attribute is on indices 2 and 3, this should be set as ``-i 0 2 3``.
+
+This step is the only one that must be executed once per dataset. The results are stored under the ``pre-processing`` directory.
 
 ### Step 1: Scalar Function Computation
 
+The Scalar Function Computation step is responsible for generating all possible scalar functions at different spatio-temporal resolutions.
+
+To run the scalar function computation step:
+
+    $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.scalar_function_computation.Aggregation -m <machine> -n <number-nodes> -g <datasets>
+    
+where:
+
+* **``-g``** indicates the datasets for which the scalar functions will be computed, followed by the temporal and spatial indices. For instance, to execute this step for the taxi and 311 datasets, one can use ``-g taxi 0 0 311 0 0``.
+
+The results are stored under the ``aggregates`` directory.
+
 ### Step 2: Feature Identification
+
+The Feature Identification step creates the merge tree indices (if they have not been created yet) and identifies the set of features for the different scalar functions.
+
+To run the feature identification step:
+
+    $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.feature_identification.IndexCreation -m <machine> -n <number-nodes> -g <datasets> -t
+    
+where:
+
+* **``-g``** indicates the datasets for which the features will be identified and computed (e.g.: ``-g taxi 311``).
+* **``-t``** is an *optional* flag that indicates that this step should use custom thresholds for salient and extreme features, instead of relying on our data-driven approach. Custom thresholds must be written to a file named ``data/thresholds``.
+
+The format of file ``data/thresholds`` must be the following:
+
+    <dataset-name>
+    <scalar-function-id> <threshold-salient-feature> <threshold-extreme-feature>
+    <scalar-function-id> <threshold-salient-feature> <threshold-extreme-feature>
+    ...
+    <dataset-name>
+    <scalar-function-id> <threshold-salient-feature> <threshold-extreme-feature>
+    <scalar-function-id> <threshold-salient-feature> <threshold-extreme-feature>
+    ...
+    
+In this file, values in a line are separated by the tab character (i.e., ``\t``). To know which scalar function ids to use, you can take a look at the file ``pre-processing/*.aggregates`` corresponding to the dataset of interest.
+
+The results (set of features for each scalar function at different resolutions) are stored under the ``index`` directory. Merge tree indices are stored under the ``mergetree`` directory.
 
 ### Step 3: Relationship Computation
 
+The Relationship Computation step evaluates the relationships between all the possible pairs of functions corresponding to the input query, i.e., the query evaluation happens in this step.
+
+To run the relationship computation step:
+
+    $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.relationship_computation.Relationship -m <machine> -n <number-nodes> -g1 <datasets> -g2 <datasets> -sc <score-threshold> -st <strength threshold> -c -id -r
+    
+where:
+
+* **``-g1``** is the first group of datasets.
+* **``-g2``** is the *optional* second group of datasets.
+* **``-sc``** is an *optional* threshold for relationship score.
+* **``-st``** is an *optional* threshold for relationship strength.
+* **``-c``** is an *optional* flag for using complete, rather than restricted, randomization for the Monte Carlo tests.
+* **``-id``** is an *optional* flag for returning dataset ids, instead of dataset names, in the relationship results.
+* **``-r``** is an *optional* flag that indicates that relationships that are identified as not significant should be removed from the final output.
+
+This step supports the general form of the *relationship query*:
+
+<p style="text-align: center;"><b>Find relationships between G1 and G2 satisfying CLAUSE.</b></p>
+
+The results are stored under the ``relationships`` directory if flag ``-id`` is not used; otherwise, results are stored under the ``relationships-ids`` directory.
+
 ## Paper Experiments
 
+* Java 1.7.0_45
+* [Apache Maven](https://maven.apache.org/) 3.3.9
+* [Apache Hadoop](http://hadoop.apache.org/) 2.2.0
 
