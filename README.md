@@ -18,7 +18,7 @@ The team includes:
 [td]: http://www2.warwick.ac.uk/fac/sci/statistics/staff/academic-research/damoulas
 [jf]: http://vgc.poly.edu/~juliana/
 
-Our code and data in this repository is available under the [BSD](LICENSE) license.
+Our code and data are this repository is available under the [BSD](LICENSE) license.
 
 ## Contents
 
@@ -175,7 +175,9 @@ Note that all the dependencies are taken care of by Maven, except for [JIDT](htt
 
 ## How To Run
 
-To run our framework, you will need [Apache Hadoop](http://hadoop.apache.org/): each step of our framework is represented by a map-reduce job.
+To run our framework, you will need [Apache Hadoop](http://hadoop.apache.org/): each step of the framework is represented by a map-reduce job. The framework can be summarized as follows:
+
+![alt tag](framework.png)
 
 ### Common Arguments
 
