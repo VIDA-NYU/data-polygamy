@@ -20,7 +20,7 @@ The team includes:
 
 Our code and data in this repository is available under the [BSD](LICENSE) license.
 
-## Index
+## Contents
 
 This README file is divided into the following sections:
 
@@ -36,12 +36,12 @@ This README file is divided into the following sections:
     * [Pre-Processing Step](#pre-processing-step)
     * [Step 1: Scalar Function Computation](#step-1-scalar-function-computation)
     * [Step 2: Feature Identification](#step-2-feature-identification)
-    * [Step 3: Relationship Computation](#step-3-relationship-computation-query-evaluation)
-* [Paper Experiments](#paper-experiments)
+    * [Step 3: Relationship Computation (Query Evaluation)](#step-3-relationship-computation-query-evaluation)
+* [Experiments](#paper-experiments)
 
 ## Repository Overview
 
-
+Soon ...
 
 ## Dependencies
 
@@ -283,9 +283,11 @@ This step supports the general form of the *relationship query*:
 
 The results are stored under the ``relationships`` directory if flag ``-id`` is not used; otherwise, results are stored under the ``relationships-ids`` directory.
 
-## Paper Experiments
+## Experiments
 
 * Java 1.7.0_45
 * [Apache Maven](https://maven.apache.org/) 3.3.9
 * [Apache Hadoop](http://hadoop.apache.org/) 2.2.0
+
+More details soon...
 
