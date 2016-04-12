@@ -4,7 +4,22 @@
 
 Data Polygamy is a scalable topology-based framework that allows users to query for statistically significant relationships between spatio-temporal data sets.
 
-## Links and References
+This README file is divided into the following sections:
+
+* [Links and References](#Links)
+* [Dependencies][]
+* [Repository Overview][]
+* [How To Build][]
+* [How To Run][]
+    * [Preliminaries][]
+    * [Common Arguments][]
+    * [Pre-Processing Step][]
+    * [Step 1: Scalar Function Computation][]
+    * [Step 2: Feature Identification][]
+    * [Step 3: Relationship Computation][]
+* [Paper Experiments][]
+
+## Links and References [Links]
 
 For more detailed information about the our framework, please refer to our SIGMOD paper:
 
@@ -21,6 +36,8 @@ The team includes:
 [hd]: http://www.harishd.com/
 [td]: http://www2.warwick.ac.uk/fac/sci/statistics/staff/academic-research/damoulas
 [jf]: http://vgc.poly.edu/~juliana/
+
+Our code is available under the [BSD](LICENSE) license.
 
 ## Dependencies
 
@@ -44,23 +61,65 @@ The Data Polygamy framework uses Java 1.7.0_45 and has the following dependencie
 
 The plots ...
 
-## Source Code Overview
+## Repository Overview
 
 
 
 ## How To Build
 
-We use [Apache Maven](https://maven.apache.org/) 3.3.9 to build the code for the Data Polygamy framework:
+We use [Apache Maven](https://maven.apache.org/) 3.3.9 to build the Data Polygamy framework:
 
     $ cd data-polygamy/
     $ mvn clean package
 
-All the dependencies are taken care of by Maven, except for [JIDT](http://jlizier.github.io/jidt/), [Java-ML](http://java-ml.sourceforge.net/), and [JavaMI](http://www.cs.man.ac.uk/~pococka4/JavaMI.html), since these libraries are not available in the central repository. Therefore, we include these libraries, as well as their corresponding licenses, under [``data-polygamy/lib``](data-polygamy/lib). Please note that we **do not** make modifications to any of these libraries.
+This generates a jar file, with the following name and path: ``data-polygamy/target/data-polygamy-0.1-jar-with-dependencies.jar``. For simplicity, we refer to this file as ``data-polygamy.jar`` throughout this documentation. 
 
-## How To Use
+Note that all the dependencies are taken care of by Maven, except for [JIDT](http://jlizier.github.io/jidt/), [Java-ML](http://java-ml.sourceforge.net/), and [JavaMI](http://www.cs.man.ac.uk/~pococka4/JavaMI.html), since these libraries are not available in the central repository. Therefore, we include these libraries, as well as their corresponding licenses, under [``data-polygamy/lib``](data-polygamy/lib). It is worth mentioning that we **did not** make modifications to any of these libraries.
 
+## How To Run
 
+To run the different steps of the framework, you will need [Apache Hadoop](http://hadoop.apache.org/).
 
-## Experiments
+We strongly suggest users to read our [paper](#Links) before using our code.
+
+### Preliminaries
+
+Directory structure, data sets, header files, defaults files, ...
+
+### Common Arguments
+
+The following command-line arguments are available in all the steps of the framework:
+
+*Required Arguments*:
+
+* **-m**: identifier for the machine configuration of the Hadoop cluster nodes. These identifiers are defined in the class Machine in file [FrameworkUtils.java](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/utils/FrameworkUtils.java). For each identifier, information related to the corresponding machine is declared (e.g.: number of cores, amount of memory, and number of disks). Such information is used to set a few Hadoop configuration parameters.
+* **-n**: number of nodes in the Hadoop cluster.
+
+*Optional Arguments*:
+
+* **-f**: flag that forces the execution of the step for all the input data sets, even if the results for these data sets already exist. In other words, existing results or output files are deleted and the step is re-executed for all input data sets.
+* **-s3**: flag that indicates that the execution will read data from and write data to a bucket on [Amazon S3](https://aws.amazon.com/s3/) storage service.
+* **-aws_id**: the AWS Access Key Id. This argument is required if the **s3** flag is used.
+* **-aws_key**: the AWS Secret Access Key. This argument is required if the **s3** flag is used.
+* **-b**: the bucket on S3 where data will be read from and write to. This argument is required if the **s3** flag is used.
+* **-h**: flag that displays a help message.
+
+### Pre-Processing Step
+
+The Pre-Processing step is responsible for selecting data (from a data set) that correspond to spatial, temporal, identifier, and numerical attributes. This step also does a pre-aggregation that is fed to the scalar function computation step.
+
+To run the pre-processing step, run:
+
+    $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -dn <data set name> -dh <data set header file> -dd <data set defaults file> -t <temporal resolution> -s <spatial resolution> -cs <current spatial resolution> -i <temporal index> <spatial indices> ...
+    
+where: 
+
+### Step 1: Scalar Function Computation
+
+### Step 2: Feature Identification
+
+### Step 3: Relationship Computation
+
+## Paper Experiments
 
 
