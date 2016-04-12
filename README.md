@@ -37,6 +37,7 @@ This README file is divided into the following sections:
     * [Step 1: Scalar Function Computation](#step-1-scalar-function-computation)
     * [Step 2: Feature Identification](#step-2-feature-identification)
     * [Step 3: Relationship Computation (Query Evaluation)](#step-3-relationship-computation-query-evaluation)
+    * [Alternate Step: Correlation Computation](#alternate-step-correlation-computation)
 * [Experiments](#paper-experiments)
 
 ## Repository Overview
@@ -175,9 +176,11 @@ Note that all the dependencies are taken care of by Maven, except for [JIDT](htt
 
 ## How To Run
 
-To run our framework, you will need [Apache Hadoop](http://hadoop.apache.org/): each step of the framework is represented by a map-reduce job. The framework can be summarized as follows:
+To run our framework, you will need [Apache Hadoop](http://hadoop.apache.org/). The framework can be summarized as follows:
 
 ![alt tag](framework.png)
+
+Each step of the framework is represented by a map-reduce job. The Pre-Processing step is executed once for each dataset, while the other steps can be executed once for multiple datasets.
 
 ### Common Arguments
 
@@ -215,7 +218,7 @@ where:
 * **``-s``** indicates the minimum spatial resolution that this data should be aggregated. For instance, if the current spatial resolution is *points*, the minimum spatial resolution could be *nbhd* or *zip*.
 * **``-i``** indicates the indices for the temporal and spatial attributes. For instance, if the temporal attribute is on index 0, and the x and y components of the spatial attribute is on indices 2 and 3, this should be set as ``-i 0 2 3``.
 
-This step is the only one that must be executed once per dataset. The results are stored under the ``pre-processing`` directory.
+The results are stored under the ``pre-processing`` directory.
 
 ### Step 1: Scalar Function Computation
 
@@ -284,6 +287,10 @@ This step supports the general form of the *relationship query*:
 *G1* and *G2* are the groups of datasets corresponding to arguments ``-g1`` and ``-g2``: all the possible relationships between *G1* and *G2* are evaluated; if *G2* is not provided, we assume that *G2* encompasses all the datasets in the corpus (i.e., under the ``data`` directory), thus allowing hypothesis generation. The remaining arguments and flags are part of the *CLAUSE* sentence. If users want to specify custom thresholds for computing salient and extreme features, instead of doing so as part of the *CLAUSE* sentence, it is better to first re-execute [the feature identification step](#step-2-feature-identification) (specifying the desired thresholds), and then execute the relationship computation step.
 
 The results are stored under the ``relationships`` directory if flag ``-id`` is not used; otherwise, results are stored under the ``relationships-ids`` directory.
+
+### Alternate Step: Correlation Computation
+
+![alt tag](framework-standard-techniques.png)
 
 ## Experiments
 
