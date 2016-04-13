@@ -39,6 +39,7 @@ This README file is divided into the following sections:
     * [Step 3: Relationship Computation (Query Evaluation)](#step-3-relationship-computation-query-evaluation)
     * [Alternate Step: Correlation Computation](#alternate-step-correlation-computation)
 * [Experiments](#paper-experiments)
+    * [Datasets](#datasets)
 
 ## Repository Overview
 
@@ -341,6 +342,56 @@ The results are stored in a similar structure as in [the relationship computatio
 * Java 1.7.0_45
 * [Apache Maven](https://maven.apache.org/) 3.3.9
 * [Apache Hadoop](http://hadoop.apache.org/) 2.2.0
+
+### Datasets
+
+#### Gas Prices
+
+The Gas Prices dataset that we used in the experiments is available [here](http://dx.doi.org/10.7910/DVN/XZUH9V).
+
+The original dataset is available at the [U.S. Energy Information Administration website](https://www.eia.gov/petroleum/gasdiesel/xls/pswrgvwall.xls).
+
+#### Vehicle Collisions
+
+The Vehicle Collisions dataset that we used in the experiments is available [here](http://dx.doi.org/10.7910/DVN/YTMEO6).
+
+The original dataset is available at the [NYC Open Data portal](https://data.cityofnewyork.us/d/h9gi-nx95?category=Public-Safety&view_name=NYPD-Motor-Vehicle-Collisions).
+
+#### 311 Complaints
+
+The 311 dataset that we used in the experiments is available [here](http://dx.doi.org/10.7910/DVN/EGPPPL).
+
+The original dataset is available at the [NYC Open Data portal](https://data.cityofnewyork.us/d/erm2-nwe9?category=Social-Services&view_name=311-Service-Requests-from-2010-to-Present).
+
+#### 911 Calls
+
+Unfortunately, this dataset is not open source, and therefore, we cannot make it available online.
+
+#### Citi Bike Data
+
+The Citi Bike dataset that we used in the experiments is available [here](https://figshare.com/articles/Citi_Bike_Dataset/3175573).
+
+The original dataset is available at the [Citi Bike website](https://www.citibikenyc.com/system-data).
+
+#### Weather Data
+
+The Weather dataset that we used in the experiments is available [here](http://dx.doi.org/10.7910/DVN/DXQ8ZP).
+
+The original dataset is available at the [National Climatic Data Center website](http://www7.ncdc.noaa.gov/CDO/dataproduct).
+
+#### Traffic Speed
+
+The Traffic Speed dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3175570.v1).
+
+#### Taxi Data
+
+Unfortunately, the version of the Taxi Dataset that we used in the experiments is not open source, and therefore, we cannot make it available online. However, the Taxi and Limousine Commission has made the trip data available on their [website](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml).
+
+#### Twitter
+
+Unfortunately, the Twitter data that we used in the experiments is too large for sharing (approximately 700 GB). We obtained such dataset by using [Twitter's streaming API](https://dev.twitter.com/streaming/public).
+
+#### Datasets from NYC Open Data
 
 More details soon...
 
