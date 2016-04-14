@@ -103,16 +103,16 @@ The code originally reads from and writes to HDFS. It assumes that the HDFS home
 
 where:
 
-* **``data``** is a directory containing all the datasets and metadata associated with the datasets (more information [later](#data));
-* **``pre-processing/``** is a directory that stores the results from the [pre-processing step](#pre-processing-step);
-* **``aggregates/``** is a directory that stores the results from the [scalar function computation step](#step-1-scalar-function-computation);
-* **``index/``** is a directory that stores the results from the [feature identification step](#step-2-feature-identification);
+* **``data``** is a directory containing all the datasets and metadata associated with the datasets (more information [later](#33-data));
+* **``pre-processing/``** is a directory that stores the results from the [pre-processing step](#52-pre-processing-step);
+* **``aggregates/``** is a directory that stores the results from the [scalar function computation step](#53-step-1-scalar-function-computation);
+* **``index/``** is a directory that stores the results from the [feature identification step](#54-step-2-feature-identification);
 * **``mergetree/``** is a directory that stores the previously computed merge trees;
-* **``relationships/``** is a directory that stores the results from the [relationship computation step](#step-3-relationship-computation-query-evaluation), i.e., the topology-based relationships between datasets;
+* **``relationships/``** is a directory that stores the results from the [relationship computation step](#55-step-3-relationship-computation-query-evaluation), i.e., the topology-based relationships between datasets;
 * **``relationships-ids/``** is a directory similar to ``relationships/``, but the relationships are stored with the datasets ids, instead of the datasets names;
 * **``correlations/``** is a directory that stores the results from the standard correlation techniques step;
-* **``neighborhood``** and **``zipcode``** are files that contain the polygons corresponding to the neighborhood and zipcode resolutions, respectively (more information [later](#spatial-structures));
-* **``neighborhood-graph``** and **``zipcode-graph``** are files that contain the graph structure of the neighborhood and zipcode resolutions, respectively (more information [later](#spatial-structures)).
+* **``neighborhood``** and **``zipcode``** are files that contain the polygons corresponding to the neighborhood and zipcode resolutions, respectively (more information [later](#32-spatial-resolutions));
+* **``neighborhood-graph``** and **``zipcode-graph``** are files that contain the graph structure of the neighborhood and zipcode resolutions, respectively (more information [later](#32-spatial-resolutions)).
 
 To automatically create the required directories, take a look at the [``load-hdfs-structure``](data/load-hdfs-structure) script.
 
@@ -285,7 +285,7 @@ This step supports the general form of the *relationship query*:
 
 <b><i>Find relationships between G1 and G2 satisfying CLAUSE.</i></b>
 
-*G1* and *G2* are the groups of datasets corresponding to arguments ``-g1`` and ``-g2``: all the possible relationships between *G1* and *G2* are evaluated; if *G2* is not provided, we assume that *G2* encompasses all the datasets in the corpus (i.e., under the ``data`` directory), thus allowing hypothesis generation. The remaining arguments and flags are part of the *CLAUSE* sentence. If users want to specify custom thresholds for computing salient and extreme features, instead of doing so as part of the *CLAUSE* sentence, it is better to first re-execute [the feature identification step](#step-2-feature-identification) (specifying the desired thresholds), and then execute the relationship computation step.
+*G1* and *G2* are the groups of datasets corresponding to arguments ``-g1`` and ``-g2``: all the possible relationships between *G1* and *G2* are evaluated; if *G2* is not provided, we assume that *G2* encompasses all the datasets in the corpus (i.e., under the ``data`` directory), thus allowing hypothesis generation. The remaining arguments and flags are part of the *CLAUSE* sentence. If users want to specify custom thresholds for computing salient and extreme features, instead of doing so as part of the *CLAUSE* sentence, it is better to first re-execute [the feature identification step](#54-step-2-feature-identification) (specifying the desired thresholds), and then execute the relationship computation step.
 
 The results are stored under the ``relationships`` directory if flag ``-id`` is not used; otherwise, results are stored under the ``relationships-ids`` directory.
 
@@ -331,11 +331,11 @@ To run the correlation computation step:
 
     $ hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.standard_techniques.CorrelationTechniques -m <machine> -n <number-nodes> -g1 <datasets> -g2 <datasets>
 
-where ``-g1`` and ``-g2`` are equivalent to the arguments in [the relationship computation step](#step-3-relationship-computation-query-evaluation).
+where ``-g1`` and ``-g2`` are equivalent to the arguments in [the relationship computation step](#55-step-3-relationship-computation-query-evaluation).
 
 #### Correlation Output
 
-The results are stored in a similar structure as in [the relationship computation step](#step-3-relationship-computation-query-evaluation), except that there are no salient and extreme features, and Monte Carlo tests are always restricted. For each pair of scalar functions, the following values are outputted (in this order): *PCC*, *MI*, *DTW*, *p-value for PCC*, *p-value for MI*, and *p-value for DTW*.
+The results are stored in a similar structure as in [the relationship computation step](#55-step-3-relationship-computation-query-evaluation), except that there are no salient and extreme features, and Monte Carlo tests are always restricted. For each pair of scalar functions, the following values are outputted (in this order): *PCC*, *MI*, *DTW*, *p-value for PCC*, *p-value for MI*, and *p-value for DTW*.
 
 ## 6. Experiments
 
@@ -406,7 +406,7 @@ The 300 datasets from NYC Open Data (*NYC Open collection*) that we used in the 
 
 ### 6.3. Initial Setup
 
-We provide a pre-built jar file for the Data Polygamy framework at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar). If you want to build the code yourself, follow the instructions [here](#how-to-build).
+We provide a pre-built jar file for the Data Polygamy framework at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar). If you want to build the code yourself, follow the instructions [here](#4-how-to-build).
 
 Soon...
 
