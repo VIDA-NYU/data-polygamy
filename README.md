@@ -25,29 +25,29 @@ Our code and data in this repository are available under the [BSD](LICENSE) lice
 This README file is divided into the following sections:
 
 * [1. Repository Overview](#1-repository-overview)
-* [2. Dependencies](#dependencies)
-* [3. Preliminaries](#preliminaries)
-    * [3.1. HDFS Directory](#hdfs-directory)
-    * [3.2. Spatial Resolutions](#spatial-resolutions)
-    * [3.3. Data](#data)
-* [4. How To Build](#how-to-build)
-* [5. How To Run](#how-to-run)
-    * [5.1. Common Arguments](#common-arguments)
-    * [5.2. Pre-Processing Step](#pre-processing-step)
-    * [5.3. Step 1: Scalar Function Computation](#step-1-scalar-function-computation)
-    * [5.4. Step 2: Feature Identification](#step-2-feature-identification)
-    * [5.5. Step 3: Relationship Computation (Query Evaluation)](#step-3-relationship-computation-query-evaluation)
-    * [5.6. Alternate Step: Correlation Computation](#alternate-step-correlation-computation)
-* [6. Experiments](#paper-experiments)
-    * [6.1. Machine Configuration](#machine-configuration)
-    * [6.2. Datasets](#datasets)
-    * [6.3. Initial Setup](#initial-setup)
+* [2. Dependencies](#2-dependencies)
+* [3. Preliminaries](#3-preliminaries)
+    * [3.1. HDFS Directory](#3-1-hdfs-directory)
+    * [3.2. Spatial Resolutions](#3-2-spatial-resolutions)
+    * [3.3. Data](#3-3-data)
+* [4. How To Build](#4-how-to-build)
+* [5. How To Run](#5-how-to-run)
+    * [5.1. Common Arguments](#5-1-common-arguments)
+    * [5.2. Pre-Processing Step](#5-2-pre-processing-step)
+    * [5.3. Step 1: Scalar Function Computation](#5-3-step-1-scalar-function-computation)
+    * [5.4. Step 2: Feature Identification](#5-4-step-2-feature-identification)
+    * [5.5. Step 3: Relationship Computation (Query Evaluation)](#5-5-step-3-relationship-computation-query-evaluation)
+    * [5.6. Alternate Step: Correlation Computation](#5-6-alternate-step-correlation-computation)
+* [6. Experiments](#6-paper-experiments)
+    * [6.1. Machine Configuration](#6-1-machine-configuration)
+    * [6.2. Datasets](#6-2-datasets)
+    * [6.3. Initial Setup](#6-3-initial-setup)
 
 ## 1. Repository Overview
 
 Soon ...
 
-## Dependencies
+## 2. Dependencies
 
 The Data Polygamy framework uses Java 1.7.0_45 and has the following dependencies:
 
@@ -67,11 +67,11 @@ The Data Polygamy framework uses Java 1.7.0_45 and has the following dependencie
 * [Java-ML 0.1.7](http://java-ml.sourceforge.net/)
 * [JavaMI 1.0](http://www.cs.man.ac.uk/~pococka4/JavaMI.html)
 
-## Preliminaries
+## 3. Preliminaries
 
 This section describes information about the data used by the framework that *must* be in place before executing the framework.
 
-### HDFS Directory
+### 3.1. HDFS Directory
 
 The code originally reads from and writes to HDFS. It assumes that the HDFS home directory has the following structure:
 
@@ -116,7 +116,7 @@ where:
 
 To automatically create the required directories, take a look at the [``load-hdfs-structure``](data/load-hdfs-structure) script.
 
-### Spatial Resolutions
+### 3.2. Spatial Resolutions
 
 The current implementation of Data Polygamy has support to five spatial resolutions: *GPS*, *neighborhood*, *zipcode*, *grid*, and *city*. The grid resolution has only been used for testing, and not in our final experiments. Note that the framework assumes that all the data fed to the pre-processing step corresponds to a single city; therefore, if you are handling data from more than one city, you probably need to provide a suitable resolution conversion under the [``resolution``](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/resolution/) directory.
 
@@ -139,7 +139,7 @@ The **graph** file represents a graph for the resolution, where each region of t
 
 The script [``load-spatial``](data/load-spatial) can be used to automatically upload our spatial resolutions files to HDFS. 
 
-### Data
+### 3.3. Data
 
 The ``data`` directory under HDFS contains all the datasets used by the framework.
 
@@ -164,7 +164,7 @@ For each dataset, three files are required and must be located under the ``data`
 
 In addition to these dataset files, a file named ``datasets`` must be created under the ``data`` directory, containing a mapping between dataset name and dataset id. An example of such file is available [here](data/datasets.txt).
 
-## How To Build
+## 4. How To Build
 
 We use [Apache Maven](https://maven.apache.org/) 3.3.9 to build the Data Polygamy framework:
 
@@ -175,7 +175,7 @@ This generates a jar file, with the following name and path: ``data-polygamy/tar
 
 Note that all the dependencies are taken care of by Maven, except for [JIDT](http://jlizier.github.io/jidt/), [Java-ML](http://java-ml.sourceforge.net/), and [JavaMI](http://www.cs.man.ac.uk/~pococka4/JavaMI.html), since these libraries are not available in the central repository. Therefore, we include these libraries, as well as their corresponding licenses, under [``data-polygamy/lib``](data-polygamy/lib). It is worth mentioning that we **did not** make modifications to any of these libraries.
 
-## How To Run
+## 5. How To Run
 
 To run our framework, you will need [Apache Hadoop](http://hadoop.apache.org/). The framework can be summarized as follows:
 
@@ -183,7 +183,7 @@ To run our framework, you will need [Apache Hadoop](http://hadoop.apache.org/). 
 
 Each step of the framework is represented by a map-reduce job. The Pre-Processing step is executed once for each dataset, while the other steps can be executed once for multiple datasets.
 
-### Common Arguments
+### 5.1. Common Arguments
 
 The following command-line arguments are available in all the steps of the framework:
 
@@ -201,7 +201,7 @@ The following command-line arguments are available in all the steps of the frame
 * **``-b``**: the bucket on S3 where data will be read from and write to. This argument is required if the ``s3`` flag is used.
 * **``-h``**: flag that displays a help message.
 
-### Pre-Processing Step
+### 5.2. Pre-Processing Step
 
 The Pre-Processing step is responsible for selecting data (from a dataset) that correspond to spatial, temporal, identifier, and numerical [attributes](#dataset-attributes). This step also does a pre-aggregation that is fed to the scalar function computation step.
 
@@ -221,7 +221,7 @@ where:
 
 The results are stored under the ``pre-processing`` directory.
 
-### Step 1: Scalar Function Computation
+### 5.3. Step 1: Scalar Function Computation
 
 The Scalar Function Computation step is responsible for generating all possible scalar functions at different spatio-temporal resolutions.
 
@@ -235,7 +235,7 @@ where:
 
 The results are stored under the ``aggregates`` directory.
 
-### Step 2: Feature Identification
+### 5.4. Step 2: Feature Identification
 
 The Feature Identification step creates the merge tree indices (if they have not been created yet) and identifies the set of features for the different scalar functions.
 
@@ -263,7 +263,7 @@ In this file, values in a line are separated by the tab character (i.e., ``\t``)
 
 The results (set of features for each scalar function at different resolutions) are stored under the ``index`` directory. Merge tree indices are stored under the ``mergetree`` directory.
 
-### Step 3: Relationship Computation (Query Evaluation)
+### 5.5. Step 3: Relationship Computation (Query Evaluation)
 
 The Relationship Computation step evaluates the relationships between all the possible pairs of functions corresponding to the input query, i.e., the query evaluation happens in this step.
 
@@ -319,7 +319,7 @@ To download the results for, say, taxi and weather with salient features:
     
 For each relationship (pair of scalar functions), the following values are outputted (in this order): *relationship score*, *relationship strength*, *p-value*, *number of matched events*, *number of matched positive events*, *number of matched negative events*, *number of positive events on the first scalar function only*, *number of negative events on the first scalar function only*, *number of positive events on the second scalar function only*, and *number of negative events on the second scalar function only*.
 
-### Alternate Step: Correlation Computation
+### 5.6. Alternate Step: Correlation Computation
 
 The Correlation Computation step, which is not an "official" step of our framework, is used to compute relationships among datasets that are based on standard correlation techniques (rather than on topology features): Pearson's correlation coefficient (PCC), mutual information (MI), and dynamic time warping (DTW). We use this step for comparison purposes only.
 
@@ -337,11 +337,11 @@ where ``-g1`` and ``-g2`` are equivalent to the arguments in [the relationship c
 
 The results are stored in a similar structure as in [the relationship computation step](#step-3-relationship-computation-query-evaluation), except that there are no salient and extreme features, and Monte Carlo tests are always restricted. For each pair of scalar functions, the following values are outputted (in this order): *PCC*, *MI*, *DTW*, *p-value for PCC*, *p-value for MI*, and *p-value for DTW*.
 
-## Experiments
+## 6. Experiments
 
 In this section, we show how to reproduce the results of our SIGMOD'16 paper.
 
-### Machine Configuration
+### 6.1. Machine Configuration
 
 The experiments were executed on a cluster with 20 compute nodes, each node running Red Hat Enterprise Linux Server release 6.7, and having an AMD Opteron(TM) Processor 6272 (4x16 cores) 2.1GHz and 256GB of RAM. The installed software is the following:
 
@@ -352,7 +352,7 @@ The experiments were executed on a cluster with 20 compute nodes, each node runn
 
 All the files related to the experiments are located under ``sigmod16/``. All the scripts assume that these software and libraries are properly installed.
 
-### Datasets
+### 6.2. Datasets
 
 #### Gas Prices
 
@@ -404,7 +404,7 @@ The Twitter data that we used in the experiments is too large for sharing (appro
 
 The 300 datasets from NYC Open Data (*NYC Open collection*) that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3175606.v2).
 
-### Initial Setup
+### 6.3. Initial Setup
 
 We provide a pre-built jar file for the Data Polygamy framework at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar). If you want to build the code yourself, follow the instructions [here](#how-to-build).
 
