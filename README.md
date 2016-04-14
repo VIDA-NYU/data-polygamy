@@ -374,7 +374,7 @@ The original dataset is available at the [NYC Open Data portal](https://data.cit
 
 #### 911 Calls
 
-Unfortunately, this dataset is not open source, and therefore, we cannot make it available online.
+This dataset is not open source, and therefore, we cannot make it available online.
 
 #### Citi Bike Data
 
@@ -394,11 +394,11 @@ The Traffic Speed dataset that we used in the experiments is available [here](ht
 
 #### Taxi Data
 
-Unfortunately, the version of the Taxi Dataset that we used in the experiments is not open source, and therefore, we cannot make it available online. However, the Taxi and Limousine Commission has made the trip data available on their [website](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml).
+The version of the Taxi Dataset that we used in the experiments is not open source, and therefore, we cannot make it available online. However, the Taxi and Limousine Commission has made the trip data available on their [website](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml).
 
 #### Twitter
 
-Unfortunately, the Twitter data that we used in the experiments is too large for sharing (approximately 700 GB). We obtained such dataset by using [Twitter's streaming API](https://dev.twitter.com/streaming/public).
+The Twitter data that we used in the experiments is too large for sharing (approximately 700 GB). We obtained such dataset by using [Twitter's streaming API](https://dev.twitter.com/streaming/public).
 
 #### Datasets from NYC Open Data
 
