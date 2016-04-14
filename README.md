@@ -39,7 +39,9 @@ This README file is divided into the following sections:
     * [Step 3: Relationship Computation (Query Evaluation)](#step-3-relationship-computation-query-evaluation)
     * [Alternate Step: Correlation Computation](#alternate-step-correlation-computation)
 * [Experiments](#paper-experiments)
+    * [Machine Configuration](#machine-configuration)
     * [Datasets](#datasets)
+    * [Initial Setup](#initial-setup)
 
 ## Repository Overview
 
@@ -64,8 +66,6 @@ The Data Polygamy framework uses Java 1.7.0_45 and has the following dependencie
 * [JIDT 1.3](http://jlizier.github.io/jidt/)
 * [Java-ML 0.1.7](http://java-ml.sourceforge.net/)
 * [JavaMI 1.0](http://www.cs.man.ac.uk/~pococka4/JavaMI.html)
-
-The plots ...
 
 ## Preliminaries
 
@@ -166,7 +166,7 @@ In addition to these dataset files, a file named ``datasets`` must be created un
 
 ## How To Build
 
-We use [Apache Maven](https://maven.apache.org/) to build the Data Polygamy framework:
+We use [Apache Maven](https://maven.apache.org/) 3.3.9 to build the Data Polygamy framework:
 
     $ cd data-polygamy/
     $ mvn clean package
@@ -339,9 +339,18 @@ The results are stored in a similar structure as in [the relationship computatio
 
 ## Experiments
 
+In this section, we show how to reproduce the results of our SIGMOD'16 paper.
+
+### Machine Configuration
+
+The experiments were executed on a cluster with 20 compute nodes, each node running Red Hat Enterprise Linux Server release 6.7, and having an AMD Opteron(TM) Processor 6272 (4x16 cores) 2.1GHz and 256GB of RAM. The installed software is the following:
+
 * Java 1.7.0_45
-* [Apache Maven](https://maven.apache.org/) 3.3.9
 * [Apache Hadoop](http://hadoop.apache.org/) 2.2.0
+* Python X
+* [matplotlib](http://matplotlib.org/) 1.5.1 (to generate the plots)
+
+All the files related to the experiments are located under ``sigmod16/``. All the scripts assume that these software and libraries are properly installed.
 
 ### Datasets
 
@@ -369,7 +378,7 @@ Unfortunately, this dataset is not open source, and therefore, we cannot make it
 
 #### Citi Bike Data
 
-The Citi Bike dataset that we used in the experiments is available [here](https://figshare.com/articles/Citi_Bike_Dataset/3175573).
+The Citi Bike dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3175573.v2).
 
 The original dataset is available at the [Citi Bike website](https://www.citibikenyc.com/system-data).
 
@@ -393,5 +402,9 @@ Unfortunately, the Twitter data that we used in the experiments is too large for
 
 #### Datasets from NYC Open Data
 
-More details soon...
+The 300 datasets from NYC Open Data (*NYC Open collection*) that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3175606.v2).
+
+### Initial Setup
+
+Soon...
 
