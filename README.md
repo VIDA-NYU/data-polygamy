@@ -394,7 +394,7 @@ The Traffic Speed dataset that we used in the experiments is available [here](ht
 
 #### Taxi Data
 
-The version of the Taxi Dataset that we used in the experiments is not open source, and therefore, we cannot make it available online. However, the Taxi and Limousine Commission has made the trip data available on their [website](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml).
+The version of the Taxi dataset that we used in the experiments is not open source, and therefore, we cannot make it available online. However, the Taxi and Limousine Commission has made the trip data available on their [website](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml).
 
 #### Twitter
 
