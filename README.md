@@ -24,7 +24,7 @@ Our code and data in this repository are available under the [BSD](LICENSE) lice
 
 This README file is divided into the following sections:
 
-* [1. Repository Overview](#repository-overview)
+* [1. Repository Overview](#1-repository-overview)
 * [2. Dependencies](#dependencies)
 * [3. Preliminaries](#preliminaries)
     * [3.1. HDFS Directory](#hdfs-directory)
@@ -43,7 +43,7 @@ This README file is divided into the following sections:
     * [6.2. Datasets](#datasets)
     * [6.3. Initial Setup](#initial-setup)
 
-## Repository Overview
+## 1. Repository Overview
 
 Soon ...
 
