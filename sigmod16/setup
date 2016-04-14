@@ -1,0 +1,18 @@
+# Creating HDFS Directory
+hdfs dfs -mkdir pre-processing
+hdfs dfs -mkdir aggregates
+hdfs dfs -mkdir index
+hdfs dfs -mkdir mergetree
+hdfs dfs -mkdir relationships
+hdfs dfs -mkdir relationships-ids
+hdfs dfs -mkdir correlations
+hdfs dfs -mkdir data
+
+# Loading Spatial Structures
+hdfs dfs -put ../data/neighborhood.txt neighborhood
+hdfs dfs -put ../data/neighborhood-graph.txt neighborhood-graph
+hdfs dfs -put ../data/zipcode.txt zipcode
+hdfs dfs -put ../data/zipcode-graph.txt zipcode-graph
+
+# Loading 'datasets' File
+hdfs dfs -put ../data/datasets.txt datasets
