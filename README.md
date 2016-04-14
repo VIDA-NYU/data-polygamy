@@ -406,5 +406,7 @@ The 300 datasets from NYC Open Data (*NYC Open collection*) that we used in the 
 
 ### Initial Setup
 
+We provide a pre-built jar file for the Data Polygamy framework at ``sigmod16/data-polygamy.jar``. If you want to build the code yourself, follow the instructions [here](#how-to-build).
+
 Soon...
 
