@@ -194,9 +194,9 @@ The following command-line arguments are available in all the steps of the frame
 
 *Optional Arguments*:
 
-* **``-f``**: flag that forces the execution of the step for all the input datasets, even if the results for these datasets already exist. In other words, existing results or output files are deleted and the step is re-executed for all input datasets.
+* **``-f``**: flag that forces the execution of the step for all the input datasets, even if the results for these datasets already exist. In other words, existing results or output files are deleted and the step is re-executed for all input datasets. The [pre-processing step](#52-pre-processing-step) is the only step that does not support this argument (existing files are automatically removed).
 * **``-s3``**: flag that indicates that the execution will read data from and write data to a bucket on [Amazon S3](https://aws.amazon.com/s3/) storage service.
-* **``-aws_id``**: the AWS Access Key Id. This argument is required if the s3 flag is used.
+* **``-aws_id``**: the AWS Access Key Id. This argument is required if the ``s3`` flag is used.
 * **``-aws_key``**: the AWS Secret Access Key. This argument is required if the ``s3`` flag is used.
 * **``-b``**: the bucket on S3 where data will be read from and write to. This argument is required if the ``s3`` flag is used.
 * **``-h``**: flag that displays a help message.
@@ -362,13 +362,13 @@ The original dataset is available at the [U.S. Energy Information Administration
 
 #### Vehicle Collisions
 
-The Vehicle Collisions dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3187535.v2).
+The Vehicle Collisions dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3187535.v3).
 
 The original dataset is available at the [NYC Open Data portal](https://data.cityofnewyork.us/d/h9gi-nx95?category=Public-Safety&view_name=NYPD-Motor-Vehicle-Collisions).
 
 #### 311 Complaints
 
-The 311 dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3187539.v1).
+The 311 dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3187539.v2).
 
 The original dataset is available at the [NYC Open Data portal](https://data.cityofnewyork.us/d/erm2-nwe9?category=Social-Services&view_name=311-Service-Requests-from-2010-to-Present).
 
@@ -413,12 +413,14 @@ First, run the [``hdfs_dir``](sigmod16/setup/hdfs_dir) script to create the appr
     
 To load the datasets from the *NYC Urban collection*, run the [``load_nyc_urban``](sigmod16/setup/load_nyc_urban) script:
 
+    $ cd sigmod16/setup/
     $ ./load_nyc_urban
     
 Please note that, since we cannot make the 911, Taxi, and Twitter datasets available, these datasets are not loaded to your HDFS.
     
 To load the datasets from NYC Open Data (*NYC Open collection*), run the [``load_nyc_open``](sigmod16/setup/load_nyc_open) script:
 
+    $ cd sigmod16/setup/
     $ ./load_nyc_open
 
 We provide a pre-built jar file for the Data Polygamy framework at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar). If you want to build the code yourself, follow the instructions [here](#4-how-to-build).
