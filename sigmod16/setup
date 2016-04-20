@@ -15,4 +15,4 @@ hdfs dfs -put ../data/zipcode.txt zipcode
 hdfs dfs -put ../data/zipcode-graph.txt zipcode-graph
 
 # Loading 'datasets' File
-hdfs dfs -put ../data/datasets.txt datasets
+hdfs dfs -put ../data/datasets.txt data/datasets

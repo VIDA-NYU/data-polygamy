@@ -1,0 +1,8 @@
+# Loading NYC Open Data
+# https://dx.doi.org/10.6084/m9.figshare.3175606.v2
+wget https://ndownloader.figshare.com/files/4945003 -O nyc-open
+tar -zxvf nyc-open
+rm nyc-open
+for f in *_new; do mv $f $(echo $f | sed 's/_new//g'); done
+hdfs dfs -put *-* data/
+rm *-*
