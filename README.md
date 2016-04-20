@@ -406,10 +406,10 @@ The 300 datasets from NYC Open Data (*NYC Open collection*) that we used in the 
 
 ### 6.3. Initial Setup
 
-First, run the [``setup``](sigmod16/setup) script to create the appropriate HDFS directory structure:
+First, run the [``hdfs_dir``](sigmod16/setup/hdfs_dir) script to create the appropriate HDFS directory structure:
 
-    $ cd sigmod16/
-    $ ./setup
+    $ cd sigmod16/setup/
+    $ ./hdfs_dir
     
 To load the datasets from the *NYC Urban collection*, run the [``load_nyc_urban``](sigmod16/load_nyc_urban) script:
 
