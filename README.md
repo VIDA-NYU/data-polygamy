@@ -350,25 +350,25 @@ The experiments were executed on a cluster with 20 compute nodes, each node runn
 * Python X
 * [matplotlib](http://matplotlib.org/) 1.5.1 (to generate the plots)
 
-All the files related to the experiments are located under ``sigmod16/``. All the scripts assume that these software and libraries are properly installed.
+All the files related to the experiments are located under [``sigmod16/``](sigmod16). All the scripts assume that these software and libraries are properly installed.
 
 ### 6.2. Datasets
 
 #### Gas Prices
 
-The Gas Prices dataset that we used in the experiments is available [here](http://dx.doi.org/10.7910/DVN/XZUH9V).
+The Gas Prices dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3187531.v1).
 
 The original dataset is available at the [U.S. Energy Information Administration website](https://www.eia.gov/petroleum/gasdiesel/xls/pswrgvwall.xls).
 
 #### Vehicle Collisions
 
-The Vehicle Collisions dataset that we used in the experiments is available [here](http://dx.doi.org/10.7910/DVN/YTMEO6).
+The Vehicle Collisions dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3187535.v2).
 
 The original dataset is available at the [NYC Open Data portal](https://data.cityofnewyork.us/d/h9gi-nx95?category=Public-Safety&view_name=NYPD-Motor-Vehicle-Collisions).
 
 #### 311 Complaints
 
-The 311 dataset that we used in the experiments is available [here](http://dx.doi.org/10.7910/DVN/EGPPPL).
+The 311 dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3187539.v1).
 
 The original dataset is available at the [NYC Open Data portal](https://data.cityofnewyork.us/d/erm2-nwe9?category=Social-Services&view_name=311-Service-Requests-from-2010-to-Present).
 
@@ -384,7 +384,7 @@ The original dataset is available at the [Citi Bike website](https://www.citibik
 
 #### Weather Data
 
-The Weather dataset that we used in the experiments is available [here](http://dx.doi.org/10.7910/DVN/DXQ8ZP).
+The Weather dataset that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3187549.v1).
 
 The original dataset is available at the [National Climatic Data Center website](http://www7.ncdc.noaa.gov/CDO/dataproduct).
 
@@ -405,6 +405,21 @@ The Twitter data that we used in the experiments is too large for sharing (appro
 The 300 datasets from NYC Open Data (*NYC Open collection*) that we used in the experiments is available [here](https://dx.doi.org/10.6084/m9.figshare.3175606.v2).
 
 ### 6.3. Initial Setup
+
+First, run the [``setup``](sigmod16/setup) script to create the appropriate HDFS directory structure:
+
+    $ cd sigmod16/
+    $ ./setup
+    
+To load the datasets from the *NYC Urban collection*, run the [``load_nyc_urban``](sigmod16/load_nyc_urban) script:
+
+    $ ./load_nyc_urban
+    
+Please note that, since we cannot make the 911, Taxi, and Twitter datasets available, these datasets are not loaded to your HDFS.
+    
+To load the datasets from NYC Open Data (*NYC Open collection*), run the [``load_nyc_open``](sigmod16/load_nyc_open) script:
+
+    $ ./load_nyc_open
 
 We provide a pre-built jar file for the Data Polygamy framework at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar). If you want to build the code yourself, follow the instructions [here](#4-how-to-build).
 
