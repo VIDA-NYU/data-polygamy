@@ -1,0 +1,23 @@
+m=cusp
+n=20
+
+echo 2 datasets
+./aggregation/aggregation-2 $m $n
+./index-creation/index-2 $m $n
+./relationship/relationship-2 $m $n
+echo 3 datasets
+./aggregation/aggregation-3 $m $n
+./index-creation/index-3 $m $n
+./relationship/relationship-3 $m $n
+echo 4 datasets
+./aggregation/aggregation-4 $m $n
+./index-creation/index-4 $m $n
+./relationship/relationship-4 $m $n
+echo 5 datasets
+./aggregation/aggregation-5 $m $n
+./index-creation/index-5 $m $n
+./relationship/relationship-5 $m $n
+echo 6 datasets
+./aggregation/aggregation-6 $m $n
+./index-creation/index-6 $m $n
+./relationship/relationship-6 $m $n

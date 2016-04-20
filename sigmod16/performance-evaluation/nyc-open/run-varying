@@ -1,0 +1,47 @@
+m=cusp
+n=20
+
+echo 2 datasets
+./aggregation/aggregation-2 $m $n
+./index-creation/index-2 $m $n
+./relationship/relationship-2 $m $n
+echo 30 datasets
+./aggregation/aggregation-30 $m $n
+./index-creation/index-30 $m $n
+./relationship/relationship-30 $m $n
+echo 60 datasets
+./aggregation/aggregation-60 $m $n
+./index-creation/index-60 $m $n
+./relationship/relationship-60 $m $n
+echo 90 datasets
+./aggregation/aggregation-90 $m $n
+./index-creation/index-90 $m $n
+./relationship/relationship-90 $m $n
+echo 120 datasets
+./aggregation/aggregation-120 $m $n
+./index-creation/index-120 $m $n
+./relationship/relationship-120 $m $n
+echo 150 datasets
+./aggregation/aggregation-150 $m $n
+./index-creation/index-150 $m $n
+./relationship/relationship-150 $m $n
+echo 180 datasets
+./aggregation/aggregation-180 $m $n
+./index-creation/index-180 $m $n
+./relationship/relationship-180 $m $n
+echo 210 datasets
+./aggregation/aggregation-210 $m $n
+./index-creation/index-210 $m $n
+./relationship/relationship-210 $m $n
+echo 240 datasets
+./aggregation/aggregation-240 $m $n
+./index-creation/index-240 $m $n
+./relationship/relationship-240 $m $n
+echo 270 datasets
+./aggregation/aggregation-270 $m $n
+./index-creation/index-270 $m $n
+./relationship/relationship-270 $m $n
+echo 300 datasets
+./aggregation/aggregation-300 $m $n
+./index-creation/index-300 $m $n
+./relationship/relationship-300 $m $n
