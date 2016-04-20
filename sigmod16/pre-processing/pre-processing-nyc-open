@@ -1,0 +1,903 @@
+m=cusp
+n=20
+
+#itm4-nz7t
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn itm4-nz7t -dh itm4-nz7t.header -dd itm4-nz7t.defaults -t day -s city -cs city -i 0 0
+
+#59tk-vhmd
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 59tk-vhmd -dh 59tk-vhmd.header -dd 59tk-vhmd.defaults -t day -s city -cs city -i 0 0
+
+#jxsu-xtig
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn jxsu-xtig -dh jxsu-xtig.header -dd jxsu-xtig.defaults -t day -s zip -cs zip -i 0 21
+
+#shs2-r47p
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn shs2-r47p -dh shs2-r47p.header -dd shs2-r47p.defaults -t day -s zip -cs zip -i 0 13
+
+#u8m3-rtpq
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn u8m3-rtpq -dh u8m3-rtpq.header -dd u8m3-rtpq.defaults -t day -s zip -cs zip -i 0 18
+
+#6xrr-b3y3
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 6xrr-b3y3 -dh 6xrr-b3y3.header -dd 6xrr-b3y3.defaults -t day -s zip -cs zip -i 0 1
+
+#bdeh-z67j
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bdeh-z67j -dh bdeh-z67j.header -dd bdeh-z67j.defaults -t day -s zip -cs zip -i 0 18
+
+#bxzn-njc2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bxzn-njc2 -dh bxzn-njc2.header -dd bxzn-njc2.defaults -t day -s city -cs city -i 0 0
+
+#qkjb-2n58
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn qkjb-2n58 -dh qkjb-2n58.header -dd qkjb-2n58.defaults -t day -s zip -cs zip -i 0 1
+
+#4ppd-kj92
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 4ppd-kj92 -dh 4ppd-kj92.header -dd 4ppd-kj92.defaults -t day -s zip -cs zip -i 0 1
+
+#mqd6-mvf7
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn mqd6-mvf7 -dh mqd6-mvf7.header -dd mqd6-mvf7.defaults -t day -s zip -cs zip -i 0 6
+
+#x8za-mxm3
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn x8za-mxm3 -dh x8za-mxm3.header -dd x8za-mxm3.defaults -t day -s city -cs city -i 0 0
+
+#4czu-pn25
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 4czu-pn25 -dh 4czu-pn25.header -dd 4czu-pn25.defaults -t day -s city -cs city -i 0 0
+
+#vcuf-38jy
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn vcuf-38jy -dh vcuf-38jy.header -dd vcuf-38jy.defaults -t day -s zip -cs zip -i 0 21
+
+#tpt6-yj9a
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn tpt6-yj9a -dh tpt6-yj9a.header -dd tpt6-yj9a.defaults -t day -s zip -cs zip -i 0 18
+
+#hwq6-v2yg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hwq6-v2yg -dh hwq6-v2yg.header -dd hwq6-v2yg.defaults -t day -s zip -cs zip -i 0 21
+
+#64q8-wp45
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 64q8-wp45 -dh 64q8-wp45.header -dd 64q8-wp45.defaults -t day -s zip -cs zip -i 0 21
+
+#hxvf-ve2z
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hxvf-ve2z -dh hxvf-ve2z.header -dd hxvf-ve2z.defaults -t day -s city -cs city -i 0 0
+
+#39vy-gpj7
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 39vy-gpj7 -dh 39vy-gpj7.header -dd 39vy-gpj7.defaults -t day -s zip -cs zip -i 0 6
+
+#7fnq-m3ws
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 7fnq-m3ws -dh 7fnq-m3ws.header -dd 7fnq-m3ws.defaults -t day -s city -cs city -i 0 0
+
+#u73j-27ey
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn u73j-27ey -dh u73j-27ey.header -dd u73j-27ey.defaults -t day -s zip -cs zip -i 0 21
+
+#42ty-6mij
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 42ty-6mij -dh 42ty-6mij.header -dd 42ty-6mij.defaults -t day -s zip -cs zip -i 0 1
+
+#ahx2-5kkr
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ahx2-5kkr -dh ahx2-5kkr.header -dd ahx2-5kkr.defaults -t day -s zip -cs zip -i 0 1
+
+#wyh3-xium
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn wyh3-xium -dh wyh3-xium.header -dd wyh3-xium.defaults -t day -s city -cs city -i 0 0
+
+#cu2j-a8uz
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cu2j-a8uz -dh cu2j-a8uz.header -dd cu2j-a8uz.defaults -t day -s city -cs city -i 0 0
+
+#623c-3g3z
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 623c-3g3z -dh 623c-3g3z.header -dd 623c-3g3z.defaults -t day -s zip -cs zip -i 0 18
+
+#7unq-3p5k
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 7unq-3p5k -dh 7unq-3p5k.header -dd 7unq-3p5k.defaults -t day -s zip -cs zip -i 0 21
+
+#554a-h9em
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 554a-h9em -dh 554a-h9em.header -dd 554a-h9em.defaults -t day -s city -cs city -i 0 0
+
+#vhuv-ydvk
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn vhuv-ydvk -dh vhuv-ydvk.header -dd vhuv-ydvk.defaults -t day -s zip -cs zip -i 0 1
+
+#apyi-hmk2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn apyi-hmk2 -dh apyi-hmk2.header -dd apyi-hmk2.defaults -t day -s city -cs city -i 0 0
+
+#mdcw-pe3g
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn mdcw-pe3g -dh mdcw-pe3g.header -dd mdcw-pe3g.defaults -t day -s city -cs city -i 0 0
+
+#jsf8-vufw
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn jsf8-vufw -dh jsf8-vufw.header -dd jsf8-vufw.defaults -t day -s zip -cs zip -i 0 18
+
+#bj6m-ydtj
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bj6m-ydtj -dh bj6m-ydtj.header -dd bj6m-ydtj.defaults -t day -s city -cs city -i 0 0
+
+#8nuh-9gtb
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 8nuh-9gtb -dh 8nuh-9gtb.header -dd 8nuh-9gtb.defaults -t day -s zip -cs zip -i 0 21
+
+#bpgd-h3pq
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bpgd-h3pq -dh bpgd-h3pq.header -dd bpgd-h3pq.defaults -t day -s city -cs city -i 0 0
+
+#wvtg-p8gz
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn wvtg-p8gz -dh wvtg-p8gz.header -dd wvtg-p8gz.defaults -t day -s city -cs city -i 0 0
+
+#xhra-y7xm
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xhra-y7xm -dh xhra-y7xm.header -dd xhra-y7xm.defaults -t day -s zip -cs zip -i 0 21
+
+#5kp6-wi6n
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 5kp6-wi6n -dh 5kp6-wi6n.header -dd 5kp6-wi6n.defaults -t day -s zip -cs zip -i 0 11
+
+#bz4c-ismu
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bz4c-ismu -dh bz4c-ismu.header -dd bz4c-ismu.defaults -t day -s zip -cs zip -i 0 5
+
+#4dhk-iji8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 4dhk-iji8 -dh 4dhk-iji8.header -dd 4dhk-iji8.defaults -t day -s zip -cs zip -i 0 6
+
+#sbnd-xujn
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn sbnd-xujn -dh sbnd-xujn.header -dd sbnd-xujn.defaults -t day -s zip -cs zip -i 0 9
+
+#cxkz-3jrg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cxkz-3jrg -dh cxkz-3jrg.header -dd cxkz-3jrg.defaults -t day -s city -cs city -i 0 0
+
+#iwac-jebg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn iwac-jebg -dh iwac-jebg.header -dd iwac-jebg.defaults -t day -s zip -cs zip -i 0 6
+
+#8tyc-ews2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 8tyc-ews2 -dh 8tyc-ews2.header -dd 8tyc-ews2.defaults -t day -s zip -cs zip -i 0 1
+
+#33c5-b922
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 33c5-b922 -dh 33c5-b922.header -dd 33c5-b922.defaults -t day -s city -cs city -i 0 0
+
+#pp5r-2jt5
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn pp5r-2jt5 -dh pp5r-2jt5.header -dd pp5r-2jt5.defaults -t day -s zip -cs zip -i 0 1
+
+#pp82-yvmr
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn pp82-yvmr -dh pp82-yvmr.header -dd pp82-yvmr.defaults -t day -s city -cs city -i 0 0
+
+#39ts-rq5a
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 39ts-rq5a -dh 39ts-rq5a.header -dd 39ts-rq5a.defaults -t day -s city -cs city -i 0 0
+
+#4sqw-dmpk
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 4sqw-dmpk -dh 4sqw-dmpk.header -dd 4sqw-dmpk.defaults -t day -s zip -cs zip -i 0 18
+
+#rj52-w3f7
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn rj52-w3f7 -dh rj52-w3f7.header -dd rj52-w3f7.defaults -t day -s city -cs city -i 0 0
+
+#a9em-ijfe
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn a9em-ijfe -dh a9em-ijfe.header -dd a9em-ijfe.defaults -t day -s zip -cs zip -i 0 4
+
+#fwvv-in3t
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fwvv-in3t -dh fwvv-in3t.header -dd fwvv-in3t.defaults -t day -s zip -cs zip -i 0 21
+
+#5v8x-rgx9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 5v8x-rgx9 -dh 5v8x-rgx9.header -dd 5v8x-rgx9.defaults -t day -s zip -cs zip -i 0 1
+
+#gj3x-a9g7
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn gj3x-a9g7 -dh gj3x-a9g7.header -dd gj3x-a9g7.defaults -t day -s zip -cs zip -i 0 6
+
+#s47z-wrf4
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn s47z-wrf4 -dh s47z-wrf4.header -dd s47z-wrf4.defaults -t day -s city -cs city -i 0 0
+
+#qu9v-fyfu
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn qu9v-fyfu -dh qu9v-fyfu.header -dd qu9v-fyfu.defaults -t day -s zip -cs zip -i 0 18
+
+#982u-hs4f
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 982u-hs4f -dh 982u-hs4f.header -dd 982u-hs4f.defaults -t day -s zip -cs zip -i 0 18
+
+#cz2t-ve9q
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cz2t-ve9q -dh cz2t-ve9q.header -dd cz2t-ve9q.defaults -t day -s zip -cs zip -i 0 12
+
+#94uh-jgp5
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 94uh-jgp5 -dh 94uh-jgp5.header -dd 94uh-jgp5.defaults -t day -s city -cs city -i 0 0
+
+#hh4t-gy2j
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hh4t-gy2j -dh hh4t-gy2j.header -dd hh4t-gy2j.defaults -t day -s city -cs city -i 0 0
+
+#xn2m-j4cb
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xn2m-j4cb -dh xn2m-j4cb.header -dd xn2m-j4cb.defaults -t day -s city -cs city -i 0 0
+
+#at7b-u9d8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn at7b-u9d8 -dh at7b-u9d8.header -dd at7b-u9d8.defaults -t day -s city -cs city -i 0 0
+
+#yw98-u9jx
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn yw98-u9jx -dh yw98-u9jx.header -dd yw98-u9jx.defaults -t day -s city -cs city -i 0 0
+
+#4ibi-fqxt
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 4ibi-fqxt -dh 4ibi-fqxt.header -dd 4ibi-fqxt.defaults -t day -s zip -cs zip -i 0 6
+
+#vi4u-fxyp
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn vi4u-fxyp -dh vi4u-fxyp.header -dd vi4u-fxyp.defaults -t day -s city -cs city -i 0 0
+
+#sndx-sha6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn sndx-sha6 -dh sndx-sha6.header -dd sndx-sha6.defaults -t day -s zip -cs zip -i 0 1
+
+#mjnd-dwcp
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn mjnd-dwcp -dh mjnd-dwcp.header -dd mjnd-dwcp.defaults -t day -s zip -cs zip -i 0 21
+
+#wci3-e44f
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn wci3-e44f -dh wci3-e44f.header -dd wci3-e44f.defaults -t day -s zip -cs zip -i 0 1
+
+#aidy-s4e4
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn aidy-s4e4 -dh aidy-s4e4.header -dd aidy-s4e4.defaults -t day -s city -cs city -i 0 0
+
+#6w5j-u5xt
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 6w5j-u5xt -dh 6w5j-u5xt.header -dd 6w5j-u5xt.defaults -t day -s city -cs city -i 0 0
+
+#m5dr-i2r5
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn m5dr-i2r5 -dh m5dr-i2r5.header -dd m5dr-i2r5.defaults -t day -s city -cs city -i 0 0
+
+#3mde-pszy
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 3mde-pszy -dh 3mde-pszy.header -dd 3mde-pszy.defaults -t day -s zip -cs zip -i 0 1
+
+#if6b-bk7n
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn if6b-bk7n -dh if6b-bk7n.header -dd if6b-bk7n.defaults -t day -s city -cs city -i 0 0
+
+#2928-i3dn
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 2928-i3dn -dh 2928-i3dn.header -dd 2928-i3dn.defaults -t day -s zip -cs zip -i 0 6
+
+#s72m-khgp
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn s72m-khgp -dh s72m-khgp.header -dd s72m-khgp.defaults -t day -s zip -cs zip -i 0 18
+
+#gn58-mr2k
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn gn58-mr2k -dh gn58-mr2k.header -dd gn58-mr2k.defaults -t day -s zip -cs zip -i 0 1
+
+#sjfe-fppp
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn sjfe-fppp -dh sjfe-fppp.header -dd sjfe-fppp.defaults -t day -s zip -cs zip -i 0 1
+
+#ui3g-64dd
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ui3g-64dd -dh ui3g-64dd.header -dd ui3g-64dd.defaults -t day -s city -cs city -i 0 0
+
+#p424-amsu
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn p424-amsu -dh p424-amsu.header -dd p424-amsu.defaults -t day -s city -cs city -i 0 0
+
+#ea3w-zi46
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ea3w-zi46 -dh ea3w-zi46.header -dd ea3w-zi46.defaults -t day -s zip -cs zip -i 0 1
+
+#y7a3-zcdv
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn y7a3-zcdv -dh y7a3-zcdv.header -dd y7a3-zcdv.defaults -t day -s city -cs city -i 0 0
+
+#d8zw-evq9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn d8zw-evq9 -dh d8zw-evq9.header -dd d8zw-evq9.defaults -t day -s zip -cs zip -i 0 9
+
+#kp5m-qi56
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn kp5m-qi56 -dh kp5m-qi56.header -dd kp5m-qi56.defaults -t day -s city -cs city -i 0 0
+
+#jice-brhb
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn jice-brhb -dh jice-brhb.header -dd jice-brhb.defaults -t day -s zip -cs zip -i 0 18
+
+#wy86-d5vw
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn wy86-d5vw -dh wy86-d5vw.header -dd wy86-d5vw.defaults -t day -s city -cs city -i 0 0
+
+#n5xc-7jfa
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn n5xc-7jfa -dh n5xc-7jfa.header -dd n5xc-7jfa.defaults -t day -s city -cs city -i 0 0
+
+#6455-i2pd
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 6455-i2pd -dh 6455-i2pd.header -dd 6455-i2pd.defaults -t day -s city -cs city -i 0 0
+
+#65n5-tt98
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 65n5-tt98 -dh 65n5-tt98.header -dd 65n5-tt98.defaults -t day -s zip -cs zip -i 0 9
+
+#iyxn-nse3
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn iyxn-nse3 -dh iyxn-nse3.header -dd iyxn-nse3.defaults -t day -s city -cs city -i 0 0
+
+#v3mc-68jm
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn v3mc-68jm -dh v3mc-68jm.header -dd v3mc-68jm.defaults -t day -s city -cs city -i 0 0
+
+#xp8j-j8zc
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xp8j-j8zc -dh xp8j-j8zc.header -dd xp8j-j8zc.defaults -t day -s zip -cs zip -i 0 21
+
+#3xnn-24th
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 3xnn-24th -dh 3xnn-24th.header -dd 3xnn-24th.defaults -t day -s zip -cs zip -i 0 21
+
+#trrx-uj3v
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn trrx-uj3v -dh trrx-uj3v.header -dd trrx-uj3v.defaults -t day -s zip -cs zip -i 0 1
+
+#k93q-t7tm
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn k93q-t7tm -dh k93q-t7tm.header -dd k93q-t7tm.defaults -t day -s zip -cs zip -i 0 21
+
+#ae5u-upr6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ae5u-upr6 -dh ae5u-upr6.header -dd ae5u-upr6.defaults -t day -s city -cs city -i 0 0
+
+#q3h6-scka
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn q3h6-scka -dh q3h6-scka.header -dd q3h6-scka.defaults -t day -s zip -cs zip -i 0 10
+
+#uwyv-629c
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn uwyv-629c -dh uwyv-629c.header -dd uwyv-629c.defaults -t day -s zip -cs zip -i 0 8
+
+#scwj-eyn6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn scwj-eyn6 -dh scwj-eyn6.header -dd scwj-eyn6.defaults -t day -s city -cs city -i 0 0
+
+#pn6f-h8j7
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn pn6f-h8j7 -dh pn6f-h8j7.header -dd pn6f-h8j7.defaults -t day -s city -cs city -i 0 0
+
+#ryxj-pymv
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ryxj-pymv -dh ryxj-pymv.header -dd ryxj-pymv.defaults -t day -s zip -cs zip -i 0 29
+
+#cwm5-uimd
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cwm5-uimd -dh cwm5-uimd.header -dd cwm5-uimd.defaults -t day -s zip -cs zip -i 0 18
+
+#qtga-mv7y
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn qtga-mv7y -dh qtga-mv7y.header -dd qtga-mv7y.defaults -t day -s city -cs city -i 0 0
+
+#353b-hddd
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 353b-hddd -dh 353b-hddd.header -dd 353b-hddd.defaults -t day -s city -cs city -i 0 0
+
+#79bh-zmg6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 79bh-zmg6 -dh 79bh-zmg6.header -dd 79bh-zmg6.defaults -t day -s city -cs city -i 0 0
+
+#af6e-tgex
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn af6e-tgex -dh af6e-tgex.header -dd af6e-tgex.defaults -t day -s zip -cs zip -i 0 1
+
+#yp59-b8md
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn yp59-b8md -dh yp59-b8md.header -dd yp59-b8md.defaults -t day -s city -cs city -i 0 0
+
+#4vb7-7mmq
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 4vb7-7mmq -dh 4vb7-7mmq.header -dd 4vb7-7mmq.defaults -t day -s zip -cs zip -i 0 18
+
+#c4x8-fcqg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn c4x8-fcqg -dh c4x8-fcqg.header -dd c4x8-fcqg.defaults -t day -s city -cs city -i 0 0
+
+#33mt-xxvh
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 33mt-xxvh -dh 33mt-xxvh.header -dd 33mt-xxvh.defaults -t day -s city -cs city -i 0 0
+
+#ux5k-aaf7
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ux5k-aaf7 -dh ux5k-aaf7.header -dd ux5k-aaf7.defaults -t day -s zip -cs zip -i 0 15
+
+#daxe-8uus
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn daxe-8uus -dh daxe-8uus.header -dd daxe-8uus.defaults -t day -s zip -cs zip -i 0 21
+
+#wuj6-eu9v
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn wuj6-eu9v -dh wuj6-eu9v.header -dd wuj6-eu9v.defaults -t day -s city -cs city -i 0 0
+
+#43rb-b6e8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 43rb-b6e8 -dh 43rb-b6e8.header -dd 43rb-b6e8.defaults -t day -s city -cs city -i 0 0
+
+#gpwd-npar
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn gpwd-npar -dh gpwd-npar.header -dd gpwd-npar.defaults -t day -s city -cs city -i 0 0
+
+#fvdf-zh7q
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fvdf-zh7q -dh fvdf-zh7q.header -dd fvdf-zh7q.defaults -t day -s zip -cs zip -i 0 1
+
+#6bmh-jw87
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 6bmh-jw87 -dh 6bmh-jw87.header -dd 6bmh-jw87.defaults -t day -s zip -cs zip -i 0 18
+
+#2x5b-phra
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 2x5b-phra -dh 2x5b-phra.header -dd 2x5b-phra.defaults -t day -s city -cs city -i 0 0
+
+#v3gc-y7jx
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn v3gc-y7jx -dh v3gc-y7jx.header -dd v3gc-y7jx.defaults -t day -s zip -cs zip -i 0 1
+
+#veze-83k8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn veze-83k8 -dh veze-83k8.header -dd veze-83k8.defaults -t day -s city -cs city -i 0 0
+
+#an8f-9yst
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn an8f-9yst -dh an8f-9yst.header -dd an8f-9yst.defaults -t day -s zip -cs zip -i 0 21
+
+#qz9a-wbhx
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn qz9a-wbhx -dh qz9a-wbhx.header -dd qz9a-wbhx.defaults -t day -s city -cs city -i 0 0
+
+#pybt-5ufb
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn pybt-5ufb -dh pybt-5ufb.header -dd pybt-5ufb.defaults -t day -s zip -cs zip -i 0 1
+
+#m8hf-a2v9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn m8hf-a2v9 -dh m8hf-a2v9.header -dd m8hf-a2v9.defaults -t day -s city -cs city -i 0 0
+
+#fk5r-65k6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fk5r-65k6 -dh fk5r-65k6.header -dd fk5r-65k6.defaults -t day -s zip -cs zip -i 0 6
+
+#svtc-pase
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn svtc-pase -dh svtc-pase.header -dd svtc-pase.defaults -t day -s zip -cs zip -i 0 6
+
+#mtvi-es9h
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn mtvi-es9h -dh mtvi-es9h.header -dd mtvi-es9h.defaults -t day -s zip -cs zip -i 0 1
+
+#ap2w-k5q8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ap2w-k5q8 -dh ap2w-k5q8.header -dd ap2w-k5q8.defaults -t day -s city -cs city -i 0 0
+
+#rick-mnv2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn rick-mnv2 -dh rick-mnv2.header -dd rick-mnv2.defaults -t day -s city -cs city -i 0 0
+
+#xu2s-sdw7
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xu2s-sdw7 -dh xu2s-sdw7.header -dd xu2s-sdw7.defaults -t day -s city -cs city -i 0 0
+
+#bxw7-3aw6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bxw7-3aw6 -dh bxw7-3aw6.header -dd bxw7-3aw6.defaults -t day -s zip -cs zip -i 0 1
+
+#bucq-xger
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bucq-xger -dh bucq-xger.header -dd bucq-xger.defaults -t day -s city -cs city -i 0 0
+
+#k6mk-29bf
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn k6mk-29bf -dh k6mk-29bf.header -dd k6mk-29bf.defaults -t day -s zip -cs zip -i 0 1
+
+#evjd-dqpz
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn evjd-dqpz -dh evjd-dqpz.header -dd evjd-dqpz.defaults -t day -s city -cs city -i 0 0
+
+#e98g-f8hy
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn e98g-f8hy -dh e98g-f8hy.header -dd e98g-f8hy.defaults -t day -s city -cs city -i 0 0
+
+#i3e7-6mx9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn i3e7-6mx9 -dh i3e7-6mx9.header -dd i3e7-6mx9.defaults -t day -s zip -cs zip -i 0 18
+
+#gp67-j8p2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn gp67-j8p2 -dh gp67-j8p2.header -dd gp67-j8p2.defaults -t day -s zip -cs zip -i 0 1
+
+#bf8a-5cd2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bf8a-5cd2 -dh bf8a-5cd2.header -dd bf8a-5cd2.defaults -t day -s city -cs city -i 0 0
+
+#qt9t-jtv2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn qt9t-jtv2 -dh qt9t-jtv2.header -dd qt9t-jtv2.defaults -t day -s zip -cs zip -i 0 1
+
+#z57s-qzmg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn z57s-qzmg -dh z57s-qzmg.header -dd z57s-qzmg.defaults -t day -s zip -cs zip -i 0 1
+
+#gr75-354v
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn gr75-354v -dh gr75-354v.header -dd gr75-354v.defaults -t day -s zip -cs zip -i 0 6
+
+#nux4-g7k8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn nux4-g7k8 -dh nux4-g7k8.header -dd nux4-g7k8.defaults -t day -s zip -cs zip -i 0 1
+
+#fibg-ci36
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fibg-ci36 -dh fibg-ci36.header -dd fibg-ci36.defaults -t day -s city -cs city -i 0 0
+
+#5xax-zqa8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 5xax-zqa8 -dh 5xax-zqa8.header -dd 5xax-zqa8.defaults -t day -s zip -cs zip -i 0 18
+
+#2jp9-uyhb
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 2jp9-uyhb -dh 2jp9-uyhb.header -dd 2jp9-uyhb.defaults -t day -s zip -cs zip -i 0 1
+
+#2guv-3bkz
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 2guv-3bkz -dh 2guv-3bkz.header -dd 2guv-3bkz.defaults -t day -s city -cs city -i 0 0
+
+#29af-ysi3
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 29af-ysi3 -dh 29af-ysi3.header -dd 29af-ysi3.defaults -t day -s zip -cs zip -i 0 1
+
+#c8cd-i32s
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn c8cd-i32s -dh c8cd-i32s.header -dd c8cd-i32s.defaults -t day -s zip -cs zip -i 0 21
+
+#fm9x-2zi6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fm9x-2zi6 -dh fm9x-2zi6.header -dd fm9x-2zi6.defaults -t day -s zip -cs zip -i 0 21
+
+#u2nb-2kah
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn u2nb-2kah -dh u2nb-2kah.header -dd u2nb-2kah.defaults -t day -s city -cs city -i 0 0
+
+#3zg7-syvr
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 3zg7-syvr -dh 3zg7-syvr.header -dd 3zg7-syvr.defaults -t day -s zip -cs points -i 0 2 1
+
+#8pmz-ngnr
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 8pmz-ngnr -dh 8pmz-ngnr.header -dd 8pmz-ngnr.defaults -t day -s city -cs city -i 0 0
+
+#67zw-gnzu
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 67zw-gnzu -dh 67zw-gnzu.header -dd 67zw-gnzu.defaults -t day -s zip -cs zip -i 0 10
+
+#3qs7-y235
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 3qs7-y235 -dh 3qs7-y235.header -dd 3qs7-y235.defaults -t day -s zip -cs zip -i 0 18
+
+#cvdu-eguj
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cvdu-eguj -dh cvdu-eguj.header -dd cvdu-eguj.defaults -t day -s zip -cs zip -i 0 1
+
+#ahr8-bhmu
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ahr8-bhmu -dh ahr8-bhmu.header -dd ahr8-bhmu.defaults -t day -s zip -cs zip -i 0 18
+
+#cp6j-7bjj
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cp6j-7bjj -dh cp6j-7bjj.header -dd cp6j-7bjj.defaults -t day -s zip -cs zip -i 0 8
+
+#55ck-3nq9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 55ck-3nq9 -dh 55ck-3nq9.header -dd 55ck-3nq9.defaults -t day -s city -cs city -i 0 0
+
+#td9t-sgab
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn td9t-sgab -dh td9t-sgab.header -dd td9t-sgab.defaults -t day -s city -cs city -i 0 0
+
+#j3qp-bfh5
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn j3qp-bfh5 -dh j3qp-bfh5.header -dd j3qp-bfh5.defaults -t day -s zip -cs zip -i 0 19
+
+#pbv7-ft7y
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn pbv7-ft7y -dh pbv7-ft7y.header -dd pbv7-ft7y.defaults -t day -s zip -cs zip -i 0 10
+
+#cnic-vahe
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cnic-vahe -dh cnic-vahe.header -dd cnic-vahe.defaults -t day -s zip -cs zip -i 0 6
+
+#nt7p-kime
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn nt7p-kime -dh nt7p-kime.header -dd nt7p-kime.defaults -t day -s zip -cs zip -i 0 21
+
+#mdbu-nrqn
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn mdbu-nrqn -dh mdbu-nrqn.header -dd mdbu-nrqn.defaults -t day -s zip -cs zip -i 0 10
+
+#d8kn-reeg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn d8kn-reeg -dh d8kn-reeg.header -dd d8kn-reeg.defaults -t day -s city -cs city -i 0 0
+
+#nvhx-79q8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn nvhx-79q8 -dh nvhx-79q8.header -dd nvhx-79q8.defaults -t day -s zip -cs zip -i 0 1
+
+#6q8x-shne
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 6q8x-shne -dh 6q8x-shne.header -dd 6q8x-shne.defaults -t day -s zip -cs zip -i 0 21
+
+#v2b3-nu8a
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn v2b3-nu8a -dh v2b3-nu8a.header -dd v2b3-nu8a.defaults -t day -s zip -cs zip -i 0 6
+
+#scww-cdm5
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn scww-cdm5 -dh scww-cdm5.header -dd scww-cdm5.defaults -t day -s zip -cs points -i 0 2 1
+
+#qj2g-dhrc
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn qj2g-dhrc -dh qj2g-dhrc.header -dd qj2g-dhrc.defaults -t day -s zip -cs zip -i 0 19
+
+#ctcj-pwvd
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ctcj-pwvd -dh ctcj-pwvd.header -dd ctcj-pwvd.defaults -t day -s city -cs city -i 0 0
+
+#3sxq-py8c
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 3sxq-py8c -dh 3sxq-py8c.header -dd 3sxq-py8c.defaults -t day -s city -cs city -i 0 0
+
+#wng2-85mv
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn wng2-85mv -dh wng2-85mv.header -dd wng2-85mv.defaults -t day -s city -cs city -i 0 0
+
+#rb8m-2gmb
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn rb8m-2gmb -dh rb8m-2gmb.header -dd rb8m-2gmb.defaults -t day -s city -cs city -i 0 0
+
+#vsyy-jksx
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn vsyy-jksx -dh vsyy-jksx.header -dd vsyy-jksx.defaults -t day -s zip -cs zip -i 0 1
+
+#hs8h-t324
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hs8h-t324 -dh hs8h-t324.header -dd hs8h-t324.defaults -t day -s zip -cs zip -i 0 1
+
+#ptxx-49gi
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ptxx-49gi -dh ptxx-49gi.header -dd ptxx-49gi.defaults -t day -s zip -cs zip -i 0 18
+
+#yiwr-wu22
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn yiwr-wu22 -dh yiwr-wu22.header -dd yiwr-wu22.defaults -t day -s zip -cs zip -i 0 15
+
+#ccyd-4hbh
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ccyd-4hbh -dh ccyd-4hbh.header -dd ccyd-4hbh.defaults -t day -s city -cs city -i 0 0
+
+#h2bh-nad2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn h2bh-nad2 -dh h2bh-nad2.header -dd h2bh-nad2.defaults -t day -s zip -cs zip -i 0 21
+
+#m738-tp2c
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn m738-tp2c -dh m738-tp2c.header -dd m738-tp2c.defaults -t day -s city -cs city -i 0 0
+
+#t9tt-r4m6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn t9tt-r4m6 -dh t9tt-r4m6.header -dd t9tt-r4m6.defaults -t day -s zip -cs zip -i 0 1
+
+#2xh6-psuq
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 2xh6-psuq -dh 2xh6-psuq.header -dd 2xh6-psuq.defaults -t day -s city -cs city -i 0 0
+
+#7pre-ig4e
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 7pre-ig4e -dh 7pre-ig4e.header -dd 7pre-ig4e.defaults -t day -s zip -cs zip -i 0 5
+
+#xb2u-ubdp
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xb2u-ubdp -dh xb2u-ubdp.header -dd xb2u-ubdp.defaults -t day -s zip -cs zip -i 0 1
+
+#i3cc-n4uj
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn i3cc-n4uj -dh i3cc-n4uj.header -dd i3cc-n4uj.defaults -t day -s zip -cs zip -i 0 18
+
+#8b2k-wa74
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 8b2k-wa74 -dh 8b2k-wa74.header -dd 8b2k-wa74.defaults -t day -s zip -cs zip -i 0 18
+
+#m475-s22q
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn m475-s22q -dh m475-s22q.header -dd m475-s22q.defaults -t day -s city -cs city -i 0 0
+
+#beq6-7gwp
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn beq6-7gwp -dh beq6-7gwp.header -dd beq6-7gwp.defaults -t day -s zip -cs zip -i 0 6
+
+#vru9-fm97
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn vru9-fm97 -dh vru9-fm97.header -dd vru9-fm97.defaults -t day -s city -cs city -i 0 0
+
+#mbia-kyeg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn mbia-kyeg -dh mbia-kyeg.header -dd mbia-kyeg.defaults -t day -s city -cs city -i 0 0
+
+#npnr-mymu
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn npnr-mymu -dh npnr-mymu.header -dd npnr-mymu.defaults -t day -s zip -cs zip -i 0 21
+
+#c99k-mzu7
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn c99k-mzu7 -dh c99k-mzu7.header -dd c99k-mzu7.defaults -t day -s zip -cs zip -i 0 1
+
+#ukrt-mvy9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ukrt-mvy9 -dh ukrt-mvy9.header -dd ukrt-mvy9.defaults -t day -s zip -cs zip -i 0 6
+
+#myi2-kd4e
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn myi2-kd4e -dh myi2-kd4e.header -dd myi2-kd4e.defaults -t day -s city -cs city -i 0 0
+
+#fivr-dew2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fivr-dew2 -dh fivr-dew2.header -dd fivr-dew2.defaults -t day -s zip -cs zip -i 0 1
+
+#maps-urzg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn maps-urzg -dh maps-urzg.header -dd maps-urzg.defaults -t day -s zip -cs zip -i 0 18
+
+#jeea-jg8y
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn jeea-jg8y -dh jeea-jg8y.header -dd jeea-jg8y.defaults -t day -s city -cs city -i 0 0
+
+#49xy-p26u
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 49xy-p26u -dh 49xy-p26u.header -dd 49xy-p26u.defaults -t day -s zip -cs points -i 0 19 18
+
+#gfgw-b9bj
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn gfgw-b9bj -dh gfgw-b9bj.header -dd gfgw-b9bj.defaults -t day -s zip -cs zip -i 0 1
+
+#y6nw-z42n
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn y6nw-z42n -dh y6nw-z42n.header -dd y6nw-z42n.defaults -t day -s zip -cs zip -i 0 1
+
+#faj9-rxzs
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn faj9-rxzs -dh faj9-rxzs.header -dd faj9-rxzs.defaults -t day -s zip -cs zip -i 0 10
+
+#beut-idti
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn beut-idti -dh beut-idti.header -dd beut-idti.defaults -t day -s zip -cs zip -i 0 6
+
+#sqzu-jxth
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn sqzu-jxth -dh sqzu-jxth.header -dd sqzu-jxth.defaults -t day -s city -cs city -i 0 0
+
+#sci4-yqgk
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn sci4-yqgk -dh sci4-yqgk.header -dd sci4-yqgk.defaults -t day -s city -cs city -i 0 0
+
+#hn5q-hhbp
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hn5q-hhbp -dh hn5q-hhbp.header -dd hn5q-hhbp.defaults -t day -s city -cs city -i 0 0
+
+#tuvq-4sfx
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn tuvq-4sfx -dh tuvq-4sfx.header -dd tuvq-4sfx.defaults -t day -s zip -cs zip -i 0 6
+
+#cbf6-r6b5
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cbf6-r6b5 -dh cbf6-r6b5.header -dd cbf6-r6b5.defaults -t day -s zip -cs zip -i 0 21
+
+#banz-k3vq
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn banz-k3vq -dh banz-k3vq.header -dd banz-k3vq.defaults -t day -s zip -cs zip -i 0 1
+
+#cmvn-ktpi
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cmvn-ktpi -dh cmvn-ktpi.header -dd cmvn-ktpi.defaults -t day -s zip -cs zip -i 0 6
+
+#hxfa-k4hy
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hxfa-k4hy -dh hxfa-k4hy.header -dd hxfa-k4hy.defaults -t day -s zip -cs zip -i 0 1
+
+#mq5e-3pim
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn mq5e-3pim -dh mq5e-3pim.header -dd mq5e-3pim.defaults -t day -s zip -cs zip -i 0 1
+
+#jf3t-8uic
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn jf3t-8uic -dh jf3t-8uic.header -dd jf3t-8uic.defaults -t day -s zip -cs zip -i 0 21
+
+#ufyb-86fg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ufyb-86fg -dh ufyb-86fg.header -dd ufyb-86fg.defaults -t day -s zip -cs zip -i 0 5
+
+#r7qt-g4qn
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn r7qt-g4qn -dh r7qt-g4qn.header -dd r7qt-g4qn.defaults -t day -s zip -cs zip -i 0 21
+
+#5u8m-rma2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 5u8m-rma2 -dh 5u8m-rma2.header -dd 5u8m-rma2.defaults -t day -s city -cs city -i 0 0
+
+#rb3m-4bkn
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn rb3m-4bkn -dh rb3m-4bkn.header -dd rb3m-4bkn.defaults -t day -s zip -cs zip -i 0 19
+
+#h4k9-fff9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn h4k9-fff9 -dh h4k9-fff9.header -dd h4k9-fff9.defaults -t day -s zip -cs points -i 0 19 18
+
+#67e9-xrr9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 67e9-xrr9 -dh 67e9-xrr9.header -dd 67e9-xrr9.defaults -t day -s zip -cs zip -i 0 6
+
+#fuq9-wkjy
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fuq9-wkjy -dh fuq9-wkjy.header -dd fuq9-wkjy.defaults -t day -s zip -cs zip -i 0 21
+
+#kwjb-7ef2
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn kwjb-7ef2 -dh kwjb-7ef2.header -dd kwjb-7ef2.defaults -t day -s city -cs city -i 0 0
+
+#8qpt-55k4
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 8qpt-55k4 -dh 8qpt-55k4.header -dd 8qpt-55k4.defaults -t day -s zip -cs zip -i 0 3
+
+#3tz3-gyhq
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 3tz3-gyhq -dh 3tz3-gyhq.header -dd 3tz3-gyhq.defaults -t day -s zip -cs zip -i 0 1
+
+#hzhn-3cmt
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hzhn-3cmt -dh hzhn-3cmt.header -dd hzhn-3cmt.defaults -t day -s city -cs city -i 0 0
+
+#b2ck-5vpq
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn b2ck-5vpq -dh b2ck-5vpq.header -dd b2ck-5vpq.defaults -t day -s city -cs city -i 0 0
+
+#62tq-g959
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 62tq-g959 -dh 62tq-g959.header -dd 62tq-g959.defaults -t day -s zip -cs zip -i 0 14
+
+#jxvj-7k98
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn jxvj-7k98 -dh jxvj-7k98.header -dd jxvj-7k98.defaults -t day -s zip -cs zip -i 0 27
+
+#c7kw-kgxb
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn c7kw-kgxb -dh c7kw-kgxb.header -dd c7kw-kgxb.defaults -t day -s city -cs city -i 0 0
+
+#9nfi-ns88
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 9nfi-ns88 -dh 9nfi-ns88.header -dd 9nfi-ns88.defaults -t day -s zip -cs zip -i 0 29
+
+#8p46-4mte
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 8p46-4mte -dh 8p46-4mte.header -dd 8p46-4mte.defaults -t day -s city -cs city -i 0 0
+
+#pft9-phdm
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn pft9-phdm -dh pft9-phdm.header -dd pft9-phdm.defaults -t day -s zip -cs zip -i 0 6
+
+#hk4g-zwnh
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hk4g-zwnh -dh hk4g-zwnh.header -dd hk4g-zwnh.defaults -t day -s city -cs city -i 0 0
+
+#t7n3-hp3s
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn t7n3-hp3s -dh t7n3-hp3s.header -dd t7n3-hp3s.defaults -t day -s zip -cs points -i 0 2 1
+
+#nw2w-8dx8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn nw2w-8dx8 -dh nw2w-8dx8.header -dd nw2w-8dx8.defaults -t day -s zip -cs zip -i 0 18
+
+#xg8h-bksa
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xg8h-bksa -dh xg8h-bksa.header -dd xg8h-bksa.defaults -t day -s city -cs city -i 0 0
+
+#h23a-vtb9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn h23a-vtb9 -dh h23a-vtb9.header -dd h23a-vtb9.defaults -t day -s city -cs city -i 0 0
+
+#pm4m-4qwd
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn pm4m-4qwd -dh pm4m-4qwd.header -dd pm4m-4qwd.defaults -t day -s zip -cs zip -i 0 21
+
+#ti9u-82ar
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ti9u-82ar -dh ti9u-82ar.header -dd ti9u-82ar.defaults -t day -s city -cs city -i 0 0
+
+#ac9p-cw5y
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ac9p-cw5y -dh ac9p-cw5y.header -dd ac9p-cw5y.defaults -t day -s city -cs city -i 0 0
+
+#xdvf-phnx
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xdvf-phnx -dh xdvf-phnx.header -dd xdvf-phnx.defaults -t day -s zip -cs zip -i 0 18
+
+#vvqp-eh3s
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn vvqp-eh3s -dh vvqp-eh3s.header -dd vvqp-eh3s.defaults -t day -s zip -cs zip -i 0 18
+
+#5b3a-rs48
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 5b3a-rs48 -dh 5b3a-rs48.header -dd 5b3a-rs48.defaults -t day -s city -cs city -i 0 0
+
+#56kn-pnny
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 56kn-pnny -dh 56kn-pnny.header -dd 56kn-pnny.defaults -t day -s city -cs city -i 0 0
+
+#c39u-es35
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn c39u-es35 -dh c39u-es35.header -dd c39u-es35.defaults -t day -s city -cs city -i 0 0
+
+#fqdj-euw5
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fqdj-euw5 -dh fqdj-euw5.header -dd fqdj-euw5.defaults -t day -s city -cs city -i 0 0
+
+#niar-x3au
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn niar-x3au -dh niar-x3au.header -dd niar-x3au.defaults -t day -s zip -cs zip -i 0 5
+
+#8fc8-85m6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 8fc8-85m6 -dh 8fc8-85m6.header -dd 8fc8-85m6.defaults -t day -s zip -cs zip -i 0 1
+
+#ns5p-nu5h
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ns5p-nu5h -dh ns5p-nu5h.header -dd ns5p-nu5h.defaults -t day -s zip -cs zip -i 0 1
+
+#du9u-r2kp
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn du9u-r2kp -dh du9u-r2kp.header -dd du9u-r2kp.defaults -t day -s zip -cs zip -i 0 18
+
+#3nqm-a2yw
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 3nqm-a2yw -dh 3nqm-a2yw.header -dd 3nqm-a2yw.defaults -t day -s zip -cs zip -i 0 1
+
+#fza6-x8h4
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fza6-x8h4 -dh fza6-x8h4.header -dd fza6-x8h4.defaults -t day -s city -cs city -i 0 0
+
+#t6cz-bf8z
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn t6cz-bf8z -dh t6cz-bf8z.header -dd t6cz-bf8z.defaults -t day -s zip -cs zip -i 0 6
+
+#kr93-pdk6
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn kr93-pdk6 -dh kr93-pdk6.header -dd kr93-pdk6.defaults -t day -s zip -cs zip -i 0 18
+
+#tzj2-t4sd
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn tzj2-t4sd -dh tzj2-t4sd.header -dd tzj2-t4sd.defaults -t day -s city -cs city -i 0 0
+
+#bgaw-td45
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bgaw-td45 -dh bgaw-td45.header -dd bgaw-td45.defaults -t day -s zip -cs zip -i 0 6
+
+#qsmv-xfyr
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn qsmv-xfyr -dh qsmv-xfyr.header -dd qsmv-xfyr.defaults -t day -s zip -cs zip -i 0 1
+
+#t88c-cuyi
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn t88c-cuyi -dh t88c-cuyi.header -dd t88c-cuyi.defaults -t day -s city -cs city -i 0 0
+
+#5nd9-2rtt
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 5nd9-2rtt -dh 5nd9-2rtt.header -dd 5nd9-2rtt.defaults -t day -s city -cs city -i 0 0
+
+#xp4t-wh37
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xp4t-wh37 -dh xp4t-wh37.header -dd xp4t-wh37.defaults -t day -s city -cs city -i 0 0
+
+#kmbm-wzk3
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn kmbm-wzk3 -dh kmbm-wzk3.header -dd kmbm-wzk3.defaults -t day -s city -cs city -i 0 0
+
+#33de-hyv9
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 33de-hyv9 -dh 33de-hyv9.header -dd 33de-hyv9.defaults -t day -s zip -cs zip -i 0 18
+
+#9k8r-tf8p
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 9k8r-tf8p -dh 9k8r-tf8p.header -dd 9k8r-tf8p.defaults -t day -s zip -cs zip -i 0 21
+
+#u6gg-xejf
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn u6gg-xejf -dh u6gg-xejf.header -dd u6gg-xejf.defaults -t day -s city -cs city -i 0 0
+
+#juki-qvuv
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn juki-qvuv -dh juki-qvuv.header -dd juki-qvuv.defaults -t day -s city -cs city -i 0 0
+
+#e7jy-mjiy
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn e7jy-mjiy -dh e7jy-mjiy.header -dd e7jy-mjiy.defaults -t day -s zip -cs zip -i 0 18
+
+#t9nw-j73k
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn t9nw-j73k -dh t9nw-j73k.header -dd t9nw-j73k.defaults -t day -s city -cs city -i 0 0
+
+#u6qv-5gga
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn u6qv-5gga -dh u6qv-5gga.header -dd u6qv-5gga.defaults -t day -s zip -cs zip -i 0 1
+
+#rxs9-r6dm
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn rxs9-r6dm -dh rxs9-r6dm.header -dd rxs9-r6dm.defaults -t day -s city -cs city -i 0 0
+
+#tesw-yqqr
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn tesw-yqqr -dh tesw-yqqr.header -dd tesw-yqqr.defaults -t day -s zip -cs zip -i 0 11
+
+#23d2-ttdp
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 23d2-ttdp -dh 23d2-ttdp.header -dd 23d2-ttdp.defaults -t day -s city -cs city -i 0 0
+
+#cygu-gpwr
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cygu-gpwr -dh cygu-gpwr.header -dd cygu-gpwr.defaults -t day -s city -cs city -i 0 0
+
+#hrh7-79dt
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hrh7-79dt -dh hrh7-79dt.header -dd hrh7-79dt.defaults -t day -s zip -cs zip -i 0 6
+
+#bg3b-jpkh
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bg3b-jpkh -dh bg3b-jpkh.header -dd bg3b-jpkh.defaults -t day -s city -cs city -i 0 0
+
+#bnmq-44ay
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn bnmq-44ay -dh bnmq-44ay.header -dd bnmq-44ay.defaults -t day -s city -cs city -i 0 0
+
+#55ym-zqia
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 55ym-zqia -dh 55ym-zqia.header -dd 55ym-zqia.defaults -t day -s zip -cs zip -i 0 6
+
+#xjzi-f55m
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xjzi-f55m -dh xjzi-f55m.header -dd xjzi-f55m.defaults -t day -s zip -cs zip -i 0 10
+
+#2g8m-3pnx
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 2g8m-3pnx -dh 2g8m-3pnx.header -dd 2g8m-3pnx.defaults -t day -s zip -cs zip -i 0 1
+
+#2bx4-n6ma
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 2bx4-n6ma -dh 2bx4-n6ma.header -dd 2bx4-n6ma.defaults -t day -s zip -cs zip -i 0 6
+
+#fz2w-v6ga
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fz2w-v6ga -dh fz2w-v6ga.header -dd fz2w-v6ga.defaults -t day -s city -cs city -i 0 0
+
+#py7r-nieg
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn py7r-nieg -dh py7r-nieg.header -dd py7r-nieg.defaults -t day -s zip -cs zip -i 0 6
+
+#3nky-hkft
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 3nky-hkft -dh 3nky-hkft.header -dd 3nky-hkft.defaults -t day -s city -cs city -i 0 0
+
+#8v4s-pg92
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 8v4s-pg92 -dh 8v4s-pg92.header -dd 8v4s-pg92.defaults -t day -s zip -cs zip -i 0 18
+
+#s3ru-zetn
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn s3ru-zetn -dh s3ru-zetn.header -dd s3ru-zetn.defaults -t day -s zip -cs zip -i 0 1
+
+#m66p-tp6v
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn m66p-tp6v -dh m66p-tp6v.header -dd m66p-tp6v.defaults -t day -s zip -cs zip -i 0 18
+
+#2es7-6sp8
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 2es7-6sp8 -dh 2es7-6sp8.header -dd 2es7-6sp8.defaults -t day -s zip -cs zip -i 0 21
+
+#ke96-t48n
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ke96-t48n -dh ke96-t48n.header -dd ke96-t48n.defaults -t day -s zip -cs zip -i 0 5
+
+#m39x-26bk
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn m39x-26bk -dh m39x-26bk.header -dd m39x-26bk.defaults -t day -s zip -cs zip -i 0 14
+
+#prhi-nqw7
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn prhi-nqw7 -dh prhi-nqw7.header -dd prhi-nqw7.defaults -t day -s city -cs city -i 0 0
+
+#24vm-uqwu
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 24vm-uqwu -dh 24vm-uqwu.header -dd 24vm-uqwu.defaults -t day -s zip -cs zip -i 0 1
+
+#emrz-5p35
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn emrz-5p35 -dh emrz-5p35.header -dd emrz-5p35.defaults -t day -s city -cs city -i 0 0
+
+#gzwt-57pf
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn gzwt-57pf -dh gzwt-57pf.header -dd gzwt-57pf.defaults -t day -s city -cs city -i 0 0
+
+#f9sm-i8ju
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn f9sm-i8ju -dh f9sm-i8ju.header -dd f9sm-i8ju.defaults -t day -s city -cs city -i 0 0
+
+#xr5i-te68
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn xr5i-te68 -dh xr5i-te68.header -dd xr5i-te68.defaults -t day -s city -cs city -i 0 0
+
+#fthz-dhng
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn fthz-dhng -dh fthz-dhng.header -dd fthz-dhng.defaults -t day -s zip -cs zip -i 0 18
+
+#wig2-3fvs
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn wig2-3fvs -dh wig2-3fvs.header -dd wig2-3fvs.defaults -t day -s city -cs city -i 0 0
+
+#ffqa-t8km
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn ffqa-t8km -dh ffqa-t8km.header -dd ffqa-t8km.defaults -t day -s city -cs city -i 0 0
+
+#nugr-jv72
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn nugr-jv72 -dh nugr-jv72.header -dd nugr-jv72.defaults -t day -s city -cs city -i 0 0
+
+#cbmj-5ufe
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn cbmj-5ufe -dh cbmj-5ufe.header -dd cbmj-5ufe.defaults -t day -s city -cs city -i 0 0
+
+#tsuw-if7p
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn tsuw-if7p -dh tsuw-if7p.header -dd tsuw-if7p.defaults -t day -s zip -cs zip -i 0 21
+
+#kxzq-si8h
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn kxzq-si8h -dh kxzq-si8h.header -dd kxzq-si8h.defaults -t day -s city -cs city -i 0 0
+
+#hse8-tg78
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn hse8-tg78 -dh hse8-tg78.header -dd hse8-tg78.defaults -t day -s city -cs city -i 0 0
+

@@ -1,0 +1,20 @@
+m=cusp
+n=20
+
+# 311
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn 311 -dh 311.header -dd 311.defaults -t hour -s nbhd -cs points -i 0 2 1
+
+# Citi Bike
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn citibike -dh citibike.header -dd citibike.defaults -t hour -s nbhd -cs points -i 1 6 5 2 10 9
+
+# Vehicle Collisions
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn crash -dh crash.header -dd crash.defaults -t hour -s nbhd -cs points -i 0 4 3
+
+# Gas Prices
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn gas-prices -dh gas-prices.header -dd gas-prices.defaults -t week -s city -cs city -i 0 0
+
+# Traffic Speed
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn taxispeed -dh taxispeed.header -dd taxispeed.defaults -t hour -s nbhd -cs points -i 0 2 1
+
+# Weather
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.pre_processing.PreProcessing -m $m -n $n -dn weather -dh weather.header -dd weather.defaults -t hour -s city -cs city -i 0 0

@@ -7,16 +7,16 @@ hdfs dfs -put gas-prices* data/
 rm gas-prices*
 
 # Loading Vehicle Collisions
-# https://dx.doi.org/10.6084/m9.figshare.3187535.v2
-wget https://ndownloader.figshare.com/articles/3187535/versions/2 -O crash-files
+# https://dx.doi.org/10.6084/m9.figshare.3187535.v3
+wget https://ndownloader.figshare.com/articles/3187535/versions/3 -O crash-files
 unzip crash-files
 rm crash-files
 hdfs dfs -put crash* data/
 rm crash*
 
 # Loading 311
-# https://dx.doi.org/10.6084/m9.figshare.3187539.v1
-wget https://ndownloader.figshare.com/articles/3187539/versions/1 -O 311-files
+# https://dx.doi.org/10.6084/m9.figshare.3187539.v2
+wget https://ndownloader.figshare.com/articles/3187539/versions/2 -O 311-files
 unzip 311-files
 rm 311-files
 hdfs dfs -put 311* data/
