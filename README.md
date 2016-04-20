@@ -411,13 +411,13 @@ First, run the [``hdfs_dir``](sigmod16/setup/hdfs_dir) script to create the appr
     $ cd sigmod16/setup/
     $ ./hdfs_dir
     
-To load the datasets from the *NYC Urban collection*, run the [``load_nyc_urban``](sigmod16/load_nyc_urban) script:
+To load the datasets from the *NYC Urban collection*, run the [``load_nyc_urban``](sigmod16/setup/load_nyc_urban) script:
 
     $ ./load_nyc_urban
     
 Please note that, since we cannot make the 911, Taxi, and Twitter datasets available, these datasets are not loaded to your HDFS.
     
-To load the datasets from NYC Open Data (*NYC Open collection*), run the [``load_nyc_open``](sigmod16/load_nyc_open) script:
+To load the datasets from NYC Open Data (*NYC Open collection*), run the [``load_nyc_open``](sigmod16/setup/load_nyc_open) script:
 
     $ ./load_nyc_open
 
