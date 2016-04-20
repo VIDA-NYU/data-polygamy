@@ -9,10 +9,10 @@ hdfs dfs -mkdir correlations
 hdfs dfs -mkdir data
 
 # Loading Spatial Structures
-hdfs dfs -put ../data/neighborhood.txt neighborhood
-hdfs dfs -put ../data/neighborhood-graph.txt neighborhood-graph
-hdfs dfs -put ../data/zipcode.txt zipcode
-hdfs dfs -put ../data/zipcode-graph.txt zipcode-graph
+hdfs dfs -put ../../data/neighborhood.txt neighborhood
+hdfs dfs -put ../../data/neighborhood-graph.txt neighborhood-graph
+hdfs dfs -put ../../data/zipcode.txt zipcode
+hdfs dfs -put ../../data/zipcode-graph.txt zipcode-graph
 
 # Loading 'datasets' File
-hdfs dfs -put ../data/datasets.txt data/datasets
+hdfs dfs -put ../../data/datasets.txt data/datasets
