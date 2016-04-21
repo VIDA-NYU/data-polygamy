@@ -438,7 +438,7 @@ After loading all the datasets, run the following scripts to execute the pre-pro
 
 It is important to note that, since we cannot make the 911, Taxi, and Twitter datasets available, the scripts that we provide here do not take into account these datasets, and as a consequence, the performance results and plots will be consistent but visually different than the ones published on the paper. Please modify the scripts accordingly if you obtain the remaining datasets elsewhere.
 
-However, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results.
+Alternatively, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results.
 
 #### Merge Tree Index Performance (Figure 7)
 
@@ -457,10 +457,10 @@ First, run the following scripts:
 Then, to produce the plots:
 
     $ cd sigmod16/performance-evaluation/
-    $ cd nyc-urban/                       ## NYC Urban collection
-    $ python running-time-preprocessing.py metadata/ run-varying.out True
-    $ cd ../nyc-open/                     ## NYC Open collection
-    $ python running-time-preprocessing.py metadata/ run-varying.out False nyc-open-metadata
+    $ cd nyc-urban/                                                                           ## NYC Urban collection
+    $ python running-time-preprocessing.py metadata/ run-varying.out True                     ## Figure 8(a)
+    $ cd ../nyc-open/                                                                         ## NYC Open collection
+    $ python running-time-preprocessing.py metadata/ run-varying.out False nyc-open-metadata  ## Figure 8(b)
 
 #### Query Performance (Figure 9)
 
