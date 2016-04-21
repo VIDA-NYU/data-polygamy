@@ -42,6 +42,9 @@ This README file is divided into the following sections:
     * [6.1. Machine Configuration](#61-machine-configuration)
     * [6.2. Datasets](#62-datasets)
     * [6.3. Initial Setup](#63-initial-setup)
+    * [6.4. Performance Evaluation](#64-performance-evaluation)
+    * [6.5. Correctness and Robustness](#65-correctness-and-robustness)
+    * [6.6. Standard Techniques](#66-standard-techniques)
 
 ## 1. Repository Overview
 
@@ -341,6 +344,8 @@ The results are stored in a similar structure as in [the relationship computatio
 
 In this section, we show how to reproduce the results of our SIGMOD'16 paper.
 
+We provide a pre-built jar file for the Data Polygamy framework at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar). If you want to build the code yourself, follow the instructions [here](#4-how-to-build).
+
 ### 6.1. Machine Configuration
 
 The experiments were executed on a cluster with 20 compute nodes, each node running Red Hat Enterprise Linux Server release 6.7, and having an AMD Opteron(TM) Processor 6272 (4x16 cores) 2.1GHz and 256GB of RAM. The installed software is the following:
@@ -423,7 +428,44 @@ To load the datasets from NYC Open Data (*NYC Open collection*), run the [``load
     $ cd sigmod16/setup/
     $ ./load_nyc_open
 
-We provide a pre-built jar file for the Data Polygamy framework at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar). If you want to build the code yourself, follow the instructions [here](#4-how-to-build).
+After loading all the datasets, run the following scripts to execute the pre-processing step:
+
+    $ cd sigmod16/pre-processing/
+    $ ./pre-processing-nyc-urban  ## NYC Urban collection
+    $ ./pre-processing-nyc-open   ## NYC Open collection
+
+### 6.4. Performance Evaluation
+
+#### Merge Tree Index Performance (Figure 7)
 
 Soon...
 
+#### Feature Indexing and Identification (Figure 8)
+
+Soon...
+
+#### Query Performance (Figure 9)
+
+Soon...
+
+#### Scalability (Figure 10)
+
+Soon...
+
+#### Relationship Pruning (Figure 11)
+
+Soon...
+
+### 6.5. Correctness and Robustness
+
+#### Correctness
+
+Soon...
+
+#### Robustness (Figure 12)
+
+Soon...
+
+### 6.6. Standard Techniques
+
+Soon...
