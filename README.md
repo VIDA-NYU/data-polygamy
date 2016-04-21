@@ -438,7 +438,7 @@ After loading all the datasets, run the following scripts to execute the pre-pro
 
 It is important to note that, since we cannot make the 911, Taxi, and Twitter datasets available, the scripts that we provide here do not take into account these datasets, and as a consequence, the performance results and plots will be consistent but visually different than the ones published on the paper. Please modify the scripts accordingly if you obtain the remaining datasets elsewhere.
 
-Alternatively, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results.
+Alternatively, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results. The ReproZip packages were created on a Ubuntu 12.04 LTS machine, having the same versions for Python and matplotlib.
 
 #### Merge Tree Index Performance (Figure 7)
 
