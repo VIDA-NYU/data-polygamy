@@ -1,1 +1,1 @@
-hadoop jar ../../../data-polygamy.jar edu.nyu.vida.data_polygamy.relationship_computation.Relationship -f -r -m $1 -n $2 -g1 itm4-nz7t  59tk-vhmd  -g2 itm4-nz7t  59tk-vhmd 
+hadoop jar ../../data-polygamy.jar edu.nyu.vida.data_polygamy.relationship_computation.Relationship -f -r -m $1 -n $2 -g1 itm4-nz7t  59tk-vhmd  -g2 itm4-nz7t  59tk-vhmd 

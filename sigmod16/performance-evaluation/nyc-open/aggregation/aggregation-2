@@ -1,1 +1,1 @@
-hadoop jar ../../../data-polygamy.jar edu.nyu.vida.data_polygamy.scalar_function_computation.Aggregation -f -m $1 -n $2 -g itm4-nz7t 0 0 59tk-vhmd 0 0
+hadoop jar ../../data-polygamy.jar edu.nyu.vida.data_polygamy.scalar_function_computation.Aggregation -f -m $1 -n $2 -g itm4-nz7t 0 0 59tk-vhmd 0 0

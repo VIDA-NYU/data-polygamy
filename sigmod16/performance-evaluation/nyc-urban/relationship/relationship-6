@@ -1,1 +1,1 @@
-hadoop jar ../../../data-polygamy.jar edu.nyu.vida.data_polygamy.relationship_computation.Relationship -f -r -m $1 -n $2 -g1 311  crash  taxispeed  citibike  weather  gas-prices  -g2 311  crash  taxispeed  citibike  weather  gas-prices 
+hadoop jar ../../data-polygamy.jar edu.nyu.vida.data_polygamy.relationship_computation.Relationship -f -r -m $1 -n $2 -g1 311  crash  taxispeed  citibike  weather  gas-prices  -g2 311  crash  taxispeed  citibike  weather  gas-prices 

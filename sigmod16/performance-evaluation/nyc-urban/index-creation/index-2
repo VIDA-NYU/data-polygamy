@@ -1,1 +1,1 @@
-hadoop jar ../../../data-polygamy.jar edu.nyu.vida.data_polygamy.feature_identification.IndexCreation -f -m $1 -n $2 -g 311  crash 
+hadoop jar ../../data-polygamy.jar edu.nyu.vida.data_polygamy.feature_identification.IndexCreation -f -m $1 -n $2 -g 311  crash 
