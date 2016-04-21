@@ -20,28 +20,35 @@ echo 90 datasets
 echo 120 datasets
 ./aggregation/aggregation-120 $m $n
 ./index-creation/index-120 $m $n
+hdfs dfs -rm -r relationships/*
 ./relationship/relationship-120 $m $n
 echo 150 datasets
 ./aggregation/aggregation-150 $m $n
 ./index-creation/index-150 $m $n
+hdfs dfs -rm -r relationships/*
 ./relationship/relationship-150 $m $n
 echo 180 datasets
 ./aggregation/aggregation-180 $m $n
 ./index-creation/index-180 $m $n
+hdfs dfs -rm -r relationships/*
 ./relationship/relationship-180 $m $n
 echo 210 datasets
 ./aggregation/aggregation-210 $m $n
 ./index-creation/index-210 $m $n
+hdfs dfs -rm -r relationships/*
 ./relationship/relationship-210 $m $n
 echo 240 datasets
 ./aggregation/aggregation-240 $m $n
 ./index-creation/index-240 $m $n
+hdfs dfs -rm -r relationships/*
 ./relationship/relationship-240 $m $n
 echo 270 datasets
 ./aggregation/aggregation-270 $m $n
 ./index-creation/index-270 $m $n
+hdfs dfs -rm -r relationships/*
 ./relationship/relationship-270 $m $n
 echo 300 datasets
 ./aggregation/aggregation-300 $m $n
 ./index-creation/index-300 $m $n
+hdfs dfs -rm -r relationships/*
 ./relationship/relationship-300 $m $n
