@@ -449,9 +449,9 @@ Soon...
 First, run the following scripts:
 
     $ cd sigmod16/performance-evaluation/
-    $ cd nyc-urban/                       ## NYC Urban collection
+    $ cd nyc-open/                       ## NYC Open collection
     $ ./run-varying > run-varying.out
-    $ cd ../nyc-open/                     ## NYC Open collection
+    $ cd ../nyc-urban/                   ## NYC Urban collection
     $ ./run-varying > run-varying.out
 
 Then, to produce the plots:
