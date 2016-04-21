@@ -352,7 +352,7 @@ The experiments were executed on a cluster with 20 compute nodes, each node runn
 
 * Java 1.7.0_45
 * [Apache Hadoop](http://hadoop.apache.org/) 2.2.0
-* Python 2.6.6
+* Python 2.7.8
 * [matplotlib](http://matplotlib.org/) 1.5.1 (to generate the plots)
 
 All the files related to the experiments are located under [``sigmod16/``](sigmod16). All the scripts assume that these software and libraries are properly installed.
