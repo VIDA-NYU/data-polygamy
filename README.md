@@ -352,7 +352,7 @@ The experiments were executed on a cluster with 20 compute nodes, each node runn
 
 * Java 1.7.0_45
 * [Apache Hadoop](http://hadoop.apache.org/) 2.2.0
-* Python X
+* Python 2.6.6
 * [matplotlib](http://matplotlib.org/) 1.5.1 (to generate the plots)
 
 All the files related to the experiments are located under [``sigmod16/``](sigmod16). All the scripts assume that these software and libraries are properly installed.
@@ -436,13 +436,31 @@ After loading all the datasets, run the following scripts to execute the pre-pro
 
 ### 6.4. Performance Evaluation
 
+It is important to note that, since we cannot make the 911, Taxi, and Twitter datasets available, the scripts that we provide here do not take into account these datasets, and as a consequence, the performance results and plots will be consistent but visually different than the ones published on the paper. Please modify the scripts accordingly if you obtain the remaining datasets elsewhere.
+
+However, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results.
+
 #### Merge Tree Index Performance (Figure 7)
 
 Soon...
 
 #### Feature Indexing and Identification (Figure 8)
 
-Soon...
+First, run the following scripts:
+
+    $ cd sigmod16/performance-evaluation/
+    $ cd nyc-urban/                       ## NYC Urban collection
+    $ ./run-varying > run-varying.out
+    $ cd ../nyc-open/                     ## NYC Open collection
+    $ ./run-varying > run-varying.out
+
+Then, to produce the plots:
+
+    $ cd sigmod16/performance-evaluation/
+    $ cd nyc-urban/                       ## NYC Urban collection
+    $ python running-time-preprocessing.py metadata/ run-varying.out True
+    $ cd ../nyc-open/                     ## NYC Open collection
+    $ python running-time-preprocessing.py metadata/ run-varying.out False nyc-open-metadata
 
 #### Query Performance (Figure 9)
 
