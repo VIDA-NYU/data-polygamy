@@ -58,6 +58,8 @@ while line != "":
         pass
     elif line.strip() == "\n":
         pass
+    elif line.startswith("Moved:"):
+        pass
     else:
         l = line.split("\t")
         data[l[0]][current_n_datasets] = int(l[1])
