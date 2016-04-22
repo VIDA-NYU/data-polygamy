@@ -352,7 +352,7 @@ The experiments were executed on a cluster with 20 compute nodes, each node runn
 
 * Java 1.7.0_45
 * [Apache Hadoop](http://hadoop.apache.org/) 2.2.0
-* Python 2.6.6
+* Python 2.7.8
 * [matplotlib](http://matplotlib.org/) 1.5.1 (to generate the plots)
 
 All the files related to the experiments are located under [``sigmod16/``](sigmod16). All the scripts assume that these software and libraries are properly installed.
@@ -438,7 +438,7 @@ After loading all the datasets, run the following scripts to execute the pre-pro
 
 It is important to note that, since we cannot make the 911, Taxi, and Twitter datasets available, the scripts that we provide here do not take into account these datasets, and as a consequence, the performance results and plots will be consistent but visually different than the ones published on the paper. Please modify the scripts accordingly if you obtain the remaining datasets elsewhere.
 
-Alternatively, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results.
+Alternatively, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results. The ReproZip packages were created on a Ubuntu 12.04 LTS machine, having the same versions for Python and matplotlib.
 
 #### Merge Tree Index Performance (Figure 7)
 
