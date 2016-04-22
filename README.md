@@ -352,8 +352,8 @@ The experiments were executed on a cluster with 20 compute nodes, each node runn
 
 * Java 1.7.0_45
 * [Apache Hadoop](http://hadoop.apache.org/) 2.2.0
-* Python 2.7.8
-* [matplotlib](http://matplotlib.org/) 1.5.1 (to generate the plots)
+* Python 2.7.3
+* [matplotlib](http://matplotlib.org/) 1.4.3
 
 All the files related to the experiments are located under [``sigmod16/``](sigmod16). All the scripts assume that these software and libraries are properly installed.
 
@@ -461,6 +461,16 @@ Then, to produce the plots:
     $ python running-time-preprocessing.py metadata/ run-varying.out True                     ## Figure 8(a)
     $ cd ../nyc-open/                                                                         ## NYC Open collection
     $ python running-time-preprocessing.py metadata/ run-varying.out False nyc-open-metadata  ## Figure 8(b)
+
+Alternatively, you can download the ReproZip package [figure-8.rpz](https://nyu.box.com/s/oywluxvyzkx36rsa3irk6q0lvu2418z3) to reproduce the original plots:
+
+    $ reprounzip vagrant setup figure-8.rpz figure-8/
+    ## Reproducing Figure 8(a)
+    $ reprounzip vagrant run figure-8/ 8a
+    $ reprounzip vagrant download figure-8/ output-nyc-urban.png:figure-8a.png
+    ## Reproducing Figure 8(b)
+    $ reprounzip vagrant run figure-8/ 8b
+    $ reprounzip vagrant download figure-8/ output-nyc-open.png:figure-8b.png
 
 #### Query Performance (Figure 9)
 
