@@ -102,7 +102,7 @@ ylabel = "Time (min)"
 plt.figure(figsize=(8, 6), dpi=80)
 
 f, ax = plt.subplots()
-ax.set_facecolor("#E0E0E0")
+ax.set_axis_bgcolor("#E0E0E0")
 
 output = ""
 
