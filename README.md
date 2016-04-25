@@ -485,9 +485,9 @@ First, make sure to run the scripts for [feature indexing and identification](#f
 Then, to produce the plots:
 
     $ cd sigmod16/performance-evaluation/
-    $ cd nyc-urban/                                                                           ## NYC Urban collection
+    $ cd nyc-urban/                                                                          ## NYC Urban collection
     $ python running-time-relationship.py metadata/ run-varying.out True                     ## Figure 9(a)
-    $ cd ../nyc-open/                                                                         ## NYC Open collection
+    $ cd ../nyc-open/                                                                        ## NYC Open collection
     $ python running-time-relationship.py metadata/ run-varying.out False nyc-open-metadata  ## Figure 9(b)
 
 Alternatively, you can download the ReproZip package [figure-9.rpz](https://nyu.box.com/s/x356y9xf3wmnsjfyr6pzlfbiczjmg2ap) to reproduce the original plots:
