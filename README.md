@@ -474,7 +474,31 @@ Alternatively, you can download the ReproZip package [figure-8.rpz](https://nyu.
 
 #### Query Performance (Figure 9)
 
-Soon...
+First, make sure to run the scripts for [feature indexing and identification](#feature-indexing-and-identification-figure-8)), *i.e.*:
+
+    $ cd sigmod16/performance-evaluation/
+    $ cd nyc-open/                       ## NYC Open collection
+    $ ./run-varying > run-varying.out
+    $ cd ../nyc-urban/                   ## NYC Urban collection
+    $ ./run-varying > run-varying.out
+    
+Then, to produce the plots:
+
+    $ cd sigmod16/performance-evaluation/
+    $ cd nyc-urban/                                                                           ## NYC Urban collection
+    $ python running-time-relationship.py metadata/ run-varying.out True                     ## Figure 9(a)
+    $ cd ../nyc-open/                                                                         ## NYC Open collection
+    $ python running-time-relationship.py metadata/ run-varying.out False nyc-open-metadata  ## Figure 9(b)
+
+Alternatively, you can download the ReproZip package [figure-9.rpz](https://nyu.box.com/s/x356y9xf3wmnsjfyr6pzlfbiczjmg2ap) to reproduce the original plots:
+
+    $ reprounzip vagrant setup figure-9.rpz figure-9/
+    ## Reproducing Figure 9(a)
+    $ reprounzip vagrant run figure-9/ 9a
+    $ reprounzip vagrant download figure-9/ output-nyc-urban.png:figure-9a.png
+    ## Reproducing Figure 9(b)
+    $ reprounzip vagrant run figure-9/ 9b
+    $ reprounzip vagrant download figure-9/ output-nyc-open.png:figure-9b.png
 
 #### Scalability (Figure 10)
 
