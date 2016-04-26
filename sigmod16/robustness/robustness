@@ -1,0 +1,1 @@
+hadoop jar ../data-polygamy.jar edu.nyu.vida.data_polygamy.exp.NoiseExp ../taxi-time-series/taxi-city-timeseries ../../data/neighborhood-graph.txt ../../data/neighborhood.txt false > noise-exp-taxi-city.out

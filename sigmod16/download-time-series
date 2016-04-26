@@ -1,0 +1,6 @@
+wget https://ndownloader.figshare.com/articles/3201988/versions/1 -O time-series-files
+unzip time-series-files
+rm time-series-files
+mkdir time-series
+mv taxi-* time-series/
+mv time-series/ taxi-time-series/

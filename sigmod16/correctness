@@ -1,0 +1,10 @@
+# (hour, city) resolution
+echo "- (hour, city) resolution"
+hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.exp.TaxiSyntheticExp taxi-time-series/taxi-city-timeseries ../data/neighborhood-graph.txt ../data/neighborhood.txt false
+echo
+
+# (hour, nbhd) resolution
+echo "- (hour, nbhd) resolution"
+export HADOOP_HEAPSIZE=4000
+hadoop jar data-polygamy.jar edu.nyu.vida.data_polygamy.exp.TaxiSyntheticExp taxi-time-series/taxi-nbhd-timeseries ../data/neighborhood-graph.txt ../data/neighborhood.txt true
+echo
