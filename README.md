@@ -502,7 +502,47 @@ Alternatively, you can download the ReproZip package [figure-9.rpz](https://nyu.
 
 #### Scalability (Figure 10)
 
-Soon...
+The scalability experiment was the only one performed on Amazon Web Services (AWS), using [Amazon S3](https://aws.amazon.com/s3/) (for storage) and [Amazon Elastic MapReduce (EMR)](https://aws.amazon.com/elasticmapreduce/). All the scripts related to this experiment are available under [``sigmod16/performance-evaluation/scalability/``](sigmod16/performance-evaluation/scalability/).
+
+To run this experiment, install the following dependencies:
+
+* [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) 1.10.7
+* [Boto3](http://aws.amazon.com/sdk-for-python/) 1.2.4
+
+First, create a bucket on Amazon S3 (we refer to this bucket as ``BUCKET``). Then, under ``BUCKET``, create all the necessary directories presented [before](#31-hdfs-directory) (e.g.: ``data``, ``pre-processing``, ``aggregates``, ...), including a directory named ``emr-logs``; please note that AWS CLI does not provide any command to create directories, so this needs to be done manually by the user. Once all the directories are created, load all the data to Amazon S3:
+
+    $ cd sigmod16/performance-evaluation/scalability/setup/
+    $ ./load-data BUCKET
+    $ ./load-nyc-urban BUCKET
+    
+To run the pre-processing step:
+
+    $ cd sigmod16/performance-evaluation/scalability/
+    $ pyhon run-pre-processing.py BUCKET N_NODES AWS_ID AWS_KEY
+    
+where ``N_NODES`` is the number of nodes, ``AWS_ID`` is the AWS Access Key Id, and ``AWS_KEY`` is the AWS Secret Access Key.
+
+Then, to finally run the scalability experiment, run each of the following commands:
+
+    $ cd sigmod16/performance-evaluation/scalability/
+    $ python run-cluster.py BUCKET 2 AWS_ID AWS_KEY
+    $ python run-cluster.py BUCKET 4 AWS_ID AWS_KEY
+    $ python run-cluster.py BUCKET 8 AWS_ID AWS_KEY
+    $ python run-cluster.py BUCKET 16 AWS_ID AWS_KEY
+
+**Important:** after executing one command, wait for the cluster to be terminated before running the next one.
+
+To produce the speedup plot (Figure 10):
+
+    $ cd sigmod16/performance-evaluation/scalability/
+    $ python get-stdout.py BUCKET
+    $ python speedup.py
+    
+Alternatively, you can download the ReproZip package [figure-10.rpz](https://nyu.box.com/s/w4yqz4pjw4lsexquf53baixobmq5wkrv) to reproduce the original plots:
+
+    $ reprounzip vagrant setup figure-10.rpz figure-10/
+    $ reprounzip vagrant run figure-10/
+    $ reprounzip vagrant download figure-10/ speedup.png:figure-10.png
 
 #### Relationship Pruning (Figure 11)
 
