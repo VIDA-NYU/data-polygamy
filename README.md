@@ -192,7 +192,7 @@ The following command-line arguments are available in all the steps of the frame
 
 *Required Arguments*:
 
-* **``-m``**: identifier for the machine configuration of the Hadoop cluster nodes. These identifiers are defined in the class Machine in file [FrameworkUtils.java](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/utils/FrameworkUtils.java). For each identifier, information related to the corresponding machine is declared (e.g.: number of cores, amount of memory, and number of disks). Such information is used to set a few Hadoop configuration parameters.
+* **``-m``**: identifier for the machine configuration of the Hadoop cluster nodes. These identifiers are defined in the class ``Machine`` in file [FrameworkUtils.java](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/utils/FrameworkUtils.java). For each identifier, information related to the corresponding machine is declared (e.g.: number of cores, amount of memory, and number of disks). Such information is used to set a few Hadoop configuration parameters.
 * **``-n``**: number of nodes in the Hadoop cluster.
 
 *Optional Arguments*:
@@ -436,6 +436,8 @@ After loading all the datasets, run the following scripts to execute the pre-pro
 
 ### 6.4. Performance Evaluation
 
+*Section 6.1 of the paper*
+
 It is important to note that, since we cannot make the 911, Taxi, and Twitter datasets available, the scripts that we provide here do not take into account these datasets, and as a consequence, the performance results and plots will be consistent but visually different than the ones published on the paper. Please modify the scripts accordingly if you obtain the remaining datasets elsewhere.
 
 Alternatively, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results. The ReproZip packages were created on a Ubuntu 12.04 LTS machine, having the same versions for Python and matplotlib.
@@ -550,14 +552,67 @@ Soon...
 
 ### 6.5. Correctness and Robustness
 
+*Section 6.2 of the paper*
+
+Although the following experiments use Hadoop for the execution, only a single machine is used (i.e., there is no need for a cluster).
+
+Before running any of these experiments, execute the following script to download the required data:
+
+    $ cd sigmod16/
+    $ ./download-time-series
+
 #### Correctness
 
-Soon...
+To run the correctness experiment:
 
-#### Robustness (Figure 12)
+    $ cd sigmod16/
+    $ ./correctness
+    
+where:
 
-Soon...
+* ``count-db_idx``: density of taxi trips
+* ``unique-medallion_id``: unique number of taxis
+* ``avg-miles``: average of traveled miles
+* ``avg-fare``: average of total taxi fare
+
+#### Robustness (Figures 12, I, II, and III)
+
+To run the robustness experiment:
+
+    $ cd sigmod16/robustness/
+    $ ./robustness
+    
+To produce the plots:
+
+    $ cd sigmod16/robustness/
+    $ python robustness.py noise-exp-taxi-city.out 1D False
+
+In addition to the plots for relationship score and strength (originally published in the paper), the script also plots the p-values with increasing levels of noise.
+
+Alternatively, you can download the ReproZip package [robustness.rpz](https://nyu.box.com/s/83pc1o2zwgjbp2v7rvgv04r5ywl32m0p) to reproduce the original plots:
+
+    $ reprounzip vagrant setup robustness.rpz robustness/
+    $ reprounzip vagrant run robustness/
+    $ reprounzip vagrant download robustness/ 12a:figure-12a.png    ## Figure 12(a)
+    $ reprounzip vagrant download robustness/ 12b:figure-12b.png    ## Figure 12(b)
+    $ reprounzip vagrant download robustness/ Ia:figure-Ia.png      ## Figure I(a)
+    $ reprounzip vagrant download robustness/ Ib:figure-Ib.png      ## Figure I(b)
+    $ reprounzip vagrant download robustness/ IIa:figure-IIa.png    ## Figure II(a)
+    $ reprounzip vagrant download robustness/ IIb:figure-IIb.png    ## Figure II(b)
+    $ reprounzip vagrant download robustness/ IIIa:figure-IIIa.png  ## Figure III(a)
+    $ reprounzip vagrant download robustness/ IIIb:figure-IIIb.png  ## Figure III(b)
+    
+You can also retrieve all the plots simultaneously:
+
+    $ reprounzip vagrant download robustness/ --all
 
 ### 6.6. Standard Techniques
 
-Soon...
+*Section 6.4 of the paper*
+
+To run the standard techniques on the *NYC Urban collection*:
+
+    $ cd sigmod16/
+    $ ./standard-techniques
+    
+Please note that this assumes that the script [``sigmod16/performance-evaluation/nyc-urban/run-varying``](#feature-indexing-and-identification-figure-8) has already been run, i.e., that the scalar function computation step has already been executed.
