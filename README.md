@@ -538,7 +538,7 @@ To produce the speedup plot (Figure 10):
     $ python get-stdout.py BUCKET
     $ python speedup.py
     
-Alternatively, you can download the ReproZip package [figure-10.rpz](https://nyu.box.com/s/w4yqz4pjw4lsexquf53baixobmq5wkrv) to reproduce the original plots:
+Alternatively, you can download the ReproZip package [figure-10.rpz](https://nyu.box.com/s/w4yqz4pjw4lsexquf53baixobmq5wkrv) to reproduce the original plot:
 
     $ reprounzip vagrant setup figure-10.rpz figure-10/
     $ reprounzip vagrant run figure-10/
