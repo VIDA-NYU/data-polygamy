@@ -1,0 +1,8 @@
+BUCKET=$1
+
+aws s3 cp ../../../../data/neighborhood.txt s3://$BUCKET/neighborhood
+aws s3 cp ../../../../data/zipcode.txt s3://$BUCKET/zipcode
+aws s3 cp ../../../../data/zipcode-graph.txt s3://$BUCKET/zipcode-graph
+aws s3 cp ../../../../data/neighborhood-graph.txt s3://$BUCKET/neighborhood-graph
+aws s3 cp ../../../../data/datasets.txt s3://$BUCKET/data/datasets
+aws s3 cp ../../../data-polygamy.jar s3://$BUCKET/data-polygamy.jar

@@ -1,0 +1,53 @@
+BUCKET=$1
+
+# Loading Gas Prices
+# https://dx.doi.org/10.6084/m9.figshare.3187531.v1
+wget https://ndownloader.figshare.com/articles/3187531/versions/1 -O gas-prices-files
+unzip gas-prices-files
+rm gas-prices-files
+aws s3 cp . s3://$BUCKET/data/ --recursive --exclude '*' --include 'gas-prices*'
+rm gas-prices*
+
+# Loading Vehicle Collisions
+# https://dx.doi.org/10.6084/m9.figshare.3187535.v3
+wget https://ndownloader.figshare.com/articles/3187535/versions/3 -O crash-files
+unzip crash-files
+rm crash-files
+aws s3 cp . s3://$BUCKET/data/ --recursive --exclude '*' --include 'crash*'
+rm crash*
+
+# Loading 311
+# https://dx.doi.org/10.6084/m9.figshare.3187539.v2
+wget https://ndownloader.figshare.com/articles/3187539/versions/2 -O 311-files
+unzip 311-files
+rm 311-files
+aws s3 cp . s3://$BUCKET/data/ --recursive --exclude '*' --include '311*'
+rm 311*
+
+# Loading Citi Bike
+# https://dx.doi.org/10.6084/m9.figshare.3175573.v2
+wget https://ndownloader.figshare.com/articles/3175573/versions/2 -O citibike-files
+unzip citibike-files
+rm citibike-files
+aws s3 cp . s3://$BUCKET/data/ --recursive --exclude '*' --include 'citibike*'
+rm citibike*
+
+# Loading Weather Data
+# https://dx.doi.org/10.6084/m9.figshare.3187549.v1
+wget https://ndownloader.figshare.com/articles/3187549/versions/1 -O weather-files
+unzip weather-files
+rm weather-files
+aws s3 cp . s3://$BUCKET/data/ --recursive --exclude '*' --include 'weather*'
+rm weather*
+
+# Loading Traffic Speed
+# https://dx.doi.org/10.6084/m9.figshare.3175570.v1
+wget https://ndownloader.figshare.com/articles/3175570/versions/1 -O taxispeed-files
+unzip taxispeed-files
+rm taxispeed-files
+tar -zxvf taxispeed.tar.gz
+rm taxispeed.tar.gz
+mv san_share/share/fchirigati/taxispeed.csv taxispeed
+rm -r san_share/
+aws s3 cp . s3://$BUCKET/data/ --recursive --exclude '*' --include 'taxispeed*'
+rm taxispeed*
