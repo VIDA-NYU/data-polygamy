@@ -38,7 +38,7 @@ This README file is divided into the following sections:
     * [5.4. Step 2: Feature Identification](#54-step-2-feature-identification)
     * [5.5. Step 3: Relationship Computation (Query Evaluation)](#55-step-3-relationship-computation-query-evaluation)
     * [5.6. Alternate Step: Correlation Computation](#56-alternate-step-correlation-computation)
-* [6. Experiments](#6-paper-experiments)
+* [6. Experiments](#6-experiments)
     * [6.1. Machine Configuration](#61-machine-configuration)
     * [6.2. Datasets](#62-datasets)
     * [6.3. Initial Setup](#63-initial-setup)
