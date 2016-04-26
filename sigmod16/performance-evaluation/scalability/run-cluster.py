@@ -53,7 +53,7 @@ aggregation_step = {
                     "edu.nyu.vida.data_polygamy.scalar_function_computation.Aggregation",
                     "-m",
                     "r3.2xlarge",
-                    "-n",i
+                    "-n",
                     "%d"%n_nodes,
                     "-s3",
                     "-aws_id",
