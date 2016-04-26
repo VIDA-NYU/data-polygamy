@@ -511,7 +511,7 @@ To run this experiment, install the following dependencies:
 * [AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) 1.10.7
 * [Boto3](http://aws.amazon.com/sdk-for-python/) 1.2.4
 
-First, create a bucket on Amazon S3 (we refer to this bucket as ``BUCKET``). Then, under ``BUCKET``, create all the necessary directories presented [before](#31-hdfs-directory) (e.g.: ``data``, ``pre-processing``, ``aggregates``, ...), including a directory named ``emr-logs``; please note that AWS CLI does not provide any command to create directories, so this needs to be done manually by the user. Once all the directories are created, load all the data to Amazon S3:
+First, create a bucket on Amazon S3 (we refer to this bucket as ``BUCKET``). Then, under ``BUCKET``, create all the necessary directories presented [before](#31-hdfs-directory) (e.g.: ``data``, ``pre-processing``, ``aggregates``, ...), including a directory named ``emr-logs``. Once all the directories are created, load all the data to Amazon S3:
 
     $ cd sigmod16/performance-evaluation/scalability/setup/
     $ ./load-data BUCKET
