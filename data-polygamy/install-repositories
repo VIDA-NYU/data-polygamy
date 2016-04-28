@@ -1,0 +1,8 @@
+# JIDT
+mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=lib/JIDT/jidt-1.3.jar -DgroupId=jidt -DartifactId=jidt -Dversion=1.3 -Dpackaging=jar
+
+# JavaMI
+mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=lib/JavaMI/javami-1.0.jar -DgroupId=javami -DartifactId=javami -Dversion=1.0 -Dpackaging=jar
+
+# Java-ML
+mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=lib/Java-ML/javaml-0.1.7.jar -DgroupId=javaml -DartifactId=javaml -Dversion=0.1.7 -Dpackaging=jar

@@ -172,6 +172,7 @@ In addition to these dataset files, a file named ``datasets`` must be created un
 We use [Apache Maven](https://maven.apache.org/) 3.3.9 to build the Data Polygamy framework:
 
     $ cd data-polygamy/
+    $ ./install-repositories
     $ mvn clean package
 
 This generates a jar file, with the following name and path: ``data-polygamy/target/data-polygamy-0.1-jar-with-dependencies.jar``. For simplicity, we refer to this file as ``data-polygamy.jar`` throughout this documentation. 

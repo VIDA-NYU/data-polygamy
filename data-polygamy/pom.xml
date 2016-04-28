@@ -71,22 +71,16 @@
   		<groupId>jidt</groupId>
   		<artifactId>jidt</artifactId>
   		<version>1.3</version>
-  		<scope>system</scope>
-  		<systemPath>${basedir}/lib/JIDT/jidt-1.3.jar</systemPath>
   	</dependency>
   	<dependency>
   		<groupId>javami</groupId>
   		<artifactId>javami</artifactId>
   		<version>1.0</version>
-  		<scope>system</scope>
-  		<systemPath>${basedir}/lib/JavaMI/javami-1.0.jar</systemPath>
   	</dependency>
   	<dependency>
   		<groupId>javaml</groupId>
   		<artifactId>javaml</artifactId>
   		<version>0.1.7</version>
-  		<scope>system</scope>
-  		<systemPath>${basedir}/lib/Java-ML/javaml-0.1.7.jar</systemPath>
   	</dependency>
   </dependencies>
   <description>Data Polygamy is a topology-based framework that allows users to query for statistically significant relationships between spatio-temporal data sets.</description>
