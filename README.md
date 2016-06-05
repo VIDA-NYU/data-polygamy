@@ -183,7 +183,7 @@ Note that all the dependencies are taken care of by Maven, except for [JIDT](htt
 
 To run our framework, you will need [Apache Hadoop](http://hadoop.apache.org/). The framework can be summarized as follows:
 
-<img src="framework.png" height="125">
+<div align="center"><img src="framework.png" height="125"></div>
 
 Each step of the framework is represented by a map-reduce job. The Pre-Processing step is executed once for each dataset, while the other steps can be executed once for multiple datasets.
 
@@ -329,7 +329,7 @@ The Correlation Computation step, which is not an "official" step of our framewo
 
 This should be executed after the scalar function computation step:
 
-<img src="framework-standard-techniques.png" height="110">
+<div align="center"><img src="framework-standard-techniques.png" height="110"></div>
 
 To run the correlation computation step:
 
