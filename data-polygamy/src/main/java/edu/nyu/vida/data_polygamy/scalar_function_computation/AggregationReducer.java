@@ -75,7 +75,7 @@ public class AggregationReducer extends Reducer<SpatioTemporalWritable, Aggregat
                 generateFileName(idToDataset.get(key.getDataset())));
         //context.write(key, valueWritable);
         
-        if ((key.getSpatialResolution() == FrameworkUtils.CITY) &&
+        /*if ((key.getSpatialResolution() == FrameworkUtils.CITY) &&
                 (key.getTemporalResolution() == FrameworkUtils.HOUR)) {
             // October 15th, 2011 to October 31st, 2011
             if ((key.getTemporal() >= 1318636800) &&
@@ -85,7 +85,7 @@ public class AggregationReducer extends Reducer<SpatioTemporalWritable, Aggregat
                     System.out.print(output[i] + ",");
                 System.out.println("");
             }
-        }
+        }*/
         
         for (int i = 0; i < aggregates.length; i++)
             aggregates[i].reset();

@@ -181,14 +181,15 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                 regThreshold = idToRegThreshold.get(key.getDataset()).get(key.getAttribute());
             }
         }
-        ArrayList<byte[]> events = new ArrayList<byte[]>();
+        ArrayList<byte[]> events = index.queryEvents(this.th, false, att, regThreshold);
+        /*ArrayList<byte[]> events = new ArrayList<byte[]>();
         if ((key.getSpatialResolution() == FrameworkUtils.CITY) &&
                 (key.getTemporalResolution() == FrameworkUtils.HOUR)) {
             System.out.println("Attribute: " + key.getAttribute());
             events = index.queryEvents(this.th, false, att, regThreshold, true);
         } else {
             events = index.queryEvents(this.th, false, att, regThreshold);
-        }
+        }*/
         for (int spatial = 0; spatial < events.size(); spatial++) {
             if (!att.nodeSet.contains(spatial))
                 continue;

@@ -1,3 +1,6 @@
+/* Copyright (C) 2016 New York University
+   This file is part of Data Polygamy which is released under the Revised BSD License
+   See file LICENSE for full license details. */
 package edu.nyu.vida.data_polygamy.exp;
 
 import it.unimi.dsi.fastutil.ints.IntIterator;
@@ -155,11 +158,9 @@ public class StandaloneExp {
         }
     }
 	
-	public TopologicalIndex createIndex(HashMap<String, Attribute> attributes,
-            String attribute, int spatialRes, int nv, ArrayList<Integer[]> edges, int noMonths) {
-        TopologicalIndex index = new TopologicalIndex(
-                spatialRes, FrameworkUtils.HOUR, nv);
-        Attribute a = attributes.get(attribute);
+	public Attribute createNewAttribute(HashMap<String, Attribute> attributes,
+            String attribute, int noMonths) {
+	    Attribute a = attributes.get(attribute);
         int ct = 0;
         IntSet keys = a.data.keySet();
         IntIterator it = keys.iterator();
@@ -175,6 +176,13 @@ public class StandaloneExp {
         Collections.sort(arr);
         Attribute na = new Attribute();
         na.data.put(0, arr);
+        return na;
+	}
+	
+	public TopologicalIndex createIndex(Attribute na, int spatialRes, int nv, ArrayList<Integer[]> edges) {
+        
+	    TopologicalIndex index = new TopologicalIndex(
+                spatialRes, FrameworkUtils.HOUR, nv);
         long st = System.nanoTime();
         index.createIndex(na, edges);
         indexTimes = System.nanoTime() - st;
@@ -188,9 +196,10 @@ public class StandaloneExp {
         int nv = 1;
         
         for(int cc = 0; cc < 3; cc++) {
-            TopologicalIndex index = createIndex(attributes, dataAttributes[0], spatialRes, nv, edges, noMonths);
+            Attribute na = createNewAttribute(attributes, dataAttributes[0], noMonths);
+            TopologicalIndex index = createIndex(na, spatialRes, nv, edges);
             long st = System.nanoTime();
-            ArrayList<byte[]> e1 = index.queryEvents(0.4f, false, attributes.get(dataAttributes[0]), "");
+            ArrayList<byte[]> e1 = index.queryEvents(0.4f, false, na, "");
             queryTimes = System.nanoTime() - st;
             e1.clear();
         }
@@ -229,9 +238,10 @@ public class StandaloneExp {
         reader.close();
         
         for (int cc = 0; cc < 3; cc++) {
-            TopologicalIndex index = createIndex(attributes, dataAttributes[0], spatialRes, nv, edges, noMonths);
+            Attribute na = createNewAttribute(attributes, dataAttributes[0], noMonths);
+            TopologicalIndex index = createIndex(na, spatialRes, nv, edges);
             long st = System.nanoTime();
-            ArrayList<byte[]> e1 = index.queryEvents(0.4f, false, attributes.get(dataAttributes[0]), "");
+            ArrayList<byte[]> e1 = index.queryEvents(0.4f, false, na, "");
             queryTimes = System.nanoTime() - st;
             e1.clear();
         }
