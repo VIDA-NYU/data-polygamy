@@ -226,8 +226,12 @@ public class TopologicalIndex implements Serializable {
 		
         return 0;
 	}
+    
+    public ArrayList<byte[]> queryEvents(float th, boolean outlier, Attribute att, String threshold) {
+        return queryEvents(th, outlier, att, threshold, false);
+    }
 	
-	public ArrayList<byte[]> queryEvents(float th, boolean outlier, Attribute att, String threshold) {
+	public ArrayList<byte[]> queryEvents(float th, boolean outlier, Attribute att, String threshold, boolean print) {
 		
 	    int timeSteps = FrameworkUtils.getTimeSteps(this.tempRes, this.stTime, this.enTime);
 	    ArrayList<byte[]> results = new ArrayList<byte[]>();
@@ -291,7 +295,7 @@ public class TopologicalIndex implements Serializable {
 					if(outlier) {
 						eventTh = iqOutlierTh(vals, min);
 					}
-					getEvents(results, functions.get(tempBin), index.get(tempBin), min, eventTh);
+					getEvents(results, functions.get(tempBin), index.get(tempBin), min, eventTh, print);
 					perVals = new PersistencePoints();
 				}
 			}
@@ -355,11 +359,11 @@ public class TopologicalIndex implements Serializable {
 		for (int tempBin : att.data.keySet()) {
 			Feature[] features = featureMap.get(tempBin);
 			GraphInput tf = functions.get(tempBin);
-			getEvents(events, tf, features, min, eventTh);
+			getEvents(events, tf, features, min, eventTh, false);
 		}
 	}
 	
-	private void getEvents(ArrayList<byte[]> events, GraphInput tf, Feature[] features, boolean min, double eventTh) {
+	private void getEvents(ArrayList<byte[]> events, GraphInput tf, Feature[] features, boolean min, double eventTh, boolean print) {
 		float[] fnVertices = tf.getFnVertices();
 //		nv = 1;
 //		if (is2D) {
@@ -396,6 +400,15 @@ public class TopologicalIndex implements Serializable {
 					    byte[] spatialEvents = events.get(spatial);
 					    spatialEvents[index-1] = FrameworkUtils.negativeEvent;
 					    events.set(spatial, spatialEvents);
+					    
+					    if (print) {
+					        // October 15th, 2011 to October 31st, 2011
+				            if ((time >= 1318636800) && (time <= 1320105599)) {
+				                System.out.print(FrameworkUtils.getTemporalStr(FrameworkUtils.HOUR, time) + "\t");
+				                System.out.print(eventTh + ", " + pt);
+				                System.out.println("");
+				            }
+					    }
 					    
 					    int[] nEventsArray = nEvents.get(spatial);
 					    nEventsArray[1]++;
@@ -437,6 +450,15 @@ public class TopologicalIndex implements Serializable {
                         byte[] spatialEvents = events.get(spatial);
                         spatialEvents[index-1] = FrameworkUtils.positiveEvent;
                         events.set(spatial, spatialEvents);
+                        
+                        if (print) {
+                            // October 15th, 2011 to October 31st, 2011
+                            if ((time >= 1318636800) && (time <= 1320105599)) {
+                                System.out.print(FrameworkUtils.getTemporalStr(FrameworkUtils.HOUR, time) + "\t");
+                                System.out.print(eventTh + ", " + pt);
+                                System.out.println("");
+                            }
+                        }
                         
                         int[] nEventsArray = nEvents.get(spatial);
                         nEventsArray[0]++;
