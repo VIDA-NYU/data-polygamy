@@ -48,7 +48,9 @@ This README file is divided into the following sections:
 
 ## 1. Repository Overview
 
-Soon ...
+* [``data-polygamy/``](data-polygamy) includes the source code of the framework.
+* [``data/``](data) includes scripts to download datasets, and some additional data and metadata that is necessary to run the framework.
+* [``sigmod16/``](sigmod16) includes all the scripts used to run the experiments from our SIGMOD'16 paper.
 
 ## 2. Dependencies
 
@@ -193,7 +195,7 @@ The following command-line arguments are available in all the steps of the frame
 
 *Required Arguments*:
 
-* **``-m``**: identifier for the machine configuration of the Hadoop cluster nodes. These identifiers are defined in the class ``Machine`` in file [FrameworkUtils.java](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/utils/FrameworkUtils.java). For each identifier, information related to the corresponding machine is declared (e.g.: number of cores, amount of memory, and number of disks). Such information is used to set a few Hadoop configuration parameters.
+* **``-m``**: identifier for the machine configuration of the Hadoop cluster nodes. These identifiers are defined in the class ``Machine`` in file [FrameworkUtils.java](data-polygamy/src/main/java/edu/nyu/vida/data_polygamy/utils/FrameworkUtils.java#L2906). For each identifier, information related to the corresponding machine is declared (e.g.: number of cores, amount of memory, and number of disks). Such information is used to set a few Hadoop configuration parameters.
 * **``-n``**: number of nodes in the Hadoop cluster.
 
 *Optional Arguments*:
@@ -345,7 +347,19 @@ The results are stored in a similar structure as in [the relationship computatio
 
 In this section, we show how to reproduce the results of our SIGMOD'16 paper.
 
-We provide a pre-built jar file for the Data Polygamy framework at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar). If you want to build the code yourself, follow the instructions [here](#4-how-to-build).
+We provide a pre-built jar file for the Data Polygamy framework at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar). If you want to build the code yourself, follow the instructions [here](#4-how-to-build) or take a look at [``prepareSoftware.sh``](sigmod16/prepareSoftware.sh).
+
+We provide the following scripts to make it easier for re-running our experiments (these must be run from the [``sigmod16/``](sigmod16) directory):
+
+* [``prepareData.sh``](sigmod16/prepareData.sh) downloads and stores all the necessary data and metadata.
+* [``prepareSoftware.sh``](sigmod16/prepareSoftware.sh) builds the Data Polygamy framework; note this is optional, since we provide a pre-built jar file available at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar).
+* [``runExperiments.sh``](sigmod16/runExperiments.sh) runs the following experiments: 
+
+It is important to note that, since we cannot make the 911, Taxi, and Twitter datasets available, the scripts that we provide here do not take into account these datasets, and as a consequence, the performance results and plots will be consistent but visually different than the ones published on the paper. Please modify the scripts accordingly if you obtain the remaining datasets elsewhere.
+
+Alternatively, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results. The ReproZip packages were created on a Ubuntu 12.04 LTS machine, having the same versions for Python and matplotlib.
+
+More detailed information about our experiments can be found in the following sections.
 
 ### 6.1. Machine Configuration
 
@@ -434,18 +448,38 @@ After loading all the datasets, run the following scripts to execute the pre-pro
     $ cd sigmod16/pre-processing/
     $ ./pre-processing-nyc-urban  ## NYC Urban collection
     $ ./pre-processing-nyc-open   ## NYC Open collection
+    
+Finally, execute the following script to download some additional required data:
+
+    $ cd sigmod16/
+    $ ./download-time-series
 
 ### 6.4. Performance Evaluation
 
 *Section 6.1 of the paper*
 
-It is important to note that, since we cannot make the 911, Taxi, and Twitter datasets available, the scripts that we provide here do not take into account these datasets, and as a consequence, the performance results and plots will be consistent but visually different than the ones published on the paper. Please modify the scripts accordingly if you obtain the remaining datasets elsewhere.
-
-Alternatively, we provide [ReproZip](https://vida-nyu.github.io/reprozip/) packages for the original plots published in the paper, where you can obtain the original performance results. The ReproZip packages were created on a Ubuntu 12.04 LTS machine, having the same versions for Python and matplotlib.
-
 #### Merge Tree Index Performance (Figure 7)
 
-Soon...
+This experiment was run for a single dataset (Taxi data, using its density function), for both city (1D) and neighborhood (3D) resolutions. Here, we used a single node in the cluster, and the experiment assumes that the system has at least 100GB of unused memory.
+
+To generate the data, run the following:
+
+    $ cd sigmod16/performance-evaluation/merge-tree-index/
+    $ python run.py
+    
+Then, to produce the plots:
+
+    $ cd sigmod16/performance-evaluation/merge-tree-index/
+    $ python merge-tree-inde-performance.py  ## Figures 7(a) and 7(b)
+    
+Alternatively, you can download the ReproZip package [figure-7.rpz]() to reproduce the original plots:
+
+    $ reprounzip vagrant setup figure-7.rpz figure-7/
+    $ reprounzip vagrant run figure-7/
+    ## Figure 7(a)
+    $ reprounzip vagrant download figure-7/ output-nyc-urban.png:figure-7a.png
+    ## Figure 7(b)
+    $ reprounzip vagrant download figure-7/ output-nyc-open.png:figure-7b.png
 
 #### Feature Indexing and Identification (Figure 8)
 
@@ -556,11 +590,6 @@ Soon...
 *Section 6.2 of the paper*
 
 Although the following experiments use Hadoop for the execution, only a single machine is used (i.e., there is no need for a cluster).
-
-Before running any of these experiments, execute the following script to download the required data:
-
-    $ cd sigmod16/
-    $ ./download-time-series
 
 #### Correctness
 
