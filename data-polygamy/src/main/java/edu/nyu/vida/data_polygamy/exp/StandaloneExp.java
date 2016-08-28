@@ -206,7 +206,7 @@ public class StandaloneExp {
         System.out.println(noMonths + "\t" + indexTimes + "\t" + queryTimes);
     }
 	
-	public void test2d(int noMonths, String dataFile, String polygonsFile, String graphFile) throws IOException {
+	public void test2d(int noMonths, String dataFile, String graphFile, String polygonsFile) throws IOException {
         load2DData(dataFile);
         ArrayList<Integer[]> edges = new ArrayList<Integer[]>();
         int spatialRes = FrameworkUtils.NBHD;
