@@ -477,9 +477,9 @@ Alternatively, you can download the ReproZip package [figure-7.rpz]() to reprodu
     $ reprounzip vagrant setup figure-7.rpz figure-7/
     $ reprounzip vagrant run figure-7/
     ## Figure 7(a)
-    $ reprounzip vagrant download figure-7/ output-nyc-urban.png:figure-7a.png
+    $ reprounzip vagrant download figure-7/ standalone-index-1d.png:figure-7a.png
     ## Figure 7(b)
-    $ reprounzip vagrant download figure-7/ output-nyc-open.png:figure-7b.png
+    $ reprounzip vagrant download figure-7/ standalone-index-3d.png:figure-7b.png
 
 #### Feature Indexing and Identification (Figure 8)
 

@@ -176,6 +176,7 @@ public class StandaloneExp {
         Collections.sort(arr);
         Attribute na = new Attribute();
         na.data.put(0, arr);
+        na.nodeSet = a.nodeSet;
         return na;
 	}
 	
