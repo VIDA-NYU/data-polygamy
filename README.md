@@ -470,7 +470,7 @@ To generate the data, run the following:
 Then, to produce the plots:
 
     $ cd sigmod16/performance-evaluation/merge-tree-index/
-    $ python merge-tree-inde-performance.py  ## Figures 7(a) and 7(b)
+    $ python merge-tree-index-performance.py  ## Figures 7(a) and 7(b)
     
 Alternatively, you can download the ReproZip package [figure-7.rpz]() to reproduce the original plots:
 
@@ -583,7 +583,38 @@ Alternatively, you can download the ReproZip package [figure-10.rpz](https://nyu
 
 #### Relationship Pruning (Figure 11)
 
-Soon...
+First, make sure to run the scripts for [query performance](#query-performance-figure-9)). Then, run the following to download the relationship data:
+
+    $ cd sigmod16/performance-evaluation/nyc-open/
+    $ ./download-relationships
+    $ cd ../nyc-urban/
+    $ ./download-relationships
+    
+Next, we need to analyze the number of relationships for a varying number of datasets running the following:
+
+    $ cd sigmod16/performance-evaluation/nyc-urban/pruning/
+    $ ./get-pruning-data
+    $ cd ../../nyc-open/pruning/
+    $ ./get-pruning-data
+    
+To produce the pruning plots (Figure 11):
+
+    $ cd sigmod16/performance-evaluation/nyc-urban/pruning/
+    $ python pruning.py results events restricted week city  ## Figure 11(a)
+    $ cd ../../nyc-open/pruning/
+    $ python pruning.py results events restricted week city  ## Figure 11(b)
+    
+Note that you can generate the same plots for different resolutions. For instance, run ``python pruning.py results events restricted hour nbhd`` to generate the pruning plots for the hour-city resolution.
+
+Alternatively, you can download the ReproZip package [figure-11.rpz]() to reproduce the original plots:
+
+    $ reprounzip vagrant setup figure-11.rpz figure-11/
+    ## Reproducing Figure 11(a)
+    $ reprounzip vagrant run figure-11/ 11a
+    $ reprounzip vagrant download figure-11/ events-restricted-week-city.png:figure-11a.png
+    ## Reproducing Figure 11(b)
+    $ reprounzip vagrant run figure-11/ 11b
+    $ reprounzip vagrant download figure-11/ events-restricted-week-city.png:figure-11b.png
 
 ### 6.5. Correctness and Robustness
 
