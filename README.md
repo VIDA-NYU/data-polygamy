@@ -45,6 +45,7 @@ This README file is divided into the following sections:
     * [6.4. Performance Evaluation](#64-performance-evaluation)
     * [6.5. Correctness and Robustness](#65-correctness-and-robustness)
     * [6.6. Standard Techniques](#66-standard-techniques)
+    * [6.7. Interesting Relationships](#67-interesting-relationships)
 
 ## 1. Repository Overview
 
@@ -472,7 +473,7 @@ Then, to produce the plots:
     $ cd sigmod16/performance-evaluation/merge-tree-index/
     $ python merge-tree-index-performance.py  ## Figures 7(a) and 7(b)
     
-Alternatively, you can download the ReproZip package [figure-7.rpz]() to reproduce the original plots:
+Alternatively, you can download the ReproZip package [figure-7.rpz](https://nyu.box.com/s/mpvksv5lw9xrfun8lzddy6irol251o7y) to reproduce the original plots:
 
     $ reprounzip vagrant setup figure-7.rpz figure-7/
     $ reprounzip vagrant run figure-7/
@@ -511,7 +512,7 @@ Alternatively, you can download the ReproZip package [figure-8.rpz](https://nyu.
 
 #### Query Performance (Figure 9)
 
-First, make sure to run the scripts for [feature indexing and identification](#feature-indexing-and-identification-figure-8)), *i.e.*:
+First, make sure to run the scripts for [feature indexing and identification](#feature-indexing-and-identification-figure-8), *i.e.*:
 
     $ cd sigmod16/performance-evaluation/
     $ cd nyc-open/                       ## NYC Open collection
@@ -583,7 +584,7 @@ Alternatively, you can download the ReproZip package [figure-10.rpz](https://nyu
 
 #### Relationship Pruning (Figure 11)
 
-First, make sure to run the scripts for [query performance](#query-performance-figure-9)). Then, run the following to download the relationship data:
+First, make sure to run the scripts for [query performance](#query-performance-figure-9). Then, run the following to download the relationship data:
 
     $ cd sigmod16/performance-evaluation/nyc-open/
     $ ./download-relationships
@@ -677,3 +678,12 @@ To run the standard techniques on the *NYC Urban collection*:
     $ ./standard-techniques
     
 Please note that this assumes that the script [``sigmod16/performance-evaluation/nyc-urban/run-varying``](#feature-indexing-and-identification-figure-8) has already been run, i.e., that the scalar function computation step has already been executed.
+
+### 6.7. Interesting Relationships
+
+First, make sure to run the scripts for [query performance](#query-performance-figure-9). Then, run the following to download the relationship data from the *NYC Urban collection*:
+
+    $ cd sigmod16/performance-evaluation/nyc-urban/
+    $ ./download-relationships
+    
+Relationships for salient features can be found under ``sigmod16/performance-evaluation/nyc-urban/output-events``, while relationships for extreme features can be found under ``sigmod16/performance-evaluation/nyc-urban/output-outliers``.
