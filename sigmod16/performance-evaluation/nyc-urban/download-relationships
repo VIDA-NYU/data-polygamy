@@ -1,0 +1,3 @@
+mkdir output-events
+mkdir output-outliers
+hdfs dfs -ls -h relationships/* | python getmerge.py output-events output-outliers restricted

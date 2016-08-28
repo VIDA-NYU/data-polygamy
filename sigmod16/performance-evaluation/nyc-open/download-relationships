@@ -1,0 +1,3 @@
+mkdir output-events
+mkdir output-outliers
+python getmerge.py output-events output-outliers nyc-open-metadata
