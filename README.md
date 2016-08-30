@@ -601,21 +601,21 @@ Next, we need to analyze the number of relationships for a varying number of dat
 To produce the pruning plots (Figure 11):
 
     $ cd sigmod16/performance-evaluation/nyc-urban/pruning/
-    $ python pruning.py results events restricted week city  ## Figure 11(a)
+    $ python pruning.py results events restricted week city True   ## Figure 11(a)
     $ cd ../../nyc-open/pruning/
-    $ python pruning.py results events restricted week city  ## Figure 11(b)
+    $ python pruning.py results events restricted week city False  ## Figure 11(b)
     
-Note that you can generate the same plots for different resolutions. For instance, run ``python pruning.py results events restricted hour nbhd`` to generate the pruning plots for the hour-city resolution.
+Note that you can generate the same plots for different resolutions. For instance, run ``python pruning.py results events restricted hour nbhd True`` to generate the pruning plots for the hour-city resolution.
 
-Alternatively, you can download the ReproZip package [figure-11.rpz]() to reproduce the original plots:
+Alternatively, you can download the ReproZip package [figure-11.rpz](https://nyu.box.com/s/khiivdbud3c974ratuhrr9i7hqel70q0) to reproduce the original plots:
 
     $ reprounzip vagrant setup figure-11.rpz figure-11/
     ## Reproducing Figure 11(a)
     $ reprounzip vagrant run figure-11/ 11a
-    $ reprounzip vagrant download figure-11/ events-restricted-week-city.png:figure-11a.png
+    $ reprounzip vagrant download figure-11/ events-restricted-week-city-urban:figure-11a.png
     ## Reproducing Figure 11(b)
     $ reprounzip vagrant run figure-11/ 11b
-    $ reprounzip vagrant download figure-11/ events-restricted-week-city.png:figure-11b.png
+    $ reprounzip vagrant download figure-11/ events-restricted-week-city-open:figure-11b.png
 
 ### 6.5. Correctness and Robustness
 

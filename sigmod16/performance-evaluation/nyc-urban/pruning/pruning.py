@@ -13,7 +13,7 @@ import matplotlib.font_manager as font
 from operator import itemgetter
 
 if sys.argv[1] == "help":
-    print "[dir] [events] [permutation] [temp res] [spatial res]"
+    print "[dir] [events] [permutation] [temp res] [spatial res] [y-axis-label]"
     sys.exit(0)
 
 scores = ["0.6", "0.8"]
