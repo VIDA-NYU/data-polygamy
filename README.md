@@ -45,7 +45,7 @@ This README file is divided into the following sections:
     * [6.4. Performance Evaluation](#64-performance-evaluation)
     * [6.5. Correctness and Robustness](#65-correctness-and-robustness)
     * [6.6. Standard Techniques](#66-standard-techniques)
-    * [6.7. Interesting Relationships](#67-interesting-relationships)
+    * [6.7. Relationships](#67-relationships)
 
 ## 1. Repository Overview
 
@@ -354,7 +354,7 @@ We provide the following scripts to make it easier for re-running our experiment
 
 * [``prepareData.sh``](sigmod16/prepareData.sh) downloads and stores all the necessary data and metadata.
 * [``prepareSoftware.sh``](sigmod16/prepareSoftware.sh) builds the Data Polygamy framework; note this is optional, since we provide a pre-built jar file available at [``sigmod16/data-polygamy.jar``](sigmod16/data-polygamy.jar).
-* [``runExperiments.sh``](sigmod16/runExperiments.sh) runs the following experiments: 
+* [``runExperiments.sh``](sigmod16/runExperiments.sh) runs all the experiments (including the generation of the plots), except for the scalability experiment, since this one depends on installing some additional dependencies and configuring Amazon Web Services (AWS). For more information about this experiment, please see its [corresponding section](#scalability-figure-10).
 
 It is important to note that, since we cannot make the 911, Taxi, and Twitter datasets available, the scripts that we provide here do not take into account these datasets, and as a consequence, the performance results and plots will be consistent but visually different than the ones published on the paper. Please modify the scripts accordingly if you obtain the remaining datasets elsewhere.
 
@@ -679,7 +679,7 @@ To run the standard techniques on the *NYC Urban collection*:
     
 Please note that this assumes that the script [``sigmod16/performance-evaluation/nyc-urban/run-varying``](#feature-indexing-and-identification-figure-8) has already been run, i.e., that the scalar function computation step has already been executed.
 
-### 6.7. Interesting Relationships
+### 6.7. Relationships
 
 First, make sure to run the scripts for [query performance](#query-performance-figure-9). Then, run the following to download the relationship data from the *NYC Urban collection*:
 
