@@ -35,6 +35,8 @@ import edu.nyu.vida.data_polygamy.utils.Utilities;
 public class TopologicalIndex implements Serializable {
 	
     private static final long serialVersionUID = 1L;
+    
+    private static final double thresholdRatio = 0.4;
 
     public static class Attribute implements Serializable {
         private static final long serialVersionUID = 1L;
@@ -292,9 +294,6 @@ public class TopologicalIndex implements Serializable {
 						continue;
 					}
 					double eventTh = min?vals[vals.length - 1]:vals[0];
-					if(outlier) {
-						eventTh = iqOutlierTh(vals, min);
-					}
 					getEvents(results, functions.get(tempBin), index.get(tempBin), min, eventTh, print);
 					perVals = new PersistencePoints();
 				}
@@ -312,13 +311,11 @@ public class TopologicalIndex implements Serializable {
 				}
 				double eventTh = min?vals[vals.length - 1]:vals[0];
 				
-				if(outlier) {
-				    if (threshold.isEmpty()) {
-				        eventTh = iqOutlierTh(vals, min);
-                    } else {
-                        eventTh = Double.parseDouble(threshold);
-                    }
-				}
+			    if (threshold.isEmpty()) {
+			        eventTh = iqOutlierTh(vals, min);
+                } else {
+                    eventTh = Double.parseDouble(threshold);
+                }
 				getEvents(results, eventTh, index, min, att);
 			}
 		}
@@ -370,15 +367,33 @@ public class TopologicalIndex implements Serializable {
 //			nv = ((TimeSeries2DFunction)tf).nv;
 //		}
 		IntOpenHashSet set = new IntOpenHashSet();
+		
+		int numberThresholdValues = 0;
+		for (Feature f: features) {
+		    double pt = f.exFn;
+		    if (min) {
+                if (f.sadFn < f.exFn) {
+                    pt = f.sadFn;
+                }
+		    }
+		    if (pt == eventTh) {
+		        numberThresholdValues++;
+		    }
+		}
+		double ratio = numberThresholdValues / (double) features.length;
+		
 		for(Feature f: features) {
 			float pt = f.exFn;
 			if (min) {
 				if (f.sadFn < f.exFn) {
 					pt = f.sadFn;
 				}
-				if (pt > eventTh) {
+				if (ratio < thresholdRatio && pt > eventTh) {
 					continue;
 				}
+				if (ratio >= thresholdRatio && pt >= eventTh) {
+                    continue;
+                }
 				int exv = f.v;
 				
 				IntArrayList queue = new IntArrayList();
@@ -424,9 +439,12 @@ public class TopologicalIndex implements Serializable {
 					}
 				}
 			} else {
-				if (pt < eventTh) {
+				if (ratio < thresholdRatio && pt < eventTh) {
 					continue;
 				}
+				if (ratio >= thresholdRatio && pt <= eventTh) {
+                    continue;
+                }
 
 				int exv = f.v;
 				
