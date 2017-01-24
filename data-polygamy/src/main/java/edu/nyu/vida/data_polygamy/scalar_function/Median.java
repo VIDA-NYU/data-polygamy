@@ -27,7 +27,7 @@ public class Median extends Aggregation {
     }
     
     @Override
-    public void addValue(float value) {
+    public void addValue(float value, int time) {
         if (Float.isNaN(value))
             return;
         

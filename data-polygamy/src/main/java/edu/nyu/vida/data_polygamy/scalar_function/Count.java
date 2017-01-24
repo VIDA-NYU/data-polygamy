@@ -19,7 +19,7 @@ public class Count extends Aggregation {
     }
     
     @Override
-    public void addValue(float value) {
+    public void addValue(float value, int time) {
         count++;
     }
     

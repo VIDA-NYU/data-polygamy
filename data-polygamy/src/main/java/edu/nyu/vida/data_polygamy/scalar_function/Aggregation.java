@@ -15,7 +15,7 @@ public abstract class Aggregation {
     
     public Aggregation() {}
     
-    abstract public void addValue(float value);
+    abstract public void addValue(float value, int time);
     abstract public void reset();
     abstract public int getCount();
     abstract public float getResult();

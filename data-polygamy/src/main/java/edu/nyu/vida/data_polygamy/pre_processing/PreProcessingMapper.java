@@ -134,6 +134,11 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             aggregates.put(i, (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.AVERAGE) + "-" + parameterNames[i].trim());
             aggregateFunctions.put(i, Function.AVERAGE);
             
+            nbParameters++;
+            
+            aggregates.put(i, (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.GRADIENT) + "-" + parameterNames[i].trim());
+            aggregateFunctions.put(i, Function.GRADIENT);
+            
         }
         
         Iterator<Integer> it = aggregates.keySet().iterator();
@@ -294,7 +299,7 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             // count 
             if (index == -1) {
                 Count agg = new Count();
-                agg.addValue(floatVal);
+                agg.addValue(floatVal, 0);
                 output.add(agg);
                 continue;
             }
@@ -316,7 +321,8 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             }
             
             Aggregation agg = FrameworkUtils.getAggregation(aggregateFunctions.get(index));
-            agg.addValue(floatVal);
+            // TODO: only gets the first temporal attribute
+            agg.addValue(floatVal, temporal.get(0));
             output.add(agg);
         }
         
