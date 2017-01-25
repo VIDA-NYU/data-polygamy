@@ -57,6 +57,8 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
     // aggregation functions for each parameter
     boolean aggregatesInit = false;
     ArrayList<Integer> aggregatesIndex = new ArrayList<Integer>();
+    HashMap<Integer,Integer> attributeIndex =
+            new HashMap<Integer,Integer>();
     HashMap<Integer,String> aggregates =
             new HashMap<Integer,String>();
     HashMap<Integer,Function> aggregateFunctions =
@@ -100,8 +102,9 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
         System.out.println();*/
         
         // count
-        aggregates.put(-1, (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.COUNT) + "-" + parameterNames[0].trim());
-        aggregateFunctions.put(-1, Function.COUNT);
+        aggregates.put((nbParameters-1), (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.COUNT) + "-" + parameterNames[0].trim());
+        attributeIndex.put((nbParameters-1), -1);
+        aggregateFunctions.put((nbParameters-1), Function.COUNT);
         
         for (int i = 0; i < inputTest.length; i++) {
             
@@ -125,23 +128,26 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
                     parameterNameLowerCase.contains("key") ||
                     parameterNameLowerCase.contains("name")) {
                 
-                aggregates.put(i, (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.UNIQUE) + "-" + parameterNames[i].trim());
-                aggregateFunctions.put(i, Function.UNIQUE);
+                aggregates.put((nbParameters-1), (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.UNIQUE) + "-" + parameterNames[i].trim());
+                attributeIndex.put((nbParameters-1), i);
+                aggregateFunctions.put((nbParameters-1), Function.UNIQUE);
                 
                 continue;
             }
             
-            aggregates.put(i, (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.AVERAGE) + "-" + parameterNames[i].trim());
-            aggregateFunctions.put(i, Function.AVERAGE);
+            aggregates.put((nbParameters-1), (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.AVERAGE) + "-" + parameterNames[i].trim());
+            attributeIndex.put((nbParameters-1), i);
+            aggregateFunctions.put((nbParameters-1), Function.AVERAGE);
             
             nbParameters++;
             
-            aggregates.put(i, (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.GRADIENT) + "-" + parameterNames[i].trim());
-            aggregateFunctions.put(i, Function.GRADIENT);
+            aggregates.put((nbParameters-1), (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.GRADIENT) + "-" + parameterNames[i].trim());
+            attributeIndex.put((nbParameters-1), i);
+            aggregateFunctions.put((nbParameters-1), Function.GRADIENT);
             
         }
         
-        Iterator<Integer> it = aggregates.keySet().iterator();
+        Iterator<Integer> it = attributeIndex.keySet().iterator();
         while (it.hasNext())
             aggregatesIndex.add(it.next());
     }
@@ -293,7 +299,8 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
         Iterator<Integer> it = aggregatesIndex.iterator();
         Float defaultVal;
         while (it.hasNext()) {
-            int index = it.next();
+            int uniqueIndex = it.next();
+            int index = attributeIndex.get(uniqueIndex);
             Float floatVal = 0f;
             
             // count 
@@ -320,7 +327,7 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
                 } catch (NumberFormatException e) {}
             }
             
-            Aggregation agg = FrameworkUtils.getAggregation(aggregateFunctions.get(index));
+            Aggregation agg = FrameworkUtils.getAggregation(aggregateFunctions.get(uniqueIndex));
             // TODO: only gets the first temporal attribute
             agg.addValue(floatVal, temporal.get(0));
             output.add(agg);
