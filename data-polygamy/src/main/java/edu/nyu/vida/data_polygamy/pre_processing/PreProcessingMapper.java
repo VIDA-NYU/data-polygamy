@@ -23,6 +23,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import edu.nyu.vida.data_polygamy.scalar_function.Aggregation;
 import edu.nyu.vida.data_polygamy.scalar_function.Count;
+import edu.nyu.vida.data_polygamy.scalar_function.CountGradient;
 import edu.nyu.vida.data_polygamy.resolution.SpatialResolution;
 import edu.nyu.vida.data_polygamy.resolution.SpatialResolutionUtils;
 import edu.nyu.vida.data_polygamy.resolution.ToCity;
@@ -102,9 +103,20 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
         System.out.println();*/
         
         // count
-        aggregates.put((nbParameters-1), (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.COUNT) + "-" + parameterNames[0].trim());
+        aggregates.put((nbParameters-1),
+                (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.COUNT)
+                + "-" + parameterNames[0].trim());
         attributeIndex.put((nbParameters-1), -1);
         aggregateFunctions.put((nbParameters-1), Function.COUNT);
+        
+        nbParameters++;
+        
+        // count gradient
+        aggregates.put((nbParameters-1),
+                (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.COUNT_GRADIENT)
+                + "-" + parameterNames[0].trim());
+        attributeIndex.put((nbParameters-1), -2);
+        aggregateFunctions.put((nbParameters-1), Function.COUNT_GRADIENT);
         
         for (int i = 0; i < inputTest.length; i++) {
             
@@ -128,20 +140,26 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
                     parameterNameLowerCase.contains("key") ||
                     parameterNameLowerCase.contains("name")) {
                 
-                aggregates.put((nbParameters-1), (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.UNIQUE) + "-" + parameterNames[i].trim());
+                aggregates.put((nbParameters-1),
+                        (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.UNIQUE)
+                        + "-" + parameterNames[i].trim());
                 attributeIndex.put((nbParameters-1), i);
                 aggregateFunctions.put((nbParameters-1), Function.UNIQUE);
                 
                 continue;
             }
             
-            aggregates.put((nbParameters-1), (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.AVERAGE) + "-" + parameterNames[i].trim());
+            aggregates.put((nbParameters-1),
+                    (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.AVERAGE)
+                    + "-" + parameterNames[i].trim());
             attributeIndex.put((nbParameters-1), i);
             aggregateFunctions.put((nbParameters-1), Function.AVERAGE);
             
             nbParameters++;
             
-            aggregates.put((nbParameters-1), (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.GRADIENT) + "-" + parameterNames[i].trim());
+            aggregates.put((nbParameters-1),
+                    (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.GRADIENT)
+                    + "-" + parameterNames[i].trim());
             attributeIndex.put((nbParameters-1), i);
             aggregateFunctions.put((nbParameters-1), Function.GRADIENT);
             
@@ -309,10 +327,18 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             int index = attributeIndex.get(uniqueIndex);
             Float floatVal = 0f;
             
-            // count 
+            // count
             if (index == -1) {
                 Count agg = new Count();
                 agg.addValue(floatVal, 0);
+                output.add(agg);
+                continue;
+            }
+            
+            // count gradient
+            if (index == -2) {
+                CountGradient agg = new CountGradient();
+                agg.addValue(floatVal, temporal.get(0));
                 output.add(agg);
                 continue;
             }

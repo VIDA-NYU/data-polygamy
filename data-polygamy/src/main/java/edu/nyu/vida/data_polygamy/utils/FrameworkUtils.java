@@ -45,6 +45,7 @@ import com.google.common.collect.ComparisonChain;
 import edu.nyu.vida.data_polygamy.scalar_function.Aggregation;
 import edu.nyu.vida.data_polygamy.scalar_function.Average;
 import edu.nyu.vida.data_polygamy.scalar_function.Count;
+import edu.nyu.vida.data_polygamy.scalar_function.CountGradient;
 import edu.nyu.vida.data_polygamy.scalar_function.Gradient;
 import edu.nyu.vida.data_polygamy.scalar_function.Max;
 import edu.nyu.vida.data_polygamy.scalar_function.Median;
@@ -551,7 +552,7 @@ public class FrameworkUtils {
     public static enum Function {
         NONE, AVERAGE, COUNT, SUM,
         MAX, MIN, MEDIAN, MODE, UNIQUE,
-        GRADIENT
+        GRADIENT, COUNT_GRADIENT
     }
     
     private static final Function[] functions = Function.values();
@@ -577,6 +578,8 @@ public class FrameworkUtils {
             return new Unique();
         case GRADIENT:
             return new Gradient();
+        case COUNT_GRADIENT:
+            return new CountGradient();
         default:
             return null;
         }
@@ -604,6 +607,8 @@ public class FrameworkUtils {
             return new Unique();
         case GRADIENT:
             return new Gradient();
+        case COUNT_GRADIENT:
+            return new CountGradient();
         default:
             return null;
         }
@@ -640,6 +645,9 @@ public class FrameworkUtils {
             break;
         case GRADIENT:
             strResult = "gradient";
+            break;
+        case COUNT_GRADIENT:
+            strResult = "count_gradient";
             break;
         default:
             strResult = "none";
