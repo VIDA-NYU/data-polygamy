@@ -318,6 +318,22 @@ public class FrameworkUtils {
         return temporal;
     }
     
+    public static int getTime(String[] input, int tempPosition) {
+        
+        int time = -1;
+        
+        try {
+            time = (int) Double.parseDouble(input[tempPosition]);
+        } catch (Exception e) {
+            return -1;
+        }
+        
+        if (time < 0)
+            return -1;
+        
+        return time;
+    }
+    
     public static int getTime(int temporalResolution, String[] input, int tempPosition) {
         
         String temporal = "";
@@ -644,6 +660,85 @@ public class FrameworkUtils {
             return false;
         }
         return true;
+    }
+    
+    /**
+     * Vector
+     */
+    
+    public static class Vector {
+        
+        private float x1, x2;
+        private float y1, y2;
+        
+        public Vector(float x1, float y1, float x2, float y2) {
+            this.x1 = x1;
+            this.x2 = x2;
+            this.y1 = y1;
+            this.y2 = y2;
+        }
+        
+        public float getMagnitude() {
+            float squareX = (float) Math.pow(x2 - x1, 2);
+            float squareY = (float) Math.pow(y2 - y1, 2);
+            return (float) Math.sqrt(squareX + squareY);
+        }
+        
+        public float getDirection() {
+            return (float) Math.atan2(y2 - y1, x2 - x1);
+        }
+        
+        public float getX1() {
+            return x1;
+        }
+
+        public float getX2() {
+            return x2;
+        }
+
+        public float getY1() {
+            return y1;
+        }
+
+        public float getY2() {
+            return y2;
+        }
+
+        public void readFields(DataInput in) throws IOException {
+            this.x1 = in.readFloat();
+            this.x2 = in.readFloat();
+            this.y1 = in.readFloat();
+            this.y2 = in.readFloat();
+        }
+
+        public void write(DataOutput out) throws IOException {
+            out.writeFloat(this.x1);
+            out.writeFloat(this.x2);
+            out.writeFloat(this.y1);
+            out.writeFloat(this.y2);
+        }
+        
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(this.x1, this.x2, this.y1, this.y2);
+        }
+        
+        public int compareTo(Vector arg0) {
+            Vector agg = (Vector) arg0;
+            return ComparisonChain.start().
+                    compare(this.x1, agg.getX1()).
+                    compare(this.x2, agg.getX2()).
+                    compare(this.y1, agg.getY1()).
+                    compare(this.y2, agg.getY2()).
+                    result();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof Vector))
+                return false;
+            return (this.compareTo((Vector) o) == 0) ? true : false;
+        }
     }
     
     /**
@@ -2817,7 +2912,7 @@ public class FrameworkUtils {
         return names;
     }
     
-public static String[] searchDataAttributes(final String name, Configuration conf, boolean s3) throws IOException {
+    public static String[] searchDataAttributes(final String name, Configuration conf, boolean s3) throws IOException {
         
         PathFilter filter = new PathFilter() {
 

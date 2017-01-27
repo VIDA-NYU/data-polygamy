@@ -265,10 +265,16 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
         
         ArrayList<Integer> temporal = new ArrayList<Integer>();
         
+        Integer time = null;
+        
         for (int tempPos: temporalPos) {
             int temp = FrameworkUtils.getTime(temporalResolution, input, tempPos);
-            if (temp != -1)
+            if (temp != -1) {
+                if (time == null) {
+                    time = FrameworkUtils.getTime(input, tempPos);
+                }
                 temporal.add(temp);
+            }
         }
         
         if ((spatial.size() <= 0) || (temporal.size() <= 0)) {
@@ -329,7 +335,7 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             
             Aggregation agg = FrameworkUtils.getAggregation(aggregateFunctions.get(uniqueIndex));
             // TODO: only gets the first temporal attribute
-            agg.addValue(floatVal, temporal.get(0));
+            agg.addValue(floatVal, time);
             output.add(agg);
         }
         
