@@ -158,25 +158,29 @@ public class FrameworkUtils {
             result[1] = "day";
             result[2] = "week";
             result[3] = "month";
+            result[4] = "year";
             break;
         case FrameworkUtils.DAY:
             result = new String[3];
             result[0] = "day";
             result[1] = "week";
             result[2] = "month";
+            result[3] = "year";
             break;
         case FrameworkUtils.WEEK:
             result = new String[2];
             result[0] = "week";
             result[1] = "month";
+            result[2] = "year";
             break;
         case FrameworkUtils.MONTH:
             result = new String[1];
             result[0] = "month";
+            result[1] = "year";
             break;
         default:
             result = new String[1];
-            result[0] = "month";
+            result[0] = "year";
             break;
         }
         

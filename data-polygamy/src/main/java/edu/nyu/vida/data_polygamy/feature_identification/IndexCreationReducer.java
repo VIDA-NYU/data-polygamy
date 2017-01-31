@@ -27,6 +27,7 @@ import edu.nyu.vida.data_polygamy.ctdata.TopologicalIndex;
 import edu.nyu.vida.data_polygamy.ctdata.TopologicalIndex.Attribute;
 import edu.nyu.vida.data_polygamy.utils.FrameworkUtils;
 import edu.nyu.vida.data_polygamy.utils.FrameworkUtils.AttributeResolutionWritable;
+import edu.nyu.vida.data_polygamy.utils.FrameworkUtils.Function;
 import edu.nyu.vida.data_polygamy.utils.FrameworkUtils.SpatioTemporalFloatWritable;
 import edu.nyu.vida.data_polygamy.utils.FrameworkUtils.TopologyTimeSeriesWritable;
 import edu.nyu.vida.data_polygamy.utils.Utilities;
@@ -37,6 +38,7 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
     public static FrameworkUtils utils = new FrameworkUtils();
     boolean s3 = true;
     
+    HashMap<Integer, HashSet<Integer>> functions = new HashMap<Integer, HashSet<Integer>>(); 
     HashMap<Integer,String> idToDataset = new HashMap<Integer,String>();
     HashMap<Integer,HashMap<Integer,String>> idToRegThreshold = new HashMap<Integer,HashMap<Integer,String>>();
     HashMap<Integer,HashMap<Integer,String>> idToRareThreshold = new HashMap<Integer,HashMap<Integer,String>>();
@@ -94,6 +96,27 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                 }
                 idToRareThreshold.put(dt, attRareThresholds);
             }
+            
+            // header
+            
+            String[] aggregates = context.getConfiguration().get("dataset-" + dt +
+                    "-aggregates", "").split(",");
+            
+            HashSet<Integer> gradientFunctions = new HashSet<Integer>();
+            
+            for (int j = 0; j < aggregates.length; j++) {
+                String[] vals = aggregates[j].split("-");
+                int id = Integer.parseInt(vals[0]);
+                String function = vals[1];
+                if (function.contains(FrameworkUtils.functionToString(Function.GRADIENT))) {
+                    gradientFunctions.add(id);
+                } else if (function.contains(FrameworkUtils.functionToString(Function.COUNT_GRADIENT))) {
+                    gradientFunctions.add(id);
+                }
+            }
+            
+            functions.put(dt, gradientFunctions);
+            
         }
         
         String[] useMergeTreeStr = conf.get("use-merge-tree","").split(",");
@@ -249,6 +272,10 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
 
         //System.out.println("Dataset: " + key.getDataset());
         
+        int datasetId = key.getDataset();
+        int attributeId = key.getAttribute();
+        boolean isGradient = functions.get(datasetId).contains(attributeId) ? true : false;
+        
         Iterator<SpatioTemporalFloatWritable> it = values.iterator();
         SpatioTemporalFloatWritable st;
         DateTime date;
@@ -263,8 +290,11 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
             
             // for each temporal bin
             date = new DateTime(((long)temporal)*1000, DateTimeZone.UTC);
-            int hash = (tempRes == FrameworkUtils.HOUR) ? date.getYear()*100 + date.getMonthOfYear() :
-                ((tempRes == FrameworkUtils.DAY) ? date.getYear()*100 + (date.getMonthOfYear()/4) : 1);
+            int hash = 1;
+            if (!isGradient) {
+                hash = (tempRes == FrameworkUtils.HOUR) ? date.getYear()*100 + date.getMonthOfYear() :
+                    ((tempRes == FrameworkUtils.DAY) ? date.getYear()*100 + (date.getMonthOfYear()/4) : 1);
+            }
             ArrayList<SpatioTemporalVal> temporalBinVals = att.data.get(hash);
             if (temporalBinVals == null)
                 temporalBinVals = new ArrayList<SpatioTemporalVal>(); 
