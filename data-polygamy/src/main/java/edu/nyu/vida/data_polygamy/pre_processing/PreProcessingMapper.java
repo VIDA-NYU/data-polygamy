@@ -234,6 +234,10 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             spatialTranslation = SpatialResolutionUtils.pointsResolution(spatialResolution,
                     gridResolution, xPositions, yPositions, conf);
             break;
+        case FrameworkUtils.BBL:
+            spatialTranslation = SpatialResolutionUtils.bblResolution(spatialResolution,
+                    spatialPos, conf);
+            break;
         case FrameworkUtils.NBHD:
             spatialTranslation = SpatialResolutionUtils.nbhdResolution(spatialResolution,
                     spatialPos);
@@ -245,6 +249,10 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
         case FrameworkUtils.GRID:
             spatialTranslation = SpatialResolutionUtils.gridResolution(spatialResolution,
                     spatialPos);
+            break;
+        case FrameworkUtils.BLOCK:
+            spatialTranslation = SpatialResolutionUtils.blockResolution(spatialResolution,
+                    spatialPos, true, conf);
             break;
         case FrameworkUtils.CITY:
             spatialTranslation = new ToCity(spatialPos);

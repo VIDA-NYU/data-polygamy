@@ -29,8 +29,83 @@ public class SpatialResolutionUtils {
             spatialTranslation = new PointsToRegion(xPositions, yPositions, "grid",
                     gridResolution, conf);
             break;
+        case FrameworkUtils.BLOCK:
+            spatialTranslation = new PointsToRegion(xPositions, yPositions, "block",
+                    gridResolution, conf);
+            break;
         case FrameworkUtils.CITY:
             spatialTranslation = new ToCity(xPositions);
+            break;
+        default:
+            System.out.println("Something is wrong...");
+            System.exit(-1);
+            break;
+        }
+        
+        return spatialTranslation;
+    }
+    
+    public static SpatialResolution bblResolution(int spatialResolution,
+            int[] spatialPos, Configuration conf) {
+        
+        SpatialResolution spatialTranslation = null;
+        
+        switch (spatialResolution) {
+        
+        case FrameworkUtils.NBHD:
+            System.out.println("Bbl to Nbhd currently not supported.");
+            System.exit(-1);
+            break;
+        case FrameworkUtils.ZIP:
+            System.out.println("Bbl to Zip currently not supported.");
+            System.exit(-1);
+            break;
+        case FrameworkUtils.GRID:
+            System.out.println("Bbl to Grid currently not supported.");
+            System.exit(-1);
+            break;
+        case FrameworkUtils.BLOCK:
+            spatialTranslation = new BblToBlock(spatialPos, conf);
+            break;
+        case FrameworkUtils.CITY:
+            spatialTranslation = new ToCity(spatialPos);
+            break;
+        default:
+            System.out.println("Something is wrong...");
+            System.exit(-1);
+            break;
+        }
+        
+        return spatialTranslation;
+    }
+    
+    public static SpatialResolution blockResolution(int spatialResolution,
+            int[] spatialPos, boolean preProcessing, Configuration conf) {
+        
+        SpatialResolution spatialTranslation = null;
+        
+        switch (spatialResolution) {
+        
+        case FrameworkUtils.NBHD:
+            System.out.println("Block to Nbhd currently not supported.");
+            System.exit(-1);
+            break;
+        case FrameworkUtils.BLOCK:
+            if (preProcessing)
+                spatialTranslation = new BlockToBlock(spatialPos, conf);
+            else
+                spatialTranslation = new NoTranslation(spatialPos);
+            break;
+        case FrameworkUtils.GRID:
+            System.out.println("Block to Grid currently not supported.");
+            System.exit(-1);
+            break;
+        case FrameworkUtils.ZIP:
+            System.out.println("Block to Zip currently not supported.");
+            System.exit(-1);
+            break;
+        case FrameworkUtils.CITY:
+            spatialTranslation = new ToCity(spatialPos);
             break;
         default:
             System.out.println("Something is wrong...");
@@ -59,6 +134,10 @@ public class SpatialResolutionUtils {
         	System.out.println("Nbhd to Grid currently not supported.");
             System.exit(-1);
         	break;
+        case FrameworkUtils.BLOCK:
+            System.out.println("Nbhd to Block currently not supported.");
+            System.exit(-1);
+            break;
         case FrameworkUtils.CITY:
             spatialTranslation = new ToCity(spatialPos);
             break;
@@ -92,6 +171,10 @@ public class SpatialResolutionUtils {
         	System.out.println("Zip to Grid currently not supported.");
             System.exit(-1);
             break;
+        case FrameworkUtils.BLOCK:
+            System.out.println("Zip to Block currently not supported.");
+            System.exit(-1);
+            break;
         case FrameworkUtils.CITY:
             spatialTranslation = new ToCity(spatialPos);
             break;
@@ -121,6 +204,10 @@ public class SpatialResolutionUtils {
         	break;
         case FrameworkUtils.GRID:
             spatialTranslation = new NoTranslation(spatialPos);
+            break;
+        case FrameworkUtils.BLOCK:
+            System.out.println("Grid to Block currently not supported.");
+            System.exit(-1);
             break;
         case FrameworkUtils.CITY:
             spatialTranslation = new ToCity(spatialPos);

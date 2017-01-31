@@ -58,6 +58,10 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
             spatialTranslation = SpatialResolutionUtils.gridResolution(spatialResolution,
             		spatialPosArray);
             break;
+        case FrameworkUtils.BLOCK:
+            spatialTranslation = SpatialResolutionUtils.blockResolution(spatialResolution,
+                    spatialPosArray, false, conf);
+            break;
         case FrameworkUtils.CITY:
             spatialTranslation = new ToCity(spatialPosArray);
             break;

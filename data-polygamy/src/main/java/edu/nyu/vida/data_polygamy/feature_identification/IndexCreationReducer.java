@@ -50,9 +50,11 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
     // CITY, NBHD, ZIP
     ArrayList<Integer[]> nbhdEdges = new ArrayList<Integer[]>();
     ArrayList<Integer[]> zipEdges = new ArrayList<Integer[]>();
+    ArrayList<Integer[]> blockEdges = new ArrayList<Integer[]>();
     int nvCity = 1;
     int nvNbhd = 1;
     int nvZip = 1;
+    int nvBlock = 1;
     
     TopologyTimeSeriesWritable valueWritable = new TopologyTimeSeriesWritable();
     
@@ -133,7 +135,8 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         for (int j = 0; j < spatialResolutionArray.length; j++) {
         	int spatialRes = utils.spatialResolution(spatialResolutionArray[j]);
         	
-        	if ((spatialRes == FrameworkUtils.NBHD) || (spatialRes == FrameworkUtils.ZIP)) {
+        	if ((spatialRes == FrameworkUtils.NBHD) || (spatialRes == FrameworkUtils.ZIP)
+        	        || (spatialRes == FrameworkUtils.BLOCK)) {
         
 	            if (bucket.equals(""))
 	                s3 = false;
@@ -142,8 +145,10 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
 	            // reading nodes
 	            if (spatialRes == FrameworkUtils.NBHD)
 	                edgesPath = new Path(bucket + "neighborhood-graph");
-	            else
+	            else if (spatialRes == FrameworkUtils.ZIP)
 	                edgesPath = new Path(bucket + "zipcode-graph");
+	            else
+	                edgesPath = new Path(bucket + "block-graph");
 	            
 	            FileSystem fs = null;
 	            
@@ -156,8 +161,10 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
 	            String [] s = Utilities.splitString(reader.readLine().trim());
 	            if (spatialRes == FrameworkUtils.NBHD)
 	                nvNbhd = Integer.parseInt(s[0].trim());
-	            else
+	            else if (spatialRes == FrameworkUtils.ZIP)
 	                nvZip = Integer.parseInt(s[0].trim());
+	            else
+	                nvBlock = Integer.parseInt(s[0].trim());
 	            
 	            int ne = Integer.parseInt(s[1].trim());
 	            for(int i = 0;i < ne;i ++) {
@@ -172,8 +179,10 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
 	                arr[1] = v2;
 	                if (spatialRes == FrameworkUtils.NBHD)
 	                	nbhdEdges.add(arr);
-	                else
+	                else if (spatialRes == FrameworkUtils.ZIP)
 	                	zipEdges.add(arr);
+	                else
+	                    blockEdges.add(arr);
 	            }
 	            reader.close();
 	        }
@@ -334,9 +343,11 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         TopologicalIndex index = (spatialRes == FrameworkUtils.NBHD) ?
                 new TopologicalIndex(spatialRes, tempRes, this.nvNbhd) :
                     ((spatialRes == FrameworkUtils.ZIP) ? new TopologicalIndex(spatialRes, tempRes, this.nvZip) :
-                                new TopologicalIndex(spatialRes, tempRes, this.nvCity));
+                        ((spatialRes == FrameworkUtils.BLOCK) ? new TopologicalIndex(spatialRes, tempRes, this.nvBlock) :
+                            new TopologicalIndex(spatialRes, tempRes, this.nvCity)));
         int ret = (spatialRes == FrameworkUtils.NBHD) ? index.createIndex(att, this.nbhdEdges) :
-            index.createIndex(att, this.zipEdges);
+            ((spatialRes == FrameworkUtils.BLOCK) ? index.createIndex(att, this.blockEdges) :
+                index.createIndex(att, this.zipEdges));
         
         // saving topological index
         /*outputStream = new ObjectOutputStream(FrameworkUtils.createFile(

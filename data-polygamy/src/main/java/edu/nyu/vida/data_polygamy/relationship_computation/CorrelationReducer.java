@@ -50,8 +50,10 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
     SpatialGraph spatialGraph = new SpatialGraph();
     SpatialGraph nbhdGraph = new SpatialGraph();
     SpatialGraph zipGraph = new SpatialGraph();
+    SpatialGraph blockGraph = new SpatialGraph();
     int gridSize = 0;
     int[][] originalGrid;
+    boolean isBlock = false;
     boolean isNbhd = false;
     boolean isGrid = false;
     boolean isZip = false;
@@ -97,6 +99,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         temporal = temporalResolution;
         
         // resetting
+        isBlock = false;
         isNbhd = false;
         isZip = false;
         isGrid = false;
@@ -117,6 +120,10 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         	spatialGraph.init(zipGraph);
         	isZip = true;
         	break;
+        case FrameworkUtils.BLOCK:
+            spatialGraph.init(blockGraph);
+            isBlock = true;
+            break;
         case FrameworkUtils.GRID:
             isGrid = true;
             break;
@@ -198,10 +205,13 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         outputIds = conf.getBoolean("output-ids", false);
         
         // nbhd grapgh
-        nbhdGraph.init(true, conf);
+        nbhdGraph.init(FrameworkUtils.NBHD, conf);
         
         // zipcode graph
-        zipGraph.init(false, conf);
+        zipGraph.init(FrameworkUtils.ZIP, conf);
+        
+        // block graph
+        blockGraph.init(FrameworkUtils.BLOCK, conf);
         
         // grid
         gridSize = 2048;
@@ -224,22 +234,6 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         
         TopologyTimeSeriesWritable[] elem;
         switch(spatial) {
-        case FrameworkUtils.NBHD:
-            for (int i = 0; i < spatialGraph.nbNodes(); i++) {
-                elem = new TopologyTimeSeriesWritable[2];
-                elem[0] = null;
-                elem[1] = null;
-                timeSeriesPerSpatial.add(elem);
-            }
-            break;
-        case FrameworkUtils.ZIP:
-            for (int i = 0; i < zipGraph.nbNodes(); i++) {
-                elem = new TopologyTimeSeriesWritable[2];
-                elem[0] = null;
-                elem[1] = null;
-                timeSeriesPerSpatial.add(elem);
-            }
-            break;
         case FrameworkUtils.GRID:
             for (int i = 0; i < gridSize; i++) {
                 elem = new TopologyTimeSeriesWritable[2];
@@ -255,7 +249,12 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             timeSeriesPerSpatial.add(elem);
             break;
         default:
-            // do nothing
+            for (int i = 0; i < spatialGraph.nbNodes(); i++) {
+                elem = new TopologyTimeSeriesWritable[2];
+                elem[0] = null;
+                elem[1] = null;
+                timeSeriesPerSpatial.add(elem);
+            }
             break;
         }
         
@@ -344,86 +343,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         //long start2 = System.currentTimeMillis();
         
         switch(spatial) {
-        case FrameworkUtils.NBHD:
-            
-            for (int j = 0; j < repetitions; j++) {
-            	//long startNbhd = System.currentTimeMillis();
-                pairs.clear();
-                pairs = (completeRandomization) ? spatialCompleteRandom() : bfsShift(true);
-                
-                stats = new TimeSeriesStats();
-                for (int i = 0; i < pairs.size(); i++) {
-                    Integer[] pair = pairs.get(i);
-                    stats.add(getStats(temporal, timeSeriesPerSpatial.get(pair[0])[dataset1Key],
-                            timeSeriesPerSpatial.get(pair[1])[dataset2Key], false));
-                }
-                stats.computeScores();
-                
-                float mcScore = stats.getRelationshipScore();
-                //float mcStrength = stats.getRelationshipStrength();
-                
-                if (alignedScore > 0) {
-                    if (mcScore >= alignedScore)
-                        pValue += 1;
-                }
-                else {
-                    if (mcScore <= alignedScore)
-                        pValue += 1;
-                }
-                if (pValue > (alpha*repetitions)) break; // pruning
-                //long endNbhd = System.currentTimeMillis();
-                //if (j == 0) System.out.println("One repetition: " + (endNbhd-startNbhd) + " ms");
-            }
-            
-            pValue = pValue/((float)(repetitions));
-            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond);
-            }
-            
-            break;
-            
-        case FrameworkUtils.ZIP:
-            
-            for (int j = 0; j < repetitions; j++) {
-                //long startNbhd = System.currentTimeMillis();
-                pairs.clear();
-                pairs = (completeRandomization) ? spatialCompleteRandom() : bfsShift(false);
-                
-                stats = new TimeSeriesStats();
-                for (int i = 0; i < pairs.size(); i++) {
-                    Integer[] pair = pairs.get(i);
-                    stats.add(getStats(temporal, timeSeriesPerSpatial.get(pair[0])[dataset1Key],
-                            timeSeriesPerSpatial.get(pair[1])[dataset2Key], false));
-                }
-                stats.computeScores();
-                
-                float mcScore = stats.getRelationshipScore();
-                //float mcStrength = stats.getRelationshipStrength();
-                
-                if (alignedScore > 0) {
-                    if (mcScore >= alignedScore)
-                        pValue += 1;
-                }
-                else {
-                    if (mcScore <= alignedScore)
-                        pValue += 1;
-                }
-                if (pValue > (alpha*repetitions)) break; // pruning
-                //long endNbhd = System.currentTimeMillis();
-                //if (j == 0) System.out.println("One repetition: " + (endNbhd-startNbhd) + " ms");
-            }
-            
-            pValue = pValue/((float)(repetitions));
-            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond);
-            }
-            
-            break;
-            
+        
         case FrameworkUtils.GRID:
             
             for (int j = 0; j < repetitions; j++) {
@@ -503,7 +423,43 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             break;
             
         default:
-            // do nothing
+            
+            for (int j = 0; j < repetitions; j++) {
+                //long startNbhd = System.currentTimeMillis();
+                pairs.clear();
+                pairs = (completeRandomization) ? spatialCompleteRandom() : bfsShift();
+                
+                stats = new TimeSeriesStats();
+                for (int i = 0; i < pairs.size(); i++) {
+                    Integer[] pair = pairs.get(i);
+                    stats.add(getStats(temporal, timeSeriesPerSpatial.get(pair[0])[dataset1Key],
+                            timeSeriesPerSpatial.get(pair[1])[dataset2Key], false));
+                }
+                stats.computeScores();
+                
+                float mcScore = stats.getRelationshipScore();
+                //float mcStrength = stats.getRelationshipStrength();
+                
+                if (alignedScore > 0) {
+                    if (mcScore >= alignedScore)
+                        pValue += 1;
+                }
+                else {
+                    if (mcScore <= alignedScore)
+                        pValue += 1;
+                }
+                if (pValue > (alpha*repetitions)) break; // pruning
+                //long endNbhd = System.currentTimeMillis();
+                //if (j == 0) System.out.println("One repetition: " + (endNbhd-startNbhd) + " ms");
+            }
+            
+            pValue = pValue/((float)(repetitions));
+            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond);
+            }
+            
             break;
         }
         
@@ -735,9 +691,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
     }
     
     // TODO: we may not have all the neighborhoods for the data
-    private ArrayList<Integer[]> bfsShift(boolean isNbhd) {
-        if (isNbhd)
-            return spatialGraph.generateRandomShift();
-        return zipGraph.generateRandomShift();
+    private ArrayList<Integer[]> bfsShift() {
+        return spatialGraph.generateRandomShift();
     }
 }

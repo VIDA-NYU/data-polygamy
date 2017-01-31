@@ -173,10 +173,10 @@ public class CorrelationTechniquesReducer extends Reducer<PairAttributeWritable,
         }
         
         // nbhd grapgh
-        nbhdGraph.init(true, conf);
+        nbhdGraph.init(FrameworkUtils.NBHD, conf);
         
         // zipcode graph
-        zipGraph.init(false, conf);
+        zipGraph.init(FrameworkUtils.ZIP, conf);
         
         // grid
         gridSize = 2048;

@@ -86,17 +86,28 @@ public class SpatialGraph {
     }
 
     
-    public void init(boolean nbhd, Configuration conf) throws IOException {
+    public void init(int resolution, Configuration conf) throws IOException {
     	
     	String bucket = conf.get("bucket", "");
     	Path edgesPath = null;
     	FileSystem fs = null;
         
         // reading edges
-        if (nbhd)
-        	edgesPath = new Path(bucket + "neighborhood-graph");
-        else
-        	edgesPath = new Path(bucket + "zipcode-graph");
+    	switch (resolution) {
+    	
+    	case FrameworkUtils.NBHD:
+    	    edgesPath = new Path(bucket + "neighborhood-graph");
+    	    break;
+    	case FrameworkUtils.ZIP:
+    	    edgesPath = new Path(bucket + "zipcode-graph");
+    	    break;
+    	case FrameworkUtils.BLOCK:
+            edgesPath = new Path(bucket + "block-graph");
+            break;
+        default:
+            edgesPath = new Path(bucket + "zipcode-graph");
+            break;
+    	}
         
         if (!bucket.equals(""))
             fs = FileSystem.get(edgesPath.toUri(), conf);

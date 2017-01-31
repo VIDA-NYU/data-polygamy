@@ -61,6 +61,8 @@ public class FrameworkUtils {
      */
     
     // spatial resolutions
+    public final static int BBL = 6;
+    public final static int BLOCK = 5;
     public final static int CITY = 4;
     public final static int GRID = 3;
     public final static int ZIP = 2;
@@ -83,12 +85,16 @@ public class FrameworkUtils {
     public FrameworkUtils() {
         
         // spatial resolution
+        spatialRes.put("bbl", BBL);
+        spatialRes.put("block", BLOCK);
         spatialRes.put("city", CITY);
         spatialRes.put("nbhd", NBHD);
         spatialRes.put("zip", ZIP);
         spatialRes.put("grid", GRID);
         spatialRes.put("points", POINTS);
         
+        spatialResStr.put(BBL, "bbl");
+        spatialResStr.put(BLOCK, "block");
         spatialResStr.put(CITY, "city");
         spatialResStr.put(NBHD, "nbhd");
         spatialResStr.put(ZIP, "zip");
@@ -111,6 +117,8 @@ public class FrameworkUtils {
     
     public String[] getSpatialResolutions() {
         String[] result = {
+                "bbl",
+                "block",
                 "city",
                 "nbhd",
                 "zip",
@@ -197,10 +205,19 @@ public class FrameworkUtils {
         switch(spatialResolution) {
         
         case FrameworkUtils.POINTS:
-            result = new String[3];
+            result = new String[5];
             result[0] = "nbhd";
             result[1] = "zip";
-            result[2] = "city";
+            result[2] = "block";
+            result[3] = "bbl";
+            result[4] = "city";
+            break;
+        case FrameworkUtils.BBL:
+            result = new String[4];
+            result[0] = "nbhd";
+            result[1] = "zip";
+            result[2] = "block";
+            result[3] = "city";
             break;
         case FrameworkUtils.NBHD:
             result = new String[2];
@@ -210,6 +227,11 @@ public class FrameworkUtils {
         case FrameworkUtils.ZIP:
             result = new String[2];
             result[0] = "zip";
+            result[1] = "city";
+            break;
+        case FrameworkUtils.BLOCK:
+            result = new String[2];
+            result[0] = "block";
             result[1] = "city";
             break;
         case FrameworkUtils.CITY:

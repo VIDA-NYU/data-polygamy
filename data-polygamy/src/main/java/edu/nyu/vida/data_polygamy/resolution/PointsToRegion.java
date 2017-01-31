@@ -23,7 +23,7 @@ public class PointsToRegion implements SpatialResolution {
     
     private ArrayList<Integer> polyRegionNames = new ArrayList<Integer>();
     private GridIndex grid = new GridIndex(100, 100);
-    boolean zipcode = false;
+    boolean useMapping = false;
     
     public PointsToRegion(int[] xPositions, int[] yPositions, String region,
             int gridResolution, Configuration conf) {
@@ -35,8 +35,11 @@ public class PointsToRegion implements SpatialResolution {
         else if (region.equals("grid"))
             data = bucket + "gneighborhood-" + gridResolution;
         else if (region.equals("zip")) {
-        	zipcode = true;
+        	useMapping = true;
         	data = bucket + "zipcode";
+        } else if (region.equals("block")) {
+            useMapping = true;
+            data = bucket + "block";
         } else {
         	System.out.println("Invalid region.");
         	System.exit(-1);
@@ -67,7 +70,7 @@ public class PointsToRegion implements SpatialResolution {
         /*Set<String> regionNames;
         JSONParser parser = new JSONParser();*/
         
-        int zipcodeId = 0;
+        int id = 0;
         
         try {
             BufferedReader buff = new BufferedReader(new InputStreamReader(fis));
@@ -98,9 +101,9 @@ public class PointsToRegion implements SpatialResolution {
                 polygon.closePath();
               
                 allPolygons.add((Path2D.Double) polygon);
-                if (zipcode) {
-                    polyRegionNames.add(zipcodeId);
-                    zipcodeId++;
+                if (useMapping) {
+                    polyRegionNames.add(id);
+                    id++;
                 } else
                     polyRegionNames.add(Integer.parseInt(region));
                 
