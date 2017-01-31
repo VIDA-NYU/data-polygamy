@@ -153,7 +153,7 @@ public class FrameworkUtils {
         switch(temporalResolution) {
         
         case FrameworkUtils.HOUR:
-            result = new String[4];
+            result = new String[5];
             result[0] = "hour";
             result[1] = "day";
             result[2] = "week";
@@ -161,22 +161,26 @@ public class FrameworkUtils {
             result[4] = "year";
             break;
         case FrameworkUtils.DAY:
-            result = new String[3];
+            result = new String[4];
             result[0] = "day";
             result[1] = "week";
             result[2] = "month";
             result[3] = "year";
             break;
         case FrameworkUtils.WEEK:
-            result = new String[2];
+            result = new String[3];
             result[0] = "week";
             result[1] = "month";
             result[2] = "year";
             break;
         case FrameworkUtils.MONTH:
-            result = new String[1];
+            result = new String[2];
             result[0] = "month";
             result[1] = "year";
+            break;
+        case FrameworkUtils.YEAR:
+            result = new String[1];
+            result[0] = "year";
             break;
         default:
             result = new String[1];
