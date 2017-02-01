@@ -230,9 +230,10 @@ public class FrameworkUtils {
             result[1] = "city";
             break;
         case FrameworkUtils.BLOCK:
-            result = new String[2];
+            result = new String[3];
             result[0] = "block";
-            result[1] = "city";
+            result[1] = "nbhd";
+            result[2] = "city";
             break;
         case FrameworkUtils.CITY:
             result = new String[1];
