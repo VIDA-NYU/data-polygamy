@@ -24,6 +24,7 @@ public class PointsToRegion implements SpatialResolution {
     private ArrayList<Integer> polyRegionNames = new ArrayList<Integer>();
     private GridIndex grid = new GridIndex(100, 100);
     boolean useMapping = false;
+    boolean useBoundingCircle = false;
     
     public PointsToRegion(int[] xPositions, int[] yPositions, String region,
             int gridResolution, Configuration conf) {
@@ -39,6 +40,7 @@ public class PointsToRegion implements SpatialResolution {
         	data = bucket + "zipcode";
         } else if (region.equals("block")) {
             useMapping = true;
+            useBoundingCircle = true;
             data = bucket + "block";
         } else {
         	System.out.println("Invalid region.");
@@ -110,7 +112,7 @@ public class PointsToRegion implements SpatialResolution {
                 line = buff.readLine();
             }
             
-            grid.buildGrid(allPolygons);
+            grid.buildGrid(allPolygons, useBoundingCircle);
             
         } catch (Exception e) {
             e.printStackTrace();

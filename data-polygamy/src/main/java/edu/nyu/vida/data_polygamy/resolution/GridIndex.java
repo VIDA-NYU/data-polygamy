@@ -3,6 +3,7 @@
    See file LICENSE for full license details. */
 package edu.nyu.vida.data_polygamy.resolution;
 
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -38,7 +39,8 @@ public class GridIndex {
 		}
 	}
 	
-	public void buildGrid(ArrayList<Path2D.Double> polygons) {
+	public void buildGrid(ArrayList<Path2D.Double> polygons,
+	        boolean useBoundingCircle) {
 		this.polygons = polygons;
 		
 		double maxx = -Double.MAX_VALUE;
@@ -49,6 +51,19 @@ public class GridIndex {
 		int i = 0;
 		for(Path2D.Double p: polygons) {
 			Rectangle2D rect = p.getBounds2D();
+			
+			if (useBoundingCircle) {
+			    double radius =
+			            (Math.sqrt(Math.pow(rect.getWidth(), 2) +
+			                    Math.pow(rect.getHeight(), 2))) / 2;
+			    radius = radius*1.20;
+			    double x = rect.getCenterX() - radius;
+			    double y = rect.getCenterY() + radius;
+			    Ellipse2D.Double boundingCircle =
+			            new Ellipse2D.Double(x, y, radius*2, radius*2);
+			    rect = boundingCircle.getBounds2D();
+			}
+			
 			bounds[i] = new Bound();
 			bounds[i].x1 = rect.getMinX();
 			bounds[i].y1 = rect.getMinY();
