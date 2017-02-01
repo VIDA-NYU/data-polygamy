@@ -61,12 +61,12 @@ public class FrameworkUtils {
      */
     
     // spatial resolutions
-    public final static int BBL = 6;
-    public final static int BLOCK = 5;
-    public final static int CITY = 4;
-    public final static int GRID = 3;
-    public final static int ZIP = 2;
-    public final static int NBHD = 1;
+    public final static int CITY = 6;
+    public final static int GRID = 5;
+    public final static int ZIP = 4;
+    public final static int NBHD = 3;
+    public final static int BLOCK = 2;
+    public final static int BBL = 1;
     public final static int POINTS = 0;
     
     // temporal resolutions
