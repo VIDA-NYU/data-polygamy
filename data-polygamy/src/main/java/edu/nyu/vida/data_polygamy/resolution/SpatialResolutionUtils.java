@@ -87,8 +87,7 @@ public class SpatialResolutionUtils {
         switch (spatialResolution) {
         
         case FrameworkUtils.NBHD:
-            System.out.println("Block to Nbhd currently not supported.");
-            System.exit(-1);
+            spatialTranslation = new BlockToNbhd(spatialPos, conf);
             break;
         case FrameworkUtils.BLOCK:
             if (preProcessing)

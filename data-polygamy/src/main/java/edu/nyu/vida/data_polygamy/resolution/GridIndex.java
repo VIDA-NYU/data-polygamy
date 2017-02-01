@@ -56,7 +56,7 @@ public class GridIndex {
 			    double radius =
 			            (Math.sqrt(Math.pow(rect.getWidth(), 2) +
 			                    Math.pow(rect.getHeight(), 2))) / 2;
-			    radius = radius*1.20;
+			    radius = radius*1.10;
 			    double x = rect.getCenterX() - radius;
 			    double y = rect.getCenterY() + radius;
 			    Ellipse2D.Double boundingCircle =
