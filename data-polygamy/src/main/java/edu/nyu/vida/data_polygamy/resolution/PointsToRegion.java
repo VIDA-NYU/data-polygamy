@@ -22,7 +22,7 @@ public class PointsToRegion implements SpatialResolution {
     private String data;
     
     private ArrayList<Integer> polyRegionNames = new ArrayList<Integer>();
-    private GridIndex grid = new GridIndex(100, 100);
+    private GridIndex grid;
     boolean useMapping = false;
     boolean useBoundingCircle = false;
     
@@ -31,17 +31,23 @@ public class PointsToRegion implements SpatialResolution {
         
     	String bucket = conf.get("bucket", "");
     	
-        if (region.equals("nbhd"))
+        if (region.equals("nbhd")) {
             data = bucket + "neighborhood";
-        else if (region.equals("grid"))
+            grid = new GridIndex(100, 100);
+        }
+        else if (region.equals("grid")) {
             data = bucket + "gneighborhood-" + gridResolution;
+            grid = new GridIndex(100, 100);
+        }
         else if (region.equals("zip")) {
         	useMapping = true;
         	data = bucket + "zipcode";
+        	grid = new GridIndex(100, 100);
         } else if (region.equals("block")) {
             useMapping = true;
             useBoundingCircle = true;
             data = bucket + "block";
+            grid = new GridIndex(1000, 1000);
         } else {
         	System.out.println("Invalid region.");
         	System.exit(-1);
