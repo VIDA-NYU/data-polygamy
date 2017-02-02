@@ -32,6 +32,7 @@ public class ZipToZip implements SpatialResolution {
             if (bucket.equals("")) {
                 FileSystem fs = FileSystem.get(new Configuration());
                 readData(fs.open(new Path(data)));
+                fs.close();
             } else {
             	Path dataPath = new Path(data);
                 FileSystem fs = FileSystem.get(dataPath.toUri(), conf);
@@ -68,11 +69,14 @@ public class ZipToZip implements SpatialResolution {
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
+        } finally {
+            fis.close();
         }
     }
 
     @Override
-    public ArrayList<Integer> translate(String[] input) throws NumberFormatException, IllegalArgumentException, NullPointerException {
+    public ArrayList<Integer> translate(String[] input)
+            throws NumberFormatException, IllegalArgumentException, NullPointerException {
         
         ArrayList<Integer> region = new ArrayList<Integer>();
         
