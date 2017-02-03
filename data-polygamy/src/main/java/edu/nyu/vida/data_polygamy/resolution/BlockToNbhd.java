@@ -41,7 +41,6 @@ public class BlockToNbhd implements SpatialResolution {
                 FileSystem fs = FileSystem.get(new Configuration());
                 readNbhdData(fs.open(new Path(dataNbhd)));
                 readBlockData(fs.open(new Path(dataBlock)));
-                fs.close();
             } else {
             	Path nbhdPath = new Path(dataNbhd);
                 FileSystem fs = FileSystem.get(nbhdPath.toUri(), conf);
@@ -49,7 +48,6 @@ public class BlockToNbhd implements SpatialResolution {
                 Path blockPath = new Path(dataBlock);
                 fs = FileSystem.get(blockPath.toUri(), conf);
                 readBlockData(fs.open(blockPath));
-                fs.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,6 +92,8 @@ public class BlockToNbhd implements SpatialResolution {
                 
                 line = buff.readLine();
             }
+            
+            buff.close();
             
             grid.buildGrid(allPolygons, false);
             
@@ -148,6 +148,8 @@ public class BlockToNbhd implements SpatialResolution {
                 id++;
                 line = buff.readLine();
             }
+            
+            buff.close();
             
         } catch (Exception e) {
             e.printStackTrace();

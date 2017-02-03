@@ -32,12 +32,10 @@ public class BlockToBlock implements SpatialResolution {
             if (bucket.equals("")) {
                 FileSystem fs = FileSystem.get(new Configuration());
                 readData(fs.open(new Path(data)));
-                fs.close();
             } else {
             	Path dataPath = new Path(data);
                 FileSystem fs = FileSystem.get(dataPath.toUri(), conf);
                 readData(fs.open(dataPath));
-                fs.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,6 +63,8 @@ public class BlockToBlock implements SpatialResolution {
                 
                 line = buff.readLine();
             }
+            
+            buff.close();
             
         } catch (Exception e) {
             e.printStackTrace();
