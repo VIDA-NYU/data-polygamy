@@ -33,6 +33,7 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
     
     int temporalResolution, spatialResolution;
     boolean sameResolution = false;
+    SpatialResolution spatialTranslation;
     
     // output key
     SpatioTemporalWritable keyWritable = new SpatioTemporalWritable();
@@ -125,6 +126,13 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
         for (int i = 0; i < spatialResolutionArray.length; i++) {
         	spatialResolutions[i] = utils.spatialResolution(spatialResolutionArray[i]);
         }
+        
+        /**
+         * Spatial Translations
+         */
+        
+        spatialTranslation = resolveResolution(currentSpatial, spatialIndex,
+                context.getConfiguration());
     }
     
     @Override
@@ -167,8 +175,7 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
                 continue;
             
             if (currentSpatial != spatialResolution)
-                spatialAtt = resolveResolution(currentSpatial, spatialIndex,
-                		context.getConfiguration()).translate(spatialArray);
+                spatialAtt = spatialTranslation.translate(spatialArray);
             
             /**
              * Temporal Resolution

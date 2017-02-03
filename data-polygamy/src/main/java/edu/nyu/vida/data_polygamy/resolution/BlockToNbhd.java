@@ -24,8 +24,8 @@ public class BlockToNbhd implements SpatialResolution {
     private String dataBlock;
     
     private ArrayList<Integer> nbhdRegionNames = new ArrayList<Integer>();
-    private HashMap<Integer, ArrayList<Double>> blockRegions =
-            new HashMap<Integer, ArrayList<Double>>();
+    private HashMap<Integer, Integer> blockRegions =
+            new HashMap<Integer, Integer>();
     private GridIndex grid = new GridIndex(100, 100);
     
     public BlockToNbhd(int[] spatialPos, Configuration conf) {
@@ -137,11 +137,13 @@ public class BlockToNbhd implements SpatialResolution {
                 polygon.closePath();
                 
                 Rectangle2D rect = polygon.getBounds2D();
-                ArrayList<Double> points = new ArrayList<Double>();
-                points.add(rect.getCenterX());
-                points.add(rect.getCenterY());
-              
-                blockRegions.put(id, points);
+                double x = rect.getCenterX();
+                double y = rect.getCenterY();
+                
+                int r = grid.getRegion(x, y);
+                if(r != -1) {
+                    blockRegions.put(id, nbhdRegionNames.get(r));
+                }
                 
                 id++;
                 line = buff.readLine();
@@ -162,7 +164,6 @@ public class BlockToNbhd implements SpatialResolution {
       
         // getting spatial attributes
         int block = 0;
-        double x = 0, y = 0;
         boolean foundOne = false;
         for (int i = 0; i < spatialPos.length; i++) {
           
@@ -173,22 +174,14 @@ public class BlockToNbhd implements SpatialResolution {
                 continue;
             }
             
-            ArrayList<Double> points = blockRegions.get(block);
-            if (points == null) {
-                System.out.println("Wrong block...");
-                continue;
-            }
-            
-            x = points.get(0);
-            y = points.get(1);
-          
-            int r = grid.getRegion(x, y);
-            if(r != -1) {
-                region.add(nbhdRegionNames.get(r));
+            Integer nbhd = blockRegions.get(block);
+            if (nbhd == null) {
+                region.add(-1);
+            } else {
+                region.add(nbhd);
                 foundOne = true;
             }
-            else
-                region.add(-1);
+                
         }
       
         if (foundOne)
