@@ -193,8 +193,14 @@ public class BlockToNbhd implements SpatialResolution {
     
     @Override
     public int translate(int[] input) {
-        // should not be called
-        return -1;
+        
+        int block = input[spatialPos[0]];
+        
+        Integer nbhd = blockRegions.get(block);
+        if (nbhd == null) {
+            return -1;
+        }
+        return nbhd;
     }
 
 }
