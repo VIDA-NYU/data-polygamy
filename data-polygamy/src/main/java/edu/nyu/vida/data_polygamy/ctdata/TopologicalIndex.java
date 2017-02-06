@@ -388,10 +388,10 @@ public class TopologicalIndex implements Serializable {
 				if (f.sadFn < f.exFn) {
 					pt = f.sadFn;
 				}
-				if (ratio < thresholdRatio && pt > eventTh) {
-					continue;
-				}
-				if (ratio >= thresholdRatio && pt >= eventTh) {
+				if (ratio >= thresholdRatio && pt == eventTh) {
+                    continue;
+                }
+				if (pt > eventTh) {
                     continue;
                 }
 				int exv = f.v;
@@ -439,10 +439,11 @@ public class TopologicalIndex implements Serializable {
 					}
 				}
 			} else {
-				if (ratio < thresholdRatio && pt < eventTh) {
-					continue;
-				}
-				if (ratio >= thresholdRatio && pt <= eventTh) {
+				
+				if (ratio >= thresholdRatio && pt == eventTh) {
+                    continue;
+                }
+                if (pt < eventTh) {
                     continue;
                 }
 
