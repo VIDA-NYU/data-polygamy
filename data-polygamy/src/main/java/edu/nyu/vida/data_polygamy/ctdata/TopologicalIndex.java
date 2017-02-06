@@ -36,7 +36,7 @@ public class TopologicalIndex implements Serializable {
 	
     private static final long serialVersionUID = 1L;
     
-    private static final double thresholdRatio = 0.4;
+    private static final double thresholdRatio = 0.2;
 
     public static class Attribute implements Serializable {
         private static final long serialVersionUID = 1L;
