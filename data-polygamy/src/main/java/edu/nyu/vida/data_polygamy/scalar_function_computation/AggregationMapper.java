@@ -175,11 +175,12 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
              */
             
             spatialAtt = spatialArray[spatialIndex];
-            if (spatialAtt == invalidSpatial)
-                continue;
             
             if (currentSpatial != spatialResolution)
                 spatialAtt = spatialTranslation[i].translate(spatialArray);
+            
+            if (spatialAtt == invalidSpatial)
+                continue;
             
             /**
              * Temporal Resolution
