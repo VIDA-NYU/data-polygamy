@@ -3158,17 +3158,17 @@ public class FrameworkUtils {
                 conf.set("yarn.scheduler.minimum-allocation-mb", "7296");
                 conf.set("yarn.scheduler.maximum-allocation-mb", "116736");
                 conf.set("mapreduce.map.memory.mb", "7296");
-                conf.set("mapreduce.reduce.memory.mb", "14592");
+                conf.set("mapreduce.reduce.memory.mb", "25000");
                 conf.set("mapreduce.map.java.opts", "-Xmx5837m");
-                conf.set("mapreduce.reduce.java.opts", "-Xmx11674m");
+                conf.set("mapreduce.reduce.java.opts", "-Xmx22000m");
             } else {
                 conf.set("yarn.nodemanager.resource.memory-mb", "116736");
                 conf.set("yarn.scheduler.minimum-allocation-mb", "7296");
                 conf.set("yarn.scheduler.maximum-allocation-mb", "116736");
                 conf.set("mapreduce.map.memory.mb", "7296");
-                conf.set("mapreduce.reduce.memory.mb", "14592");
+                conf.set("mapreduce.reduce.memory.mb", "25000");
                 conf.set("mapreduce.map.java.opts", "-Xmx5837m");
-                conf.set("mapreduce.reduce.java.opts", "-Xmx11674m");
+                conf.set("mapreduce.reduce.java.opts", "-Xmx22000m");
             }
             
         }
