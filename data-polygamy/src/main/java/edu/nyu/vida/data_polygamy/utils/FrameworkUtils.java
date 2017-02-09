@@ -439,6 +439,9 @@ public class FrameworkUtils {
             return -1;
         }
         
+        if (time < 0)
+            return -1;
+        
         DateTime dt = new DateTime(time, DateTimeZone.UTC);
         
         switch (temporalResolution) {
