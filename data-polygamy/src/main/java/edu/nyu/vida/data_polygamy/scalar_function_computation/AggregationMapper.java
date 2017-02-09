@@ -191,7 +191,7 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
             else
                 temporalAtt = FrameworkUtils.getTime(temporalResolution, temporalArray, tempIndex);
             
-            if (temporalAtt == -1)
+            if (temporalAtt < 0)
                 continue;
             
             keyWritable = new SpatioTemporalWritable(spatialAtt, temporalAtt,

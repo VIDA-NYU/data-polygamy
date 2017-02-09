@@ -295,7 +295,7 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
         
         for (int tempPos: temporalPos) {
             int temp = FrameworkUtils.getTime(temporalResolution, input, tempPos);
-            if (temp != -1) {
+            if (temp >= 0) {
                 //if (time == null) {
                 //    time = FrameworkUtils.getTime(input, tempPos);
                 //}
