@@ -1919,7 +1919,7 @@ public class FrameworkUtils {
         }
         
         public String toString(int tempRes) {
-            String result = isOutlier + ",";
+            String result = spatial + "," + isOutlier + ",";
             
             int timeSteps = getTimeSteps(tempRes, start, end);
             DateTime startTime = new DateTime(((long)start)*1000, DateTimeZone.UTC);
@@ -2630,7 +2630,9 @@ public class FrameworkUtils {
     
     public static final String preProcessingDir = "pre-processing";
     public static final String aggregatesDir = "aggregates";
+    public static final String aggregatesTextDir = "aggregates-text";
     public static final String indexDir = "index";
+    public static final String indexTextDir = "index-text";
     public static final String mergeTreeDir = "mergetree";
     public static final String relationshipsDir = "relationships";
     public static final String relationshipsIdsDir = "relationships-ids";
