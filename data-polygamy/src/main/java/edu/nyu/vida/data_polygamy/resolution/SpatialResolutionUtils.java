@@ -54,7 +54,6 @@ public class SpatialResolutionUtils {
         
         case FrameworkUtils.NBHD:
             spatialTranslation = new BblToNbhd(spatialPos, conf);
-            System.exit(-1);
             break;
         case FrameworkUtils.ZIP:
             System.out.println("Bbl to Zip currently not supported.");
