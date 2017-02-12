@@ -158,7 +158,8 @@ public class Aggregation {
     	ArrayList<String> shortDatasetAggregation = new ArrayList<String>();
     	HashMap<String,String> datasetTempAtt = new HashMap<String,String>();
     	HashMap<String,String> datasetSpatialAtt = new HashMap<String,String>();
-    	HashMap<String,String> preProcessingDataset = new HashMap<String,String>();
+    	HashMap<String,ArrayList<String>> preProcessingDataset =
+    	        new HashMap<String,ArrayList<String>>();
     	HashMap<String,String> datasetId = new HashMap<String,String>();
     	
     	boolean removeExistingFiles = cmd.hasOption("f");
@@ -168,7 +169,8 @@ public class Aggregation {
     	    String dataset = datasetArgs[i];
             
             // getting pre-processing
-            String tempPreProcessing = FrameworkUtils.searchPreProcessing(dataset, s3conf, s3);
+            ArrayList<String> tempPreProcessing =
+                    FrameworkUtils.searchAllPreProcessing(dataset, s3conf, s3);
             if (tempPreProcessing == null) {
                 System.out.println("No pre-processing available for " + dataset);
                 continue;
@@ -227,72 +229,31 @@ public class Aggregation {
         
         FrameworkUtils.createDir(s3bucket + FrameworkUtils.aggregatesDir, s3conf, s3);
         
-        // getting smallest resolution
-        
-        HashMap<String,String> tempResMap = new HashMap<String,String>();
-        HashMap<String,String> spatialResMap = new HashMap<String,String>();
-        
-        HashMap<String,String> datasetTemporalStrMap = new HashMap<String,String>();
-        HashMap<String,String> datasetSpatialStrMap = new HashMap<String,String>();
-        
         HashSet<String> input = new HashSet<String>();
         
         for (String dataset: shortDataset) {
+            
+            for (String preProcessingFile : preProcessingDataset.get(dataset)) {
         
-            String[] datasetArray = preProcessingDataset.get(dataset).split("-");
-            
-            String datasetTemporalStr = datasetArray[datasetArray.length - 2];
-            int datasetTemporal = utils.temporalResolution(datasetTemporalStr);
-            
-            String datasetSpatialStr = datasetArray[datasetArray.length - 1];
-            int datasetSpatial = utils.spatialResolution(datasetSpatialStr);
-            
-            // finding all possible resolutions
-            
-            String[] temporalResolutions = FrameworkUtils.getAggTempResolutions(datasetTemporal);
-            String[] spatialResolutions = FrameworkUtils.getAggSpatialResolutions(datasetSpatial);
-            
-            String temporalResolution = "";
-            String spatialResolution = "";
-            
-            String tempRes = "";
-            String spatialRes = "";
-            
-            boolean dataAdded = false;
-            
-            for (int i = 0; i < temporalResolutions.length; i++) {
-                for (int j = 0; j < spatialResolutions.length; j++) {
-                    
-                    temporalResolution = temporalResolutions[i];
-                    spatialResolution = spatialResolutions[j];
-
-                    String aggregatesOutputFileName = s3bucket + FrameworkUtils.aggregatesDir + "/" + dataset + "/";
-                    
-                    if (removeExistingFiles) {
-                        FrameworkUtils.removeFile(
-                                aggregatesOutputFileName, s3conf, s3);
-                    }
-                    
-                    if (!FrameworkUtils.fileExists
-                            (aggregatesOutputFileName, s3conf, s3)) {
-                        
-                        dataAdded = true;
-     
-                        tempRes += temporalResolution + "-";
-                        spatialRes += spatialResolution + "-";
-                    }
+                boolean dataAdded = false;
+                
+                String aggregatesOutputFileName = s3bucket + FrameworkUtils.aggregatesDir + "/" + dataset + "/";
+                
+                if (removeExistingFiles) {
+                    FrameworkUtils.removeFile(
+                            aggregatesOutputFileName, s3conf, s3);
                 }
-            }
-            
-            if (dataAdded) {
-                input.add(s3bucket + FrameworkUtils.preProcessingDir + "/" + preProcessingDataset.get(dataset));
-                shortDatasetAggregation.add(dataset);
                 
-                tempResMap.put(dataset, tempRes.substring(0, tempRes.length()-1));
-                spatialResMap.put(dataset, spatialRes.substring(0, spatialRes.length()-1));
+                if (!FrameworkUtils.fileExists
+                        (aggregatesOutputFileName, s3conf, s3)) {
+                    
+                    dataAdded = true;
+                }
                 
-                datasetTemporalStrMap.put(dataset, datasetTemporalStr);
-                datasetSpatialStrMap.put(dataset, datasetSpatialStr);
+                if (dataAdded) {
+                    input.add(s3bucket + FrameworkUtils.preProcessingDir + "/" + preProcessingFile);
+                    shortDatasetAggregation.add(dataset);
+                }
             }
         }
         
@@ -322,18 +283,10 @@ public class Aggregation {
         for (int i = 0; i < shortDatasetAggregation.size(); i++) {
             String dataset = shortDatasetAggregation.get(i);
             String id = datasetId.get(dataset);
-            aggConf.set("dataset-" + id + "-temporal-resolutions",
-                    tempResMap.get(dataset));
-            aggConf.set("dataset-" + id + "-spatial-resolutions",
-                    spatialResMap.get(dataset));
             aggConf.set("dataset-" + id + "-temporal-att",
                     datasetTempAtt.get(dataset));
             aggConf.set("dataset-" + id + "-spatial-att",
                     datasetSpatialAtt.get(dataset));
-            aggConf.set("dataset-" + id + "-temporal",
-                    datasetTemporalStrMap.get(dataset));
-            aggConf.set("dataset-" + id + "-spatial",
-                    datasetSpatialStrMap.get(dataset));
             
             if (s3)
                 aggConf.set("dataset-" + id,

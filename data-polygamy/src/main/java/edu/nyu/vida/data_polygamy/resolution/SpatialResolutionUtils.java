@@ -53,7 +53,7 @@ public class SpatialResolutionUtils {
         switch (spatialResolution) {
         
         case FrameworkUtils.NBHD:
-            System.out.println("Bbl to Nbhd currently not supported.");
+            spatialTranslation = new BblToNbhd(spatialPos, conf);
             System.exit(-1);
             break;
         case FrameworkUtils.ZIP:

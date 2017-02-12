@@ -230,10 +230,8 @@ public class FrameworkUtils {
             result[1] = "city";
             break;
         case FrameworkUtils.BLOCK:
-            result = new String[3];
+            result = new String[1];
             result[0] = "block";
-            result[1] = "nbhd";
-            result[2] = "city";
             break;
         case FrameworkUtils.CITY:
             result = new String[1];
@@ -2826,6 +2824,52 @@ public class FrameworkUtils {
             return null;
         
         return preProcessingFile;
+    }
+    
+    public static ArrayList<String> searchAllPreProcessing(final String name,
+            Configuration conf, boolean s3) throws IOException {
+        
+        PathFilter filter = new PathFilter() {
+
+            @Override
+            public boolean accept(Path arg0) {
+                if (arg0.getName().contains(name + "-"))
+                    return true;
+                return false;
+            }
+        };
+        
+        Path path = null;
+        FileSystem fs = null;
+        
+        if (s3) {
+            path = new Path(conf.get("bucket") + preProcessingDir);
+            fs = FileSystem.get(path.toUri(), conf);
+        } else {
+            fs = FileSystem.get(new Configuration());
+            path = new Path (fs.getHomeDirectory() + "/" + preProcessingDir);
+        }
+        
+        FileStatus[] status = fs.listStatus(path, filter);
+        
+        if (s3)
+            fs.close();
+        
+        ArrayList<String> preProcessingFiles = new ArrayList<String>();
+        boolean aggregatesFound = false;
+        String fileName = "";
+        for (FileStatus fileStatus: status) {
+            fileName = fileStatus.getPath().getName();
+            if (!fileName.endsWith(".aggregates"))
+                preProcessingFiles.add(fileName);
+            else if (fileName.endsWith(".aggregates"))
+                aggregatesFound = true;
+        }
+        
+        if (!aggregatesFound)
+            return null;
+        
+        return preProcessingFiles;
     }
     
     public static String searchAggregatesHeader(final String name, Configuration conf, boolean s3) throws IOException {

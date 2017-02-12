@@ -95,10 +95,10 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
         dataset = dataset.substring(0, dataset.length()-1);
         String datasetIdStr = datasetToId.get(dataset);
         
-        currentTemporal = utils.temporalResolution(conf.get("dataset-" + datasetIdStr +
-                "-temporal",""));
-        currentSpatial = utils.spatialResolution(conf.get("dataset-" + datasetIdStr +
-                "-spatial",""));
+        currentTemporal = utils.temporalResolution(
+                filenameTokens[filenameTokens.length-2]);
+        currentSpatial = utils.spatialResolution(
+                filenameTokens[filenameTokens.length-1]);
         
         datasetId = Integer.parseInt(datasetIdStr);
         
@@ -112,10 +112,10 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
             System.exit(-1);
         }
         
-        String[] temporalResolutionArray = conf.get("dataset-" + datasetIdStr +
-                "-temporal-resolutions","").split("-");
-        String[] spatialResolutionArray = conf.get("dataset-" + datasetIdStr +
-                "-spatial-resolutions","").split("-");
+        String[] temporalResolutionArray =
+                FrameworkUtils.getAggTempResolutions(currentTemporal);
+        String[] spatialResolutionArray =
+                FrameworkUtils.getAggSpatialResolutions(currentSpatial);
         
         temporalResolutions = new int[temporalResolutionArray.length];
         spatialResolutions = new int[spatialResolutionArray.length];
