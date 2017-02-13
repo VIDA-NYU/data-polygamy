@@ -117,14 +117,18 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
         String[] spatialResolutionArray =
                 FrameworkUtils.getAggSpatialResolutions(currentSpatial);
         
-        temporalResolutions = new int[temporalResolutionArray.length];
-        spatialResolutions = new int[spatialResolutionArray.length];
+        int size = temporalResolutionArray.length * spatialResolutionArray.length;
         
+        temporalResolutions = new int[size];
+        spatialResolutions = new int[size];
+        
+        int id = 0;
         for (int i = 0; i < temporalResolutionArray.length; i++) {
-        	temporalResolutions[i] = utils.temporalResolution(temporalResolutionArray[i]);
-        }
-        for (int i = 0; i < spatialResolutionArray.length; i++) {
-        	spatialResolutions[i] = utils.spatialResolution(spatialResolutionArray[i]);
+            for (int j = 0; j < spatialResolutionArray.length; j++) {
+                temporalResolutions[id] = utils.temporalResolution(temporalResolutionArray[i]);
+                spatialResolutions[id] = utils.spatialResolution(spatialResolutionArray[j]);
+                id++;
+            }
         }
         
         /**
