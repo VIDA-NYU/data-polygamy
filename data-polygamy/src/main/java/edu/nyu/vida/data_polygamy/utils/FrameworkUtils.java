@@ -1898,6 +1898,29 @@ public class FrameworkUtils {
             this.minThreshold = minThreshold;
         }
         
+        public TopologyTimeSeriesWritable(
+                int spatial,
+                int dataset,
+                int attribute,
+                byte[] timeSeries,
+                int start,
+                int end,
+                int nbPosEvents,
+                int nbNegEvents,
+                int nbNonEvents,
+                boolean isOutlier) {
+            this.spatial = spatial;
+            this.dataset = dataset;
+            this.attribute = attribute;
+            this.timeSeries = timeSeries;
+            this.start = start;
+            this.end = end;
+            this.nbPosEvents = nbPosEvents;
+            this.nbNegEvents = nbNegEvents;
+            this.nbNonEvents = nbNonEvents;
+            this.isOutlier = isOutlier;
+        }
+        
         public int getSpatial() {
             return this.spatial;
         }
