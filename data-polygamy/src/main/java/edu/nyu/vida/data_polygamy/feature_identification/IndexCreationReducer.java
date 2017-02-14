@@ -208,20 +208,33 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         
         // non-outliers
         String regThreshold  = "";
+        float regThresholdFloat = 0;
         if (idToRegThreshold.containsKey(key.getDataset())) {
             if (idToRegThreshold.get(key.getDataset()).containsKey(key.getAttribute())) {
                 regThreshold = idToRegThreshold.get(key.getDataset()).get(key.getAttribute());
+                regThresholdFloat = Float.parseFloat(regThreshold);
             }
         }
         ArrayList<byte[]> events = index.queryEvents(this.th, false, att, regThreshold);
-        /*ArrayList<byte[]> events = new ArrayList<byte[]>();
-        if ((key.getSpatialResolution() == FrameworkUtils.CITY) &&
-                (key.getTemporalResolution() == FrameworkUtils.HOUR)) {
-            System.out.println("Attribute: " + key.getAttribute());
-            events = index.queryEvents(this.th, false, att, regThreshold, true);
-        } else {
-            events = index.queryEvents(this.th, false, att, regThreshold);
-        }*/
+        
+        int[] thresholdStTime = new int[att.thresholdStTime.size()];
+        int[] thresholdEnTime = new int[att.thresholdEnTime.size()];
+        float[] maxThreshold = new float[att.maxThreshold.size()];
+        float[] minThreshold = new float[att.minThreshold.size()];
+        int id = 0;
+        for (int tempBin : att.thresholdStTime.keySet()) {
+            thresholdStTime[id] = att.thresholdStTime.get(tempBin);
+            thresholdEnTime[id] = att.thresholdEnTime.get(tempBin);
+            if (regThreshold.isEmpty()) {
+                maxThreshold[id] = att.maxThreshold.get(tempBin);
+                minThreshold[id] = att.minThreshold.get(tempBin);
+            } else {
+                maxThreshold[id] = regThresholdFloat;
+                minThreshold[id] = regThresholdFloat;
+            }
+            id++;
+        }
+        
         for (int spatial = 0; spatial < events.size(); spatial++) {
             if (!att.nodeSet.contains(spatial))
                 continue;
@@ -236,7 +249,11 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                     index.getNbPosEvents(spatial),
                     index.getNbNegEvents(spatial),
                     index.getNbNonEvents(spatial),
-                    false);
+                    false,
+                    thresholdStTime,
+                    thresholdEnTime,
+                    maxThreshold,
+                    minThreshold);
             out.write(key, valueWritable,
                     generateFileName(idToDataset.get(key.getDataset())));
             //out.write(new Text(key.toString()), new Text(valueWritable.toString()),
@@ -245,12 +262,27 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         
         // outliers
         String rareThreshold  = "";
+        float rareThresholdFloat = 0;
         if (idToRareThreshold.containsKey(key.getDataset())) {
             if (idToRareThreshold.get(key.getDataset()).containsKey(key.getAttribute())) {
                 rareThreshold = idToRareThreshold.get(key.getDataset()).get(key.getAttribute());
+                rareThresholdFloat = Float.parseFloat(rareThreshold);
             }
         }
         events = index.queryEvents(this.th, true, att, rareThreshold);
+        
+        id = 0;
+        for (int tempBin : att.thresholdStTime.keySet()) {
+            if (rareThreshold.isEmpty()) {
+                maxThreshold[id] = att.maxThreshold.get(tempBin);
+                minThreshold[id] = att.minThreshold.get(tempBin);
+            } else {
+                maxThreshold[id] = rareThresholdFloat;
+                minThreshold[id] = rareThresholdFloat;
+            }
+            id++;
+        }
+        
         for (int spatial = 0; spatial < events.size(); spatial++) {
             if (!att.nodeSet.contains(spatial))
                 continue;
@@ -265,7 +297,11 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                     index.getNbPosEvents(spatial),
                     index.getNbNegEvents(spatial),
                     index.getNbNonEvents(spatial),
-                    true);
+                    true,
+                    thresholdStTime,
+                    thresholdEnTime,
+                    maxThreshold,
+                    minThreshold);
             out.write(key, valueWritable,
                     generateFileName(idToDataset.get(key.getDataset())));
             //out.write(new Text(key.toString()), new Text(valueWritable.toString()),
@@ -278,8 +314,6 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
      */
     public TopologicalIndex reduceMergeTreeCreation(AttributeResolutionWritable key, Iterable<SpatioTemporalFloatWritable> values,
             Context context, Attribute att, int tempRes, int spatialRes) throws IOException {
-
-        //System.out.println("Dataset: " + key.getDataset());
         
         int datasetId = key.getDataset();
         int attributeId = key.getAttribute();
@@ -318,28 +352,6 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         for (ArrayList<SpatioTemporalVal> stVal: att.data.values())
             Collections.sort(stVal);
         
-        /*if ((spatialRes == FrameworkUtils.CITY) && (tempRes == FrameworkUtils.DAY)) {
-            for (int spatial : att.nodeSet) {
-                System.out.println("Attribute: " + key.getAttribute());
-                //System.out.println("Spatial Attribute: " + spatial);
-                for (int hash : att.data.keySet()) {
-                    ArrayList<String> data = new ArrayList<String>();
-                    for (SpatioTemporalVal val : att.data.get(hash)) {
-                        if (val.getSpatial() == spatial) {
-                            data.add(val.getTemporal() + "," + val.getVal());
-                        }
-                    }
-                    if (data.size() > 0) {
-                        System.out.println("Month: " + hash);
-                        for (String d : data) {
-                            System.out.println(d);
-                        }
-                    }
-                }
-            }
-            System.out.println("");
-        }*/
-        
         TopologicalIndex index = (spatialRes == FrameworkUtils.NBHD) ?
                 new TopologicalIndex(spatialRes, tempRes, this.nvNbhd) :
                     ((spatialRes == FrameworkUtils.ZIP) ? new TopologicalIndex(spatialRes, tempRes, this.nvZip) :
@@ -348,14 +360,6 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         int ret = (spatialRes == FrameworkUtils.NBHD) ? index.createIndex(att, this.nbhdEdges) :
             ((spatialRes == FrameworkUtils.BLOCK) ? index.createIndex(att, this.blockEdges) :
                 index.createIndex(att, this.zipEdges));
-        
-        // saving topological index
-        /*outputStream = new ObjectOutputStream(FrameworkUtils.createFile(
-                generateIndexFileName(idToDataset.get(key.getDataset()), key.getAttribute(),
-                        tempRes, spatialRes), context.getConfiguration(), s3));
-        outputStream.writeObject(index);
-        outputStream.writeObject(att);
-        outputStream.close();*/
         
         if (ret == 1) {
             return new TopologicalIndex();

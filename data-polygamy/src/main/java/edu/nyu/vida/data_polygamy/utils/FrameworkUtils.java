@@ -1828,6 +1828,10 @@ public class FrameworkUtils {
         private int nbNegEvents;
         private int nbNonEvents;
         private boolean isOutlier;
+        private int[] thresholdStTime;
+        private int[] thresholdEnTime;
+        private float[] maxThreshold;
+        private float[] minThreshold;
         
         public TopologyTimeSeriesWritable() {
             this.spatial = 0;
@@ -1840,6 +1844,10 @@ public class FrameworkUtils {
             this.nbNegEvents = 0;
             this.nbNonEvents = 0;
             this.isOutlier = false;
+            this.thresholdStTime = new int[0];
+            this.thresholdEnTime = new int[0];
+            this.maxThreshold = new float[0];
+            this.minThreshold = new float[0];
         }
         
         public TopologyTimeSeriesWritable(TopologyTimeSeriesWritable object) {
@@ -1853,6 +1861,10 @@ public class FrameworkUtils {
             this.nbNegEvents = object.getNbNegEvents();
             this.nbNonEvents = object.getNbNonEvents();
             this.isOutlier = object.getIsOutlier();
+            this.thresholdStTime = object.getThresholdStTime();
+            this.thresholdEnTime = object.getThresholdEnTime();
+            this.maxThreshold = object.getMaxThreshold();
+            this.minThreshold = object.getMinThreshold();
         }
         
         public TopologyTimeSeriesWritable(
@@ -1865,7 +1877,11 @@ public class FrameworkUtils {
                 int nbPosEvents,
                 int nbNegEvents,
                 int nbNonEvents,
-                boolean isOutlier) {
+                boolean isOutlier,
+                int[] thresholdStTime,
+                int[] thresholdEnTime,
+                float[] maxThreshold,
+                float[] minThreshold) {
             this.spatial = spatial;
             this.dataset = dataset;
             this.attribute = attribute;
@@ -1876,6 +1892,10 @@ public class FrameworkUtils {
             this.nbNegEvents = nbNegEvents;
             this.nbNonEvents = nbNonEvents;
             this.isOutlier = isOutlier;
+            this.thresholdStTime = thresholdStTime;
+            this.thresholdEnTime = thresholdEnTime;
+            this.maxThreshold = maxThreshold;
+            this.minThreshold = minThreshold;
         }
         
         public int getSpatial() {
@@ -1918,6 +1938,31 @@ public class FrameworkUtils {
             return this.isOutlier;
         }
         
+        public int[] getThresholdStTime() {
+            return thresholdStTime;
+        }
+        
+        public int[] getThresholdEnTime() {
+            return thresholdEnTime;
+        }
+
+        public float[] getMaxThreshold() {
+            return maxThreshold;
+        }
+
+        public float[] getMinThreshold() {
+            return minThreshold;
+        }
+        
+        public String thresholdsToString() {
+            String result = isOutlier + ",";
+            for (int i = 0; i < this.thresholdStTime.length; i++) {
+                result += thresholdStTime[i] + "," + thresholdEnTime[i] +
+                        "," + maxThreshold[i] + "," + minThreshold[i] + ",";
+            }
+            return result.substring(0, result.length()-1);
+        }
+
         public String toString(int tempRes) {
             String result = spatial + "," + isOutlier + ",";
             
@@ -1957,6 +2002,18 @@ public class FrameworkUtils {
             nbNegEvents = in.readInt();
             nbNonEvents = in.readInt();
             isOutlier = in.readBoolean();
+            thresholdStTime = new int[in.readInt()];
+            for (int i = 0; i < thresholdStTime.length; i++)
+                thresholdStTime[i] = in.readInt();
+            thresholdEnTime = new int[in.readInt()];
+            for (int i = 0; i < thresholdEnTime.length; i++)
+                thresholdEnTime[i] = in.readInt();
+            maxThreshold = new float[in.readInt()];
+            for (int i = 0; i < maxThreshold.length; i++)
+                maxThreshold[i] = in.readFloat();
+            minThreshold = new float[in.readInt()];
+            for (int i = 0; i < minThreshold.length; i++)
+                minThreshold[i] = in.readFloat();
         }
 
         @Override
@@ -1973,6 +2030,18 @@ public class FrameworkUtils {
             out.writeInt(nbNegEvents);
             out.writeInt(nbNonEvents);
             out.writeBoolean(isOutlier);
+            out.writeInt(thresholdStTime.length);
+            for (int i = 0; i < thresholdStTime.length; i++)
+                out.writeInt(thresholdStTime[i]);
+            out.writeInt(thresholdEnTime.length);
+            for (int i = 0; i < thresholdEnTime.length; i++)
+                out.writeInt(thresholdEnTime[i]);
+            out.writeInt(maxThreshold.length);
+            for (int i = 0; i < maxThreshold.length; i++)
+                out.writeFloat(maxThreshold[i]);
+            out.writeInt(minThreshold.length);
+            for (int i = 0; i < minThreshold.length; i++)
+                out.writeFloat(minThreshold[i]);
         }
 
         @Override
@@ -2002,7 +2071,11 @@ public class FrameworkUtils {
                     this.nbPosEvents,
                     this.nbNegEvents,
                     this.nbNonEvents,
-                    this.isOutlier);
+                    this.isOutlier,
+                    this.thresholdStTime,
+                    this.thresholdEnTime,
+                    this.maxThreshold,
+                    this.minThreshold);
         }
         
         @Override

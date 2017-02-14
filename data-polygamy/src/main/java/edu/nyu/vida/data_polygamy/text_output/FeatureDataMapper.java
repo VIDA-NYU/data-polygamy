@@ -37,7 +37,7 @@ public class FeatureDataMapper extends Mapper<AttributeResolutionWritable, Topol
     public void map(AttributeResolutionWritable key, TopologyTimeSeriesWritable value, Context context)
             throws IOException, InterruptedException {
         
-        out.write(new Text(key.toString()), new Text(value.toString(key.getTemporalResolution())),
+        out.write(new Text(key.toString()), new Text(value.thresholdsToString()),
                 generateFileName(dataset));
     }
     

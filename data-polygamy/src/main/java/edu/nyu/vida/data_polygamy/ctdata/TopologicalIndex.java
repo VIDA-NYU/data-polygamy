@@ -44,6 +44,14 @@ public class TopologicalIndex implements Serializable {
         public int id;
         public Int2ObjectOpenHashMap<ArrayList<SpatioTemporalVal>> data =
                 new Int2ObjectOpenHashMap<ArrayList<SpatioTemporalVal>>();
+        public Int2ObjectOpenHashMap<Integer> thresholdStTime =
+                new Int2ObjectOpenHashMap<Integer>();
+        public Int2ObjectOpenHashMap<Integer> thresholdEnTime =
+                new Int2ObjectOpenHashMap<Integer>();
+        public Int2ObjectOpenHashMap<Float> minThreshold =
+                new Int2ObjectOpenHashMap<Float>();
+        public Int2ObjectOpenHashMap<Float> maxThreshold =
+                new Int2ObjectOpenHashMap<Float>();
         public IntOpenHashSet nodeSet = new IntOpenHashSet();
         
         public void copy(Attribute att) {
@@ -161,6 +169,9 @@ public class TopologicalIndex implements Serializable {
 					int localEnd = stArr.get(stArr.size() - 1).getTemporal();
 					stTime = Math.min(stTime, localSt);
                     enTime = Math.max(enTime, localEnd);
+                    
+                    att.thresholdStTime.put(tempBin, new Integer(stTime));
+                    att.thresholdEnTime.put(tempBin, new Integer(enTime));
 					
 					GraphInput tf = functions.get(tempBin);
 					if (tf == null) {
@@ -235,6 +246,9 @@ public class TopologicalIndex implements Serializable {
 	
 	public ArrayList<byte[]> queryEvents(float th, boolean outlier, Attribute att, String threshold, boolean print) {
 		
+	    att.minThreshold.clear();
+	    att.maxThreshold.clear();
+	    
 	    int timeSteps = FrameworkUtils.getTimeSteps(this.tempRes, this.stTime, this.enTime);
 	    ArrayList<byte[]> results = new ArrayList<byte[]>();
 	    if (timeSteps == 0) return results;
@@ -296,6 +310,12 @@ public class TopologicalIndex implements Serializable {
 					double eventTh = min?vals[vals.length - 1]:vals[0];
 					getEvents(results, functions.get(tempBin), index.get(tempBin), min, eventTh, print);
 					perVals = new PersistencePoints();
+					
+					if (min) {
+					    att.minThreshold.put(tempBin, new Float(eventTh));
+					} else {
+					    att.maxThreshold.put(tempBin, new Float(eventTh));
+					}
 				}
 			}
 			if (outlier) {
@@ -357,6 +377,12 @@ public class TopologicalIndex implements Serializable {
 			Feature[] features = featureMap.get(tempBin);
 			GraphInput tf = functions.get(tempBin);
 			getEvents(events, tf, features, min, eventTh, false);
+			
+			if (min) {
+                att.minThreshold.put(tempBin, new Float(eventTh));
+            } else {
+                att.maxThreshold.put(tempBin, new Float(eventTh));
+            }
 		}
 	}
 	
