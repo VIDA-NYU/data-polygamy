@@ -1919,6 +1919,10 @@ public class FrameworkUtils {
             this.nbNegEvents = nbNegEvents;
             this.nbNonEvents = nbNonEvents;
             this.isOutlier = isOutlier;
+            this.thresholdStTime = new int[0];
+            this.thresholdEnTime = new int[0];
+            this.maxThreshold = new float[0];
+            this.minThreshold = new float[0];
         }
         
         public int getSpatial() {
