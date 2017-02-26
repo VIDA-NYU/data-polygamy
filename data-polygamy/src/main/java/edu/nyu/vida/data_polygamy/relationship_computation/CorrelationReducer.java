@@ -6,6 +6,7 @@ package edu.nyu.vida.data_polygamy.relationship_computation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
@@ -652,13 +653,17 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         // each element inside the array list represents a pair
         ArrayList<Integer[]> result = new ArrayList<Integer[]>();
         
-        Random random = new Random();
+        ArrayList<Integer> vals = new ArrayList<Integer>();
+        for (int k = 0; k < size; k++) {
+            vals.add(k);
+        }
+        Collections.shuffle(vals);
         
         for (int k = 0; k < size; k++) {
             
             Integer[] pair = new Integer[2];
-            pair[0] = random.nextInt(size);
-            pair[1] = random.nextInt(size);
+            pair[0] = vals.get(k);
+            pair[1] = k;
             result.add(pair);
         }
         

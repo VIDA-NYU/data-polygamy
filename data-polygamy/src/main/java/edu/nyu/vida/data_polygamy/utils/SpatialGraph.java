@@ -180,12 +180,12 @@ public class SpatialGraph {
     private void bfs(int node) {
         
         Queue<Integer> queue = new LinkedList<Integer>();
-        HashMap<Integer,Integer> seen = new HashMap<Integer,Integer>();
+        HashSet<Integer> seen = new HashSet<Integer>();
         HashMap<Integer,Integer> level = new HashMap<Integer,Integer>();
         
         queue.add(node);
         level.put(node, 0);
-        seen.put(node, 1);
+        seen.add(node);
         ArrayList<Integer> elem;
         while (!queue.isEmpty()) {
             // current node
@@ -202,9 +202,9 @@ public class SpatialGraph {
             bfsLevelArray.set(nodeLevel, elem);
             
             for (Integer neighbor: adjacencyList.get(currentNode)) {
-                if (!seen.containsKey(neighbor)) {
+                if (!seen.contains(neighbor)) {
                     queue.add(neighbor);
-                    seen.put(neighbor, 1);
+                    seen.add(neighbor);
                     level.put(neighbor, nodeLevel + 1);
                 }
             }
@@ -217,20 +217,22 @@ public class SpatialGraph {
         int origin = random.nextInt(nbNodes);
         
         Queue<Integer> queue = new LinkedList<Integer>();
-        HashMap<Integer,Integer> seen = new HashMap<Integer,Integer>();
+        int[] seen = new int[nbNodes];
         
         ArrayList<ArrayList<Integer>> randomBFSLevelArray = new ArrayList<ArrayList<Integer>>();
         HashMap<Integer,Integer> level = new HashMap<Integer,Integer>();
         
-        ArrayList<Integer> leftNodes = new ArrayList<Integer>();
-        for (int i = 0; i < nbNodes; i++)
-            leftNodes.add(i);
+        int[] leftNodes = new int[nbNodes];
+        for (int i = 0; i < nbNodes; i++) {
+            seen[i] = 0;
+            leftNodes[i] = 1;
+        }
         
         // running BFS
         
         queue.add(origin);
         level.put(origin, 0);
-        seen.put(origin, 1);
+        seen[origin] = 1;
         ArrayList<Integer> elem;
         int currentLevel = -1;
         int count = 0;
@@ -258,7 +260,7 @@ public class SpatialGraph {
             elem = randomBFSLevelArray.get(currentLevel);
             elem.add(currentNode);
             randomBFSLevelArray.set(currentLevel, elem);
-            leftNodes.remove(new Integer(currentNode));
+            leftNodes[currentNode] = 0;
             
             int nextLevel = nodeLevel + 1;
             if (bfsLevelArray.size() == nextLevel)
@@ -266,11 +268,11 @@ public class SpatialGraph {
             int sizeOriginalNextLevel = bfsLevelArray.get(nextLevel).size();
             int nodesCount = 0;
             for (Integer neighbor: adjacencyList.get(currentNode)) {
-                if (!seen.containsKey(neighbor)) {
+                if (seen[neighbor] == 0) {
                     if (++nodesCount > sizeOriginalNextLevel)
                         break;
                     queue.add(neighbor);
-                    seen.put(neighbor, 1);
+                    seen[neighbor] = 1;
                     level.put(neighbor, nextLevel);
                 }
             }
@@ -286,26 +288,16 @@ public class SpatialGraph {
             int sizeOriginalElem = bfsLevelArray.get(i).size();
             int diff = sizeOriginalElem - elem.size();
             for (int j = 0; j < diff; j++) {
+                // start looking for neighbors in the previous level,
+                // and keep going down in the tree to find neighbors
+                int bfsIndex = i - 1;
                 Integer node = 0;
                 boolean found = false;
-                // look for neighbors in the previous level
-                for (Integer nbhd: randomBFSLevelArray.get(i-1)) {
-                    for (Integer neighbor: adjacencyList.get(nbhd)) {
-                        if (leftNodes.contains(neighbor)) {
-                            leftNodes.remove(neighbor);
-                            node = neighbor;
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found) break;
-                }
-                // look for neighbors in the current level
-                if (!found) {
-                    for (Integer nbhd: elem) {
+                while (!found) {
+                    for (Integer nbhd: randomBFSLevelArray.get(bfsIndex)) {
                         for (Integer neighbor: adjacencyList.get(nbhd)) {
-                            if (leftNodes.contains(neighbor)) {
-                                leftNodes.remove(neighbor);
+                            if (leftNodes[neighbor] == 1) {
+                                leftNodes[neighbor] = 0;
                                 node = neighbor;
                                 found = true;
                                 break;
@@ -313,12 +305,10 @@ public class SpatialGraph {
                         }
                         if (found) break;
                     }
-                }
-                // finally, choose a random node
-                if (!found) {
-                    int index = random.nextInt(leftNodes.size());
-                    node = leftNodes.get(index);
-                    leftNodes.remove(index);
+                    bfsIndex++;
+                    if (bfsIndex == randomBFSLevelArray.size()) {
+                        bfsIndex = 0;
+                    }
                 }
                 elem.add(node);
             }
