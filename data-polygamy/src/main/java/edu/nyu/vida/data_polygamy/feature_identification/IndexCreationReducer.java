@@ -208,16 +208,16 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         
         // non-outliers
         String regThreshold  = "";
-        float regThresholdFloat = 0;
+        //float regThresholdFloat = 0;
         if (idToRegThreshold.containsKey(key.getDataset())) {
             if (idToRegThreshold.get(key.getDataset()).containsKey(key.getAttribute())) {
                 regThreshold = idToRegThreshold.get(key.getDataset()).get(key.getAttribute());
-                regThresholdFloat = Float.parseFloat(regThreshold);
+                //regThresholdFloat = Float.parseFloat(regThreshold);
             }
         }
         ArrayList<byte[]> events = index.queryEvents(this.th, false, att, regThreshold);
         
-        int[] thresholdStTime = new int[att.thresholdStTime.size()];
+        /*int[] thresholdStTime = new int[att.thresholdStTime.size()];
         int[] thresholdEnTime = new int[att.thresholdEnTime.size()];
         float[] maxThreshold = new float[att.maxThreshold.size()];
         float[] minThreshold = new float[att.minThreshold.size()];
@@ -233,7 +233,7 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                 minThreshold[id] = regThresholdFloat;
             }
             id++;
-        }
+        }*/
         
         for (int spatial = 0; spatial < events.size(); spatial++) {
             if (!att.nodeSet.contains(spatial))
@@ -249,11 +249,12 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                     index.getNbPosEvents(spatial),
                     index.getNbNegEvents(spatial),
                     index.getNbNonEvents(spatial),
-                    false,
-                    thresholdStTime,
-                    thresholdEnTime,
-                    maxThreshold,
-                    minThreshold);
+                    false);
+                    //false,
+                    //thresholdStTime,
+                    //thresholdEnTime,
+                    //maxThreshold,
+                    //minThreshold);
             out.write(key, valueWritable,
                     generateFileName(idToDataset.get(key.getDataset())));
             //out.write(new Text(key.toString()), new Text(valueWritable.toString()),
@@ -262,16 +263,16 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         
         // outliers
         String rareThreshold  = "";
-        float rareThresholdFloat = 0;
+        //float rareThresholdFloat = 0;
         if (idToRareThreshold.containsKey(key.getDataset())) {
             if (idToRareThreshold.get(key.getDataset()).containsKey(key.getAttribute())) {
                 rareThreshold = idToRareThreshold.get(key.getDataset()).get(key.getAttribute());
-                rareThresholdFloat = Float.parseFloat(rareThreshold);
+                //rareThresholdFloat = Float.parseFloat(rareThreshold);
             }
         }
         events = index.queryEvents(this.th, true, att, rareThreshold);
         
-        id = 0;
+        /*id = 0;
         for (int tempBin : att.thresholdStTime.keySet()) {
             if (rareThreshold.isEmpty()) {
                 maxThreshold[id] = att.maxThreshold.get(tempBin);
@@ -281,7 +282,7 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                 minThreshold[id] = rareThresholdFloat;
             }
             id++;
-        }
+        }*/
         
         for (int spatial = 0; spatial < events.size(); spatial++) {
             if (!att.nodeSet.contains(spatial))
@@ -297,11 +298,12 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                     index.getNbPosEvents(spatial),
                     index.getNbNegEvents(spatial),
                     index.getNbNonEvents(spatial),
-                    true,
-                    thresholdStTime,
-                    thresholdEnTime,
-                    maxThreshold,
-                    minThreshold);
+                    true);
+                    //true,
+                    //thresholdStTime,
+                    //thresholdEnTime,
+                    //maxThreshold,
+                    //minThreshold);
             out.write(key, valueWritable,
                     generateFileName(idToDataset.get(key.getDataset())));
             //out.write(new Text(key.toString()), new Text(valueWritable.toString()),
