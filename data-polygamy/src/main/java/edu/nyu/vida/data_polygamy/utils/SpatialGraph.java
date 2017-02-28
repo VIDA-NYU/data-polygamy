@@ -7,18 +7,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-
-import edu.nyu.vida.data_polygamy.utils.Utilities;
 
 public class SpatialGraph {
     
@@ -179,7 +177,7 @@ public class SpatialGraph {
     
     private void bfs(int node) {
         
-        Queue<Integer> queue = new LinkedList<Integer>();
+        Queue<Integer> queue = new ArrayDeque<Integer>();
         HashSet<Integer> seen = new HashSet<Integer>();
         HashMap<Integer,Integer> level = new HashMap<Integer,Integer>();
         
@@ -216,7 +214,7 @@ public class SpatialGraph {
         
         int origin = random.nextInt(nbNodes);
         
-        Queue<Integer> queue = new LinkedList<Integer>();
+        Queue<Integer> queue = new ArrayDeque<Integer>();
         int[] seen = new int[nbNodes];
         
         ArrayList<ArrayList<Integer>> randomBFSLevelArray = new ArrayList<ArrayList<Integer>>();
