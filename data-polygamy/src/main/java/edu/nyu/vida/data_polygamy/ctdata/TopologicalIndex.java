@@ -120,15 +120,6 @@ public class TopologicalIndex implements Serializable {
     Int2ObjectOpenHashMap<Feature[]> minIndex = new Int2ObjectOpenHashMap<Feature[]>();
     Int2ObjectOpenHashMap<Feature[]> maxIndex = new Int2ObjectOpenHashMap<Feature[]>();
     
-    // total number of events
-    //  [0] number of positive events
-    //  [1] number of negative events
-    //  [2] number of non events
-    ArrayList<int[]> nEvents = new ArrayList<int[]>();
-    
-    // 2D case
-    ArrayList<Integer[]> edges = new ArrayList<Integer[]>(); 
-    
     public TopologicalIndex() {}
 	
     public TopologicalIndex(int spatialRes, int tempRes, int nv) {
@@ -148,7 +139,7 @@ public class TopologicalIndex implements Serializable {
             return maxIndex;
     }
 
-    public int createIndex(Attribute att, ArrayList<Integer[]> edges2D) {
+    public int createIndex(Attribute att, int[][] edges2D) {
         this.attribute = att.id;
         //if (att.data.size() == 0) return 1;
 		for (int t = 0; t < types.length; t++) {
@@ -240,28 +231,20 @@ public class TopologicalIndex implements Serializable {
         return 0;
 	}
     
-    public ArrayList<byte[]> queryEvents(float th, boolean outlier, Attribute att, String threshold) {
+    public byte[][] queryEvents(float th, boolean outlier, Attribute att, String threshold) {
         return queryEvents(th, outlier, att, threshold, false);
     }
 	
-	public ArrayList<byte[]> queryEvents(float th, boolean outlier, Attribute att, String threshold, boolean print) {
+	public byte[][] queryEvents(float th, boolean outlier, Attribute att, String threshold, boolean print) {
 		
 	    att.minThreshold.clear();
 	    att.maxThreshold.clear();
 	    
 	    int timeSteps = FrameworkUtils.getTimeSteps(this.tempRes, this.stTime, this.enTime);
-	    ArrayList<byte[]> results = new ArrayList<byte[]>();
-	    if (timeSteps == 0) return results;
+	    byte[][] results = new byte[this.nv][timeSteps];
+	    if (timeSteps == 0) return new byte[0][0];
 	    for (int i = 0; i < this.nv; i++) {
-	        byte[] events = new byte[timeSteps]; 
-	        Arrays.fill(events, FrameworkUtils.nonEvent);
-	        results.add(events);
-	        
-	        int[] nEventsArray = new int[3];
-	        nEventsArray[0] = 0; // positive events
-	        nEventsArray[1] = 0; // negative events
-	        nEventsArray[2] = timeSteps; // non events
-	        nEvents.add(nEventsArray);
+	        Arrays.fill(results[i], FrameworkUtils.nonEvent);
 	    }
 		
 		for(int t = 0;t < types.length;t ++) {
@@ -358,19 +341,7 @@ public class TopologicalIndex implements Serializable {
 		}
 	}
 	
-	public int getNbPosEvents(int spatial) {
-	    return nEvents.get(spatial)[0];
-	}
-	
-	public int getNbNegEvents(int spatial) {
-        return nEvents.get(spatial)[1];
-    }
-	
-	public int getNbNonEvents(int spatial) {
-        return nEvents.get(spatial)[2];
-    }
-	
-	void getEvents(ArrayList<byte[]> events, double eventTh,
+	void getEvents(byte[][] events, double eventTh,
 			Int2ObjectOpenHashMap<Feature[] > featureMap, boolean min, Attribute att) {
 		// getting events using merge tree
 		for (int tempBin : att.data.keySet()) {
@@ -386,7 +357,7 @@ public class TopologicalIndex implements Serializable {
 		}
 	}
 	
-	private void getEvents(ArrayList<byte[]> events, GraphInput tf, Feature[] features, boolean min, double eventTh, boolean print) {
+	private void getEvents(byte[][] events, GraphInput tf, Feature[] features, boolean min, double eventTh, boolean print) {
 		float[] fnVertices = tf.getFnVertices();
 //		nv = 1;
 //		if (is2D) {
@@ -438,9 +409,7 @@ public class TopologicalIndex implements Serializable {
 					    
 					    int index = FrameworkUtils.getTimeSteps(this.tempRes,
 					            this.stTime, time);
-					    byte[] spatialEvents = events.get(spatial);
-					    spatialEvents[index-1] = FrameworkUtils.negativeEvent;
-					    events.set(spatial, spatialEvents);
+					    events[spatial][index-1] = FrameworkUtils.negativeEvent;
 					    
 					    if (print) {
 					        // October 15th, 2011 to October 31st, 2011
@@ -450,11 +419,6 @@ public class TopologicalIndex implements Serializable {
 				                System.out.println("");
 				            }
 					    }
-					    
-					    int[] nEventsArray = nEvents.get(spatial);
-					    nEventsArray[1]++;
-					    nEventsArray[2]--;
-					    nEvents.set(spatial, nEventsArray);
 						
 						MyIntList star = tf.getStar(vin);
 						for(int i = 0;i < star.length;i ++) {
@@ -492,9 +456,7 @@ public class TopologicalIndex implements Serializable {
                         
                         int index = FrameworkUtils.getTimeSteps(this.tempRes,
                                 this.stTime, time);
-                        byte[] spatialEvents = events.get(spatial);
-                        spatialEvents[index-1] = FrameworkUtils.positiveEvent;
-                        events.set(spatial, spatialEvents);
+                        events[spatial][index-1] = FrameworkUtils.positiveEvent;
                         
                         if (print) {
                             // October 15th, 2011 to October 31st, 2011
@@ -504,11 +466,6 @@ public class TopologicalIndex implements Serializable {
                                 System.out.println("");
                             }
                         }
-                        
-                        int[] nEventsArray = nEvents.get(spatial);
-                        nEventsArray[0]++;
-                        nEventsArray[2]--;
-                        nEvents.set(spatial, nEventsArray);
 						
 						MyIntList star = tf.getStar(vin);
 						for(int i = 0;i < star.length;i ++) {

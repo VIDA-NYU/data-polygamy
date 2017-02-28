@@ -169,7 +169,7 @@ public class TaxiSyntheticExp {
     public void run(String dataFile, String graphFile, String polygonsFile, boolean is2D) throws IOException {
         
         SpatialGraph spatialGraph = new SpatialGraph();
-        ArrayList<Integer[]> edges = new ArrayList<Integer[]>();
+        int[][] edges = new int[0][0];
         int spatialRes = 0;
         int nv = 1;
         
@@ -187,6 +187,7 @@ public class TaxiSyntheticExp {
             String [] s = Utilities.splitString(reader.readLine().trim());
             nv = Integer.parseInt(s[0].trim());
             int ne = Integer.parseInt(s[1].trim());
+            edges = new int[ne][2];
             for(int i = 0;i < ne;i ++) {
                 s = Utilities.splitString(reader.readLine().trim());
                 int v1 = Integer.parseInt(s[0].trim());
@@ -194,10 +195,8 @@ public class TaxiSyntheticExp {
                 if(v1 == v2) {
                     continue;
                 }
-                Integer[] arr = new Integer[2];
-                arr[0] = v1;
-                arr[1] = v2;
-                edges.add(arr);
+                edges[i][0] = v1;
+                edges[i][1] = v2;
             }
             reader.close();
             
@@ -230,27 +229,21 @@ public class TaxiSyntheticExp {
             for(int i = 0; i < dataAttributes.length; i++) {
                 System.out.println("Attribute: " + dataAttributes[i]);
                 
-                ArrayList<byte[]> e1 = dataIndex2011.get(i).queryEvents(
+                byte[][] e1 = dataIndex2011.get(i).queryEvents(
                         th, outlier, attributes2011.get(dataAttributes[i]), "");
-                ArrayList<byte[]> e2 = dataIndex2012.get(i).queryEvents(
+                byte[][] e2 = dataIndex2012.get(i).queryEvents(
                         th, outlier, attributes2012.get(dataAttributes[i]), "");
                 
                 TopologyTimeSeriesWritable t1 = 
-                        new TopologyTimeSeriesWritable(0, 0, i, e1.get(0),
+                        new TopologyTimeSeriesWritable(0, 0, e1[0],
                                 dataIndex2011.get(i).stTime,
                                 dataIndex2011.get(i).enTime,
-                                dataIndex2011.get(i).getNbPosEvents(0),
-                                dataIndex2011.get(i).getNbNegEvents(0),
-                                dataIndex2011.get(i).getNbNonEvents(0),
                                 outlier);
                 
                 TopologyTimeSeriesWritable t2 = 
-                        new TopologyTimeSeriesWritable(0, 0, i, e2.get(0),
+                        new TopologyTimeSeriesWritable(0, 0, e2[0],
                                 dataIndex2012.get(i).stTime,
                                 dataIndex2012.get(i).enTime,
-                                dataIndex2012.get(i).getNbPosEvents(0),
-                                dataIndex2012.get(i).getNbNegEvents(0),
-                                dataIndex2012.get(i).getNbNonEvents(0),
                                 outlier);
                 
                 int temporal = FrameworkUtils.HOUR;
@@ -298,24 +291,21 @@ public class TaxiSyntheticExp {
             for(int i = 0; i < dataAttributes.length; i++) {
                 System.out.println("Attribute: " + dataAttributes[i]);
                 
-                ArrayList<byte[]> e1 = dataIndex2011.get(i).queryEvents(
+                byte[][] e1 = dataIndex2011.get(i).queryEvents(
                         th, outlier, attributes2011.get(dataAttributes[i]), "");
                 int n1 = dataIndex2011.get(i).nv;
                 TopologyTimeSeriesWritable[] tarr1 = new TopologyTimeSeriesWritable[n1];
                 for(int j = 0; j < n1; j++) {
-                    tarr1[j] = new TopologyTimeSeriesWritable(j, 0, i, e1.get(j),
+                    tarr1[j] = new TopologyTimeSeriesWritable(j, 0, e1[j],
                             dataIndex2011.get(i).stTime,
                             dataIndex2011.get(i).enTime,
-                            dataIndex2011.get(i).getNbPosEvents(j),
-                            dataIndex2011.get(i).getNbNegEvents(j),
-                            dataIndex2011.get(i).getNbNonEvents(j),
                             outlier);
                 }
                 
                 int temporal = FrameworkUtils.HOUR;
                 TimeSeriesStats stats = new TimeSeriesStats();
                 
-                ArrayList<byte[]> e2 = dataIndex2012.get(i).queryEvents(
+                byte[][] e2 = dataIndex2012.get(i).queryEvents(
                         th, outlier, attributes2012.get(dataAttributes[i]), "");
                 int n2 = dataIndex2012.get(i).nv;
                 if(n1 != n2) {
@@ -324,12 +314,9 @@ public class TaxiSyntheticExp {
                 }
                 TopologyTimeSeriesWritable[] tarr2 = new TopologyTimeSeriesWritable[n2];
                 for(int j = 0; j < n2; j++) {
-                    tarr2[j] = new TopologyTimeSeriesWritable(j, 0, i, e2.get(j),
+                    tarr2[j] = new TopologyTimeSeriesWritable(j, 0, e2[j],
                             dataIndex2012.get(i).stTime,
                             dataIndex2012.get(i).enTime,
-                            dataIndex2012.get(i).getNbPosEvents(j),
-                            dataIndex2012.get(i).getNbNegEvents(j),
-                            dataIndex2012.get(i).getNbNonEvents(j),
                             outlier);
                     stats.add(CorrelationReducer.getStats(temporal, tarr1[j], tarr2[j], false));
                 }
@@ -382,7 +369,7 @@ public class TaxiSyntheticExp {
     }
 
     public TopologicalIndex createIndex(HashMap<String, Attribute> attributes,
-            String attribute, int spatialRes, int nv, ArrayList<Integer[]> edges) {
+            String attribute, int spatialRes, int nv, int[][] edges) {
         TopologicalIndex index = new TopologicalIndex(
                 spatialRes, FrameworkUtils.HOUR, nv);
         Attribute a = attributes.get(attribute);

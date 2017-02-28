@@ -1820,109 +1820,42 @@ public class FrameworkUtils {
 
         private int spatial;
         private int dataset;
-        private int attribute;
         private byte[] timeSeries;
         private int start;
         private int end;
-        private int nbPosEvents;
-        private int nbNegEvents;
-        private int nbNonEvents;
         private boolean isOutlier;
-        private int[] thresholdStTime;
-        private int[] thresholdEnTime;
-        private float[] maxThreshold;
-        private float[] minThreshold;
         
         public TopologyTimeSeriesWritable() {
             this.spatial = 0;
             this.dataset = 0;
-            this.attribute = 0;
             this.timeSeries = new byte[0];
             this.start = 0;
             this.end = 0;
-            this.nbPosEvents = 0;
-            this.nbNegEvents = 0;
-            this.nbNonEvents = 0;
             this.isOutlier = false;
-            this.thresholdStTime = new int[0];
-            this.thresholdEnTime = new int[0];
-            this.maxThreshold = new float[0];
-            this.minThreshold = new float[0];
         }
         
         public TopologyTimeSeriesWritable(TopologyTimeSeriesWritable object) {
             this.spatial = object.getSpatial();
             this.dataset = object.getDataset();
-            this.attribute = object.getAttribute();
             this.timeSeries = Arrays.copyOf(object.getTimeSeries(), object.getTimeSeries().length);
             this.start = object.getStart();
             this.end = object.getEnd();
-            this.nbPosEvents = object.getNbPosEvents();
-            this.nbNegEvents = object.getNbNegEvents();
-            this.nbNonEvents = object.getNbNonEvents();
             this.isOutlier = object.getIsOutlier();
-            this.thresholdStTime = object.getThresholdStTime();
-            this.thresholdEnTime = object.getThresholdEnTime();
-            this.maxThreshold = object.getMaxThreshold();
-            this.minThreshold = object.getMinThreshold();
         }
         
         public TopologyTimeSeriesWritable(
                 int spatial,
                 int dataset,
-                int attribute,
                 byte[] timeSeries,
                 int start,
                 int end,
-                int nbPosEvents,
-                int nbNegEvents,
-                int nbNonEvents,
-                boolean isOutlier,
-                int[] thresholdStTime,
-                int[] thresholdEnTime,
-                float[] maxThreshold,
-                float[] minThreshold) {
-            this.spatial = spatial;
-            this.dataset = dataset;
-            this.attribute = attribute;
-            this.timeSeries = timeSeries;
-            this.start = start;
-            this.end = end;
-            this.nbPosEvents = nbPosEvents;
-            this.nbNegEvents = nbNegEvents;
-            this.nbNonEvents = nbNonEvents;
-            this.isOutlier = isOutlier;
-            this.thresholdStTime = thresholdStTime;
-            this.thresholdEnTime = thresholdEnTime;
-            this.maxThreshold = maxThreshold;
-            this.minThreshold = minThreshold;
-        }
-        
-        public TopologyTimeSeriesWritable(
-                int spatial,
-                int dataset,
-                int attribute,
-                byte[] timeSeries,
-                int start,
-                int end,
-                int nbPosEvents,
-                int nbNegEvents,
-                int nbNonEvents,
                 boolean isOutlier) {
             this.spatial = spatial;
             this.dataset = dataset;
-            this.attribute = attribute;
             this.timeSeries = timeSeries;
             this.start = start;
             this.end = end;
-            this.nbPosEvents = nbPosEvents;
-            this.nbNegEvents = nbNegEvents;
-            this.nbNonEvents = nbNonEvents;
             this.isOutlier = isOutlier;
-            this.thresholdStTime = new int[0];
-            this.thresholdEnTime = new int[0];
-            this.maxThreshold = new float[0];
-            this.minThreshold = new float[0];
         }
         
         public int getSpatial() {
@@ -1931,10 +1864,6 @@ public class FrameworkUtils {
         
         public int getDataset() {
             return this.dataset;
-        }
-        
-        public int getAttribute() {
-            return this.attribute;
         }
         
         public byte[] getTimeSeries() {
@@ -1949,45 +1878,8 @@ public class FrameworkUtils {
             return this.end;
         }
         
-        public int getNbPosEvents() {
-            return this.nbPosEvents;
-        }
-        
-        public int getNbNegEvents() {
-            return this.nbNegEvents;
-        }
-        
-        public int getNbNonEvents() {
-            return this.nbNonEvents;
-        }
-        
         public boolean getIsOutlier() {
             return this.isOutlier;
-        }
-        
-        public int[] getThresholdStTime() {
-            return thresholdStTime;
-        }
-        
-        public int[] getThresholdEnTime() {
-            return thresholdEnTime;
-        }
-
-        public float[] getMaxThreshold() {
-            return maxThreshold;
-        }
-
-        public float[] getMinThreshold() {
-            return minThreshold;
-        }
-        
-        public String thresholdsToString() {
-            String result = isOutlier + ",";
-            for (int i = 0; i < this.thresholdStTime.length; i++) {
-                result += thresholdStTime[i] + "," + thresholdEnTime[i] +
-                        "," + maxThreshold[i] + "," + minThreshold[i] + ",";
-            }
-            return result.substring(0, result.length()-1);
         }
 
         public String toString(int tempRes) {
@@ -2019,56 +1911,24 @@ public class FrameworkUtils {
         public void readFields(DataInput in) throws IOException {
             spatial = in.readInt();
             dataset = in.readInt();
-            attribute = in.readInt();
             timeSeries = new byte[in.readInt()];
             for (int i = 0; i < timeSeries.length; i++)
                 timeSeries[i] = in.readByte();
             start = in.readInt();
             end = in.readInt();
-            nbPosEvents = in.readInt();
-            nbNegEvents = in.readInt();
-            nbNonEvents = in.readInt();
             isOutlier = in.readBoolean();
-            thresholdStTime = new int[in.readInt()];
-            for (int i = 0; i < thresholdStTime.length; i++)
-                thresholdStTime[i] = in.readInt();
-            thresholdEnTime = new int[in.readInt()];
-            for (int i = 0; i < thresholdEnTime.length; i++)
-                thresholdEnTime[i] = in.readInt();
-            maxThreshold = new float[in.readInt()];
-            for (int i = 0; i < maxThreshold.length; i++)
-                maxThreshold[i] = in.readFloat();
-            minThreshold = new float[in.readInt()];
-            for (int i = 0; i < minThreshold.length; i++)
-                minThreshold[i] = in.readFloat();
         }
 
         @Override
         public void write(DataOutput out) throws IOException {
             out.writeInt(spatial);
             out.writeInt(dataset);
-            out.writeInt(attribute);
             out.writeInt(timeSeries.length);
             for (int i = 0; i < timeSeries.length; i++)
                 out.writeByte(timeSeries[i]);
             out.writeInt(start);
             out.writeInt(end);
-            out.writeInt(nbPosEvents);
-            out.writeInt(nbNegEvents);
-            out.writeInt(nbNonEvents);
             out.writeBoolean(isOutlier);
-            out.writeInt(thresholdStTime.length);
-            for (int i = 0; i < thresholdStTime.length; i++)
-                out.writeInt(thresholdStTime[i]);
-            out.writeInt(thresholdEnTime.length);
-            for (int i = 0; i < thresholdEnTime.length; i++)
-                out.writeInt(thresholdEnTime[i]);
-            out.writeInt(maxThreshold.length);
-            for (int i = 0; i < maxThreshold.length; i++)
-                out.writeFloat(maxThreshold[i]);
-            out.writeInt(minThreshold.length);
-            for (int i = 0; i < minThreshold.length; i++)
-                out.writeFloat(minThreshold[i]);
         }
 
         @Override
@@ -2076,12 +1936,8 @@ public class FrameworkUtils {
         	return ComparisonChain.start()
                     .compare(this.spatial, arg0.getSpatial())
                     .compare(this.dataset, arg0.getDataset())
-                    .compare(this.attribute, arg0.getAttribute())
                     .compare(this.start, arg0.getStart())
                     .compare(this.end, arg0.getEnd())
-                    .compare(this.nbPosEvents, arg0.getNbPosEvents())
-                    .compare(this.nbNegEvents, arg0.getNbNegEvents())
-                    .compare(this.nbNonEvents, arg0.getNbNonEvents())
                     .compare(this.isOutlier, arg0.getIsOutlier())
                     .result();
         }
@@ -2091,18 +1947,10 @@ public class FrameworkUtils {
             return Objects.hashCode(
                     this.spatial,
                     this.dataset,
-                    this.attribute,
                     this.timeSeries,
                     this.start,
                     this.end,
-                    this.nbPosEvents,
-                    this.nbNegEvents,
-                    this.nbNonEvents,
-                    this.isOutlier,
-                    this.thresholdStTime,
-                    this.thresholdEnTime,
-                    this.maxThreshold,
-                    this.minThreshold);
+                    this.isOutlier);
         }
         
         @Override

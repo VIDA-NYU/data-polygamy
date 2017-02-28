@@ -51,7 +51,7 @@ public class GraphFunctions {
 		
 	}
 	
-	public GraphFunctions(ArrayList<Integer[]> edges2D, int noNodes) {
+	public GraphFunctions(int[][] edges2D, int noNodes) {
 	    try {
             nv = noNodes;
             nodes = new IntOpenHashSet[nv];
@@ -59,9 +59,9 @@ public class GraphFunctions {
             for(int i = 0;i < nv;i ++) {
                 nodes[i] = new IntOpenHashSet();
             }
-            for(Integer[] edge: edges2D) {
-                int v1 = edge[0];
-                int v2 = edge[1];
+            for(int i = 0; i < edges2D.length; i++) {
+                int v1 = edges2D[i][0];
+                int v2 = edges2D[i][1];
                 nodes[v1].add(v2);
                 nodes[v2].add(v1);
             }

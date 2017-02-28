@@ -180,7 +180,7 @@ public class StandaloneExp {
         return na;
 	}
 	
-	public TopologicalIndex createIndex(Attribute na, int spatialRes, int nv, ArrayList<Integer[]> edges) {
+	public TopologicalIndex createIndex(Attribute na, int spatialRes, int nv, int[][] edges) {
         
 	    TopologicalIndex index = new TopologicalIndex(
                 spatialRes, FrameworkUtils.HOUR, nv);
@@ -190,9 +190,10 @@ public class StandaloneExp {
         return index;
     }
 	
-	public void test1d(int noMonths, String dataFile) {
+	@SuppressWarnings("unused")
+    public void test1d(int noMonths, String dataFile) {
         load1DData(dataFile);
-        ArrayList<Integer[]> edges = new ArrayList<Integer[]>();
+        int[][] edges = new int[0][0];
         int spatialRes = FrameworkUtils.CITY;
         int nv = 1;
         
@@ -200,16 +201,17 @@ public class StandaloneExp {
             Attribute na = createNewAttribute(attributes, dataAttributes[0], noMonths);
             TopologicalIndex index = createIndex(na, spatialRes, nv, edges);
             long st = System.nanoTime();
-            ArrayList<byte[]> e1 = index.queryEvents(0.4f, false, na, "");
+            byte[][] e1 = index.queryEvents(0.4f, false, na, "");
             queryTimes = System.nanoTime() - st;
-            e1.clear();
+            e1 = new byte[0][0];
         }
         System.out.println(noMonths + "\t" + indexTimes + "\t" + queryTimes);
     }
 	
-	public void test2d(int noMonths, String dataFile, String graphFile, String polygonsFile) throws IOException {
+	@SuppressWarnings("unused")
+    public void test2d(int noMonths, String dataFile, String graphFile, String polygonsFile) throws IOException {
         load2DData(dataFile);
-        ArrayList<Integer[]> edges = new ArrayList<Integer[]>();
+        int[][] edges = new int[0][0];
         int spatialRes = FrameworkUtils.NBHD;
         
         SpatialGraph spatialGraph = new SpatialGraph();
@@ -224,6 +226,7 @@ public class StandaloneExp {
         String [] s = Utilities.splitString(reader.readLine().trim());
         int nv = Integer.parseInt(s[0].trim());
         int ne = Integer.parseInt(s[1].trim());
+        edges = new int[ne][2];
         for(int i = 0;i < ne;i ++) {
             s = Utilities.splitString(reader.readLine().trim());
             int v1 = Integer.parseInt(s[0].trim());
@@ -231,10 +234,8 @@ public class StandaloneExp {
             if(v1 == v2) {
                 continue;
             }
-            Integer[] arr = new Integer[2];
-            arr[0] = v1;
-            arr[1] = v2;
-            edges.add(arr);
+            edges[i][0] = v1;
+            edges[i][1] = v2;
         }
         reader.close();
         
@@ -242,9 +243,9 @@ public class StandaloneExp {
             Attribute na = createNewAttribute(attributes, dataAttributes[0], noMonths);
             TopologicalIndex index = createIndex(na, spatialRes, nv, edges);
             long st = System.nanoTime();
-            ArrayList<byte[]> e1 = index.queryEvents(0.4f, false, na, "");
+            byte[][] e1 = index.queryEvents(0.4f, false, na, "");
             queryTimes = System.nanoTime() - st;
-            e1.clear();
+            e1 = new byte[0][0];
         }
         
         System.out.println(noMonths + "\t" + indexTimes + "\t" + queryTimes);

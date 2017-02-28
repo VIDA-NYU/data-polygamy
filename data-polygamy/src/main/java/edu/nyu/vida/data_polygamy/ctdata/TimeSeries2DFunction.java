@@ -36,7 +36,7 @@ public class TimeSeries2DFunction implements GraphInput, Serializable {
 	DateTime start;
 	
 	public TimeSeries2DFunction(ArrayList<SpatioTemporalVal> data, IntOpenHashSet nodeSet,
-	        ArrayList<Integer[]> edges2D, int nv, int tempRes, int stTime, int enTime) {
+	        int[][] edges2D, int nv, int tempRes, int stTime, int enTime) {
 	    this.nv = nv;
 	    
 	    int timeSteps = FrameworkUtils.getTimeSteps(tempRes, stTime, enTime);
@@ -62,7 +62,7 @@ public class TimeSeries2DFunction implements GraphInput, Serializable {
 
 	
 	public void loadGraph(int timeSteps, IntOpenHashSet nodeSet,
-	        ArrayList<Integer[]> edges2D) {
+	        int[][] edges2D) {
 		try {
 			ignore = new boolean [nv];
 			Arrays.fill(ignore, true);
@@ -81,9 +81,9 @@ public class TimeSeries2DFunction implements GraphInput, Serializable {
 				// Ignoring coordinates. not required
 				nodes[i] = new IntOpenHashSet();
 			}
-			for(Integer[] edge: edges2D) {
-				int v1 = edge[0];
-				int v2 = edge[1];
+			for(int i = 0; i < edges2D.length; i++) {
+				int v1 = edges2D[i][0];
+				int v2 = edges2D[i][1];
 				if(ignore[v1] || ignore[v2]) {
 					continue;
 				}

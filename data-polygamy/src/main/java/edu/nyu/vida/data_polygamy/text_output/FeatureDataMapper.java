@@ -38,10 +38,7 @@ public class FeatureDataMapper extends Mapper<AttributeResolutionWritable, Topol
             throws IOException, InterruptedException {
         
         out.write(new Text(key.toString()), new Text(value.toString(key.getTemporalResolution())),
-                generateFileName(dataset + "-features"));
-        
-        out.write(new Text(key.toString()), new Text(value.thresholdsToString()),
-                generateFileName(dataset + "-thresholds"));
+                generateFileName(dataset));
     }
     
     private String generateFileName(String dataset) {

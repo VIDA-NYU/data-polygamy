@@ -169,12 +169,10 @@ public class FeatureData {
         
         for (String dataset: shortDataset) {
             
-            String indexTextOutputFileName = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "-features" + "/";
-            String indexTextOutputFileNameThresholds = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "-thresholds" + "/";
+            String indexTextOutputFileName = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "/";
             
             if (removeExistingFiles) {
                 FrameworkUtils.removeFile(indexTextOutputFileName, s3conf, s3);
-                FrameworkUtils.removeFile(indexTextOutputFileNameThresholds, s3conf, s3);
             }
             
             if (!FrameworkUtils.fileExists(indexTextOutputFileName, s3conf, s3)) {
@@ -259,11 +257,8 @@ public class FeatureData {
         
         // moving files to right place
         for (String dataset: shortDatasetIndex) {
-            String from = s3bucket + FrameworkUtils.indexTextDir + "/tmp/" + dataset + "-features" + "/";
-            String to = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "-features" + "/";
-            FrameworkUtils.renameFile(from, to, s3conf, s3);
-            from = s3bucket + FrameworkUtils.indexTextDir + "/tmp/" + dataset + "-thresholds" + "/";
-            to = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "-thresholds" + "/";
+            String from = s3bucket + FrameworkUtils.indexTextDir + "/tmp/" + dataset + "/";
+            String to = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "/";
             FrameworkUtils.renameFile(from, to, s3conf, s3);
         }
         

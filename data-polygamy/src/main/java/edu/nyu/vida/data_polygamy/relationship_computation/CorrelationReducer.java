@@ -313,14 +313,6 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         if ((hasScoreThreshold) && (Math.abs(alignedScore) < scoreThreshold)) return;
         if ((hasStrengthThreshold) && (Math.abs(alignedStrength) < strengthThreshold)) return;
         
-        // assuming city resolution
-        /*float nPosEventAtt1 = timeSeriesPerSpatial.get(0)[0].getNbPosEvents();
-        float nNegEventAtt1 = timeSeriesPerSpatial.get(0)[0].getNbNegEvents();
-        float nNonEventAtt1 = timeSeriesPerSpatial.get(0)[0].getNbNonEvents();
-        float nPosEventAtt2 = timeSeriesPerSpatial.get(0)[1].getNbPosEvents();
-        float nNegEventAtt2 = timeSeriesPerSpatial.get(0)[1].getNbNegEvents();
-        float nNonEventAtt2 = timeSeriesPerSpatial.get(0)[1].getNbNonEvents();*/
-        
         float nMatchEvents = stats.getMatchEvents();
         float nMatchPosEvents = stats.getMatchPosEvents();
         float nMatchNegEvents = stats.getMatchNegEvents();
@@ -328,9 +320,6 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         float nNegFirstNonSecond = stats.getNegFirstNonSecond();
         float nNonFirstPosSecond = stats.getNonFirstPosSecond();
         float nNonFirstNegSecond = stats.getNonFirstNegSecond();
-        
-        //HashSet<String> posEvents = stats.getPosEvents();
-        //HashSet<String> negEvents = stats.getNegEvents();
         
         //long end = System.currentTimeMillis();
         
