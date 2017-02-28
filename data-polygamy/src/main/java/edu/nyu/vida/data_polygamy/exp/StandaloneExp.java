@@ -190,7 +190,6 @@ public class StandaloneExp {
         return index;
     }
 	
-	@SuppressWarnings("unused")
     public void test1d(int noMonths, String dataFile) {
         load1DData(dataFile);
         int[][] edges = new int[0][0];
@@ -201,14 +200,13 @@ public class StandaloneExp {
             Attribute na = createNewAttribute(attributes, dataAttributes[0], noMonths);
             TopologicalIndex index = createIndex(na, spatialRes, nv, edges);
             long st = System.nanoTime();
-            byte[][] e1 = index.queryEvents(0.4f, false, na, "");
+            ArrayList<byte[]> e1 = index.queryEvents(0.4f, false, na, "");
             queryTimes = System.nanoTime() - st;
-            e1 = new byte[0][0];
+            e1.clear();
         }
         System.out.println(noMonths + "\t" + indexTimes + "\t" + queryTimes);
     }
 	
-	@SuppressWarnings("unused")
     public void test2d(int noMonths, String dataFile, String graphFile, String polygonsFile) throws IOException {
         load2DData(dataFile);
         int[][] edges = new int[0][0];
@@ -243,9 +241,9 @@ public class StandaloneExp {
             Attribute na = createNewAttribute(attributes, dataAttributes[0], noMonths);
             TopologicalIndex index = createIndex(na, spatialRes, nv, edges);
             long st = System.nanoTime();
-            byte[][] e1 = index.queryEvents(0.4f, false, na, "");
+            ArrayList<byte[]> e1 = index.queryEvents(0.4f, false, na, "");
             queryTimes = System.nanoTime() - st;
-            e1 = new byte[0][0];
+            e1.clear();
         }
         
         System.out.println(noMonths + "\t" + indexTimes + "\t" + queryTimes);

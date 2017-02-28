@@ -221,16 +221,16 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                 regThreshold = idToRegThreshold.get(key.getDataset()).get(key.getAttribute());
             }
         }
-        byte[][] events = index.queryEvents(this.th, false, att, regThreshold);
+        ArrayList<byte[]> events = index.queryEvents(this.th, false, att, regThreshold);
         
-        for (int spatial = 0; spatial < events.length; spatial++) {
+        for (int spatial = 0; spatial < events.size(); spatial++) {
             if (!att.nodeSet.contains(spatial))
                 continue;
             
             valueWritable = new TopologyTimeSeriesWritable(
                     spatial,
                     key.getDataset(),
-                    events[spatial],
+                    events.get(spatial),
                     index.stTime,
                     index.enTime,
                     false);
@@ -250,14 +250,14 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         }
         events = index.queryEvents(this.th, true, att, rareThreshold);
         
-        for (int spatial = 0; spatial < events.length; spatial++) {
+        for (int spatial = 0; spatial < events.size(); spatial++) {
             if (!att.nodeSet.contains(spatial))
                 continue;
             
             valueWritable = new TopologyTimeSeriesWritable(
                     spatial,
                     key.getDataset(),
-                    events[spatial],
+                    events.get(spatial),
                     index.stTime,
                     index.enTime,
                     true);

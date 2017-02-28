@@ -244,19 +244,19 @@ public class NoiseExp {
                 for(int i = 0; i < dataAttributes.length; i++) {
                     System.out.println("Attribute: " + dataAttributes[i]);
                     
-                    byte[][] e1 = mainDataIndex.get(i).queryEvents(
+                    ArrayList<byte[]> e1 = mainDataIndex.get(i).queryEvents(
                             th, outlier, attributes.get(dataAttributes[i]), "");
-                    byte[][] e2 = noiseDataIndex.get(i).queryEvents(
+                    ArrayList<byte[]> e2 = noiseDataIndex.get(i).queryEvents(
                             th, outlier, newAttributes.get(dataAttributes[i]), "");
                     
                     TopologyTimeSeriesWritable t1 = 
-                            new TopologyTimeSeriesWritable(0, 0, e1[0],
+                            new TopologyTimeSeriesWritable(0, 0, e1.get(0),
                                     mainDataIndex.get(i).stTime,
                                     mainDataIndex.get(i).enTime,
                                     outlier);
                     
                     TopologyTimeSeriesWritable t2 = 
-                            new TopologyTimeSeriesWritable(0, 0, e2[0],
+                            new TopologyTimeSeriesWritable(0, 0, e2.get(0),
                                     noiseDataIndex.get(i).stTime,
                                     noiseDataIndex.get(i).enTime,
                                     outlier);
@@ -310,12 +310,12 @@ public class NoiseExp {
                 for(int i = 0; i < dataAttributes.length; i++) {
                     System.out.println("Attribute: " + dataAttributes[i]);
                     
-                    byte[][] e1 = mainDataIndex.get(i).queryEvents(
+                    ArrayList<byte[]> e1 = mainDataIndex.get(i).queryEvents(
                             th, outlier, attributes.get(dataAttributes[i]), "");
                     int n1 = mainDataIndex.get(i).nv;
                     TopologyTimeSeriesWritable[] tarr1 = new TopologyTimeSeriesWritable[n1];
                     for(int j = 0; j < n1; j++) {
-                        tarr1[j] = new TopologyTimeSeriesWritable(j, 0, e1[j],
+                        tarr1[j] = new TopologyTimeSeriesWritable(j, 0, e1.get(j),
                                 mainDataIndex.get(i).stTime,
                                 mainDataIndex.get(i).enTime,
                                 outlier);
@@ -324,7 +324,7 @@ public class NoiseExp {
                     int temporal = FrameworkUtils.HOUR;
                     TimeSeriesStats stats = new TimeSeriesStats();
                     
-                    byte[][] e2 = noiseDataIndex.get(i).queryEvents(
+                    ArrayList<byte[]> e2 = noiseDataIndex.get(i).queryEvents(
                             th, outlier, newAttributes.get(dataAttributes[i]), "");
                     int n2 = noiseDataIndex.get(i).nv;
                     if(n1 != n2) {
@@ -333,7 +333,7 @@ public class NoiseExp {
                     }
                     TopologyTimeSeriesWritable[] tarr2 = new TopologyTimeSeriesWritable[n2];
                     for(int j = 0; j < n2; j++) {
-                        tarr2[j] = new TopologyTimeSeriesWritable(j, 0, e2[j],
+                        tarr2[j] = new TopologyTimeSeriesWritable(j, 0, e2.get(j),
                                 noiseDataIndex.get(i).stTime,
                                 noiseDataIndex.get(i).enTime,
                                 outlier);
