@@ -34,6 +34,7 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
 import org.joda.time.Hours;
 import org.joda.time.Months;
+import org.joda.time.MutableDateTime;
 import org.joda.time.Weeks;
 import org.joda.time.Years;
 import org.joda.time.format.DateTimeFormat;
@@ -575,6 +576,45 @@ public class FrameworkUtils {
         
         return d;
         
+    }
+    
+    public static int getDeltaSinceEpoch(int time, int tempRes) {
+        int delta = 0;
+        
+        // Epoch
+        MutableDateTime epoch = new MutableDateTime();
+        epoch.setDate(0);
+        
+        DateTime dt = new DateTime(time*1000, DateTimeZone.UTC);
+        
+        switch(tempRes) {
+        case FrameworkUtils.HOUR:
+            Hours hours = Hours.hoursBetween(epoch, dt);
+            delta = hours.getHours();
+            break;
+        case FrameworkUtils.DAY:
+            Days days = Days.daysBetween(epoch, dt);
+            delta = days.getDays();
+            break;
+        case FrameworkUtils.WEEK:
+            Weeks weeks = Weeks.weeksBetween(epoch, dt);
+            delta = weeks.getWeeks();
+            break;
+        case FrameworkUtils.MONTH:
+            Months months = Months.monthsBetween(epoch, dt);
+            delta = months.getMonths();
+            break;
+        case FrameworkUtils.YEAR:
+            Years years = Years.yearsBetween(epoch, dt);
+            delta = years.getYears();
+            break;
+        default:
+            hours = Hours.hoursBetween(epoch, dt);
+            delta = hours.getHours();
+            break;
+        }
+        
+        return delta;
     }
     
     /**

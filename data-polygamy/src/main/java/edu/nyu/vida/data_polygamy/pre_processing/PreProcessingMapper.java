@@ -346,7 +346,8 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             // count gradient
             if (index == -2) {
                 CountGradient agg = new CountGradient();
-                agg.addValue(floatVal, temporal.get(0));
+                agg.addValue(floatVal, FrameworkUtils.getDeltaSinceEpoch(
+                        temporal.get(0), temporalResolution));
                 output.add(agg);
                 continue;
             }
@@ -370,7 +371,8 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             Aggregation agg = FrameworkUtils.getAggregation(aggregateFunctions.get(uniqueIndex));
             // TODO: only gets the first temporal attribute
             //agg.addValue(floatVal, time);
-            agg.addValue(floatVal, temporal.get(0));
+            agg.addValue(floatVal, FrameworkUtils.getDeltaSinceEpoch(
+                    temporal.get(0), temporalResolution));
             output.add(agg);
         }
         
