@@ -36,7 +36,7 @@ public class TopologicalIndex implements Serializable {
 	
     private static final long serialVersionUID = 1L;
     
-    private static final double thresholdRatio = 0.2;
+    //private static final double thresholdRatio = 0.2;
 
     public static class Attribute implements Serializable {
         private static final long serialVersionUID = 1L;
@@ -367,7 +367,7 @@ public class TopologicalIndex implements Serializable {
 //		}
 		IntOpenHashSet set = new IntOpenHashSet();
 		
-		int numberThresholdValues = 0;
+		/*int numberThresholdValues = 0;
 		for (Feature f: features) {
 		    double pt = f.exFn;
 		    if (min) {
@@ -379,7 +379,7 @@ public class TopologicalIndex implements Serializable {
 		        numberThresholdValues++;
 		    }
 		}
-		double ratio = numberThresholdValues / (double) features.length;
+		double ratio = numberThresholdValues / (double) features.length;*/
 		
 		for(Feature f: features) {
 			float pt = f.exFn;
@@ -387,9 +387,9 @@ public class TopologicalIndex implements Serializable {
 				if (f.sadFn < f.exFn) {
 					pt = f.sadFn;
 				}
-				if (ratio >= thresholdRatio && pt == eventTh) {
-                    continue;
-                }
+				//if (ratio >= thresholdRatio && pt == eventTh) {
+                //    continue;
+                //}
 				if (pt > eventTh) {
                     continue;
                 }
@@ -434,9 +434,9 @@ public class TopologicalIndex implements Serializable {
 				}
 			} else {
 				
-				if (ratio >= thresholdRatio && pt == eventTh) {
-                    continue;
-                }
+				//if (ratio >= thresholdRatio && pt == eventTh) {
+                //    continue;
+                //}
                 if (pt < eventTh) {
                     continue;
                 }
