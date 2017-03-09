@@ -44,19 +44,22 @@ public class Gradient extends Aggregation {
         
         Float lastX = null;
         Float lastY = null;
+        float lastRealX = 0;
         SortedSet<Integer> keys = new TreeSet<Integer>(values.keySet());
         for (Integer key : keys) {
             if (lastX == null) {
-                lastX = (float) key;
+                lastX = (float) 0;
+                lastRealX = (float) key;
                 lastY = getAverage(values.get(key));
                 continue;
             }
-            float currentX = (float) key;
+            float currentX = (float) key - lastRealX;
             float currentY = getAverage(values.get(key));
             Vector vector = new Vector(lastX, lastY, currentX, currentY);
             vectorArray.add(vector);
             lastX = currentX;
             lastY = currentY;
+            lastRealX = (float) key;
         }
         
         float x1 = 0;
