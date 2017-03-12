@@ -6,7 +6,6 @@ package edu.nyu.vida.data_polygamy.scalar_function;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.SortedSet;
@@ -20,53 +19,81 @@ import edu.nyu.vida.data_polygamy.utils.FrameworkUtils.Vector;
 
 public class Gradient extends Aggregation {
     
-    private HashMap<Integer, ArrayList<Float>> values =
-            new HashMap<Integer, ArrayList<Float>>();
+    public class Pair {
+        private float val = 0;
+        private int count = 0;
+        
+        public Pair() {}
+        
+        public Pair(float val, int count) {
+            this.val = val;
+            this.count = count;
+        }
+        
+        public void addVal(float val) {
+            this.val += val;
+            count++;
+        }
+        
+        public void addVal(float val, int count) {
+            this.val += val;
+            this.count += count;
+        }
+        
+        public float getVal() {
+            return this.val;
+        }
+        
+        public int getCount() {
+            return this.count;
+        }
+        
+        public float getAvg() {
+            return this.val / this.count;
+        }
+    }
+    
+    private HashMap<Integer, Pair> values =
+            new HashMap<Integer, Pair>();
     
     public Gradient() {
         this.id = Function.GRADIENT;
     }
     
-    public HashMap<Integer, ArrayList<Float>> getValues() {
+    public HashMap<Integer, Pair> getValues() {
         return values;
-    }
-
-    private float getAverage(ArrayList<Float> values) {
-        float avg = 0;
-        for (float val : values) {
-            avg += val;
-        }
-        return avg / (float) values.size();
     }
     
     private float getDirection() {
-        ArrayList<Vector> vectorArray = new ArrayList<Vector>(); 
+        Vector[] vectorArray = new Vector[values.size()-1]; 
         
         Float lastX = null;
         Float lastY = null;
         float lastRealX = 0;
         SortedSet<Integer> keys = new TreeSet<Integer>(values.keySet());
+        int id = 0;
         for (Integer key : keys) {
             if (lastX == null) {
                 lastX = (float) 0;
                 lastRealX = (float) key;
-                lastY = getAverage(values.get(key));
+                lastY = values.get(key).getAvg();
                 continue;
             }
             float currentX = (float) key - lastRealX;
-            float currentY = getAverage(values.get(key));
+            float currentY = values.get(key).getAvg();
             Vector vector = new Vector(lastX, lastY, currentX, currentY);
-            vectorArray.add(vector);
+            vectorArray[id] = vector;
             lastX = currentX;
             lastY = currentY;
             lastRealX = (float) key;
+            id++;
         }
         
         float x1 = 0;
         float x2 = 0;
         float y1 = 0;
         float y2 = 0;
-        int size = vectorArray.size();
+        int size = vectorArray.length;
         for (Vector vector : vectorArray) {
             x1 += vector.getX1();
             x2 += vector.getX2();
@@ -87,18 +114,18 @@ public class Gradient extends Aggregation {
         if (Float.isNaN(value))
             return;
         
-        ArrayList<Float> timeVal = new ArrayList<Float>();
+        Pair timeVal = new Pair();
         if (values.containsKey(time)) {
             timeVal = values.get(time);
         }
-        
-        timeVal.add(value);
+
+        timeVal.addVal(value);
         values.put(time, timeVal);
     }
     
     @Override
     public void reset() {
-        values = new HashMap<Integer, ArrayList<Float>>();
+        values = new HashMap<Integer, Pair>();
     }
     
     @Override
@@ -118,17 +145,12 @@ public class Gradient extends Aggregation {
     @Override
     public void readFields(DataInput in) throws IOException {
         int size = in.readInt();
-        values = new HashMap<Integer, ArrayList<Float>>(size);
+        values = new HashMap<Integer, Pair>(size);
         for (int i = 0; i < size; i++) {
-            int intSize = in.readInt();
             int time = in.readInt();
-            ArrayList<Float> vals = new ArrayList<Float>(intSize);
-            float timeVal = 0;
-            for (int j = 0; j < intSize; j++) {
-                timeVal = in.readFloat();
-                vals.add(timeVal);
-            }
-            values.put(time, vals);
+            float val = in.readFloat();
+            int count = in.readInt();
+            values.put(time, new Pair(val, count));
         }
     }
 
@@ -137,12 +159,10 @@ public class Gradient extends Aggregation {
         out.writeInt(values.size());
         SortedSet<Integer> keys = new TreeSet<Integer>(values.keySet());
         for (Integer key : keys) {
-            ArrayList<Float> vals = values.get(key);
-            out.writeInt(vals.size());
+            Pair val = values.get(key);
             out.writeInt(key);
-            for (float val : vals) {
-                out.writeFloat(val);
-            }
+            out.writeFloat(val.getVal());
+            out.writeInt(val.getCount());
         }
     }
     
@@ -167,14 +187,15 @@ public class Gradient extends Aggregation {
             throw new IllegalArgumentException("Invalid aggregation: expect gradient, got " +
                     FrameworkUtils.functionToString(agg.getId()));
         Gradient aggregation = (Gradient) agg;
-        HashMap<Integer, ArrayList<Float>> aggValues = aggregation.getValues();
+        HashMap<Integer, Pair> aggValues = aggregation.getValues();
         Set<Integer> keys = aggValues.keySet();
         for (Integer key : keys) {
-            ArrayList<Float> vals = aggValues.get(key);
+            Pair val = aggValues.get(key);
             if (this.values.containsKey(key)) {
-                vals.addAll(this.values.get(key));
+                Pair otherVal = this.values.get(key);
+                val.addVal(otherVal.getVal(), otherVal.getCount());
             }
-            this.values.put(key, vals);
+            this.values.put(key, val);
         }
     }
 }

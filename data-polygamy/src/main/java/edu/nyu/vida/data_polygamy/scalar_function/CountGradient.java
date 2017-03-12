@@ -6,7 +6,6 @@ package edu.nyu.vida.data_polygamy.scalar_function;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.SortedSet;
@@ -31,12 +30,13 @@ public class CountGradient extends Aggregation {
     }
     
     private float getDirection() {
-        ArrayList<Vector> vectorArray = new ArrayList<Vector>(); 
+        Vector[] vectorArray = new Vector[values.size()-1];
         
         Float lastX = null;
         Float lastY = null;
         float lastRealX = 0;
         SortedSet<Integer> keys = new TreeSet<Integer>(values.keySet());
+        int id = 0;
         for (Integer key : keys) {
             if (lastX == null) {
                 lastX = (float) 0;
@@ -47,17 +47,18 @@ public class CountGradient extends Aggregation {
             float currentX = (float) key - lastRealX;
             float currentY = (float) values.get(key);
             Vector vector = new Vector(lastX, lastY, currentX, currentY);
-            vectorArray.add(vector);
+            vectorArray[id] = vector;
             lastX = currentX;
             lastY = currentY;
             lastRealX = (float) key;
+            id++;
         }
         
         float x1 = 0;
         float x2 = 0;
         float y1 = 0;
         float y2 = 0;
-        int size = vectorArray.size();
+        int size = vectorArray.length;
         for (Vector vector : vectorArray) {
             x1 += vector.getX1();
             x2 += vector.getX2();
