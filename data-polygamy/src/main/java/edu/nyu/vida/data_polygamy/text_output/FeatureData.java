@@ -214,7 +214,7 @@ public class FeatureData {
         machineConf.setMachineConfiguration(conf);
         
         if (s3) {
-            machineConf.setMachineConfiguration(conf);
+            //machineConf.setMachineConfiguration(conf);
             conf.set("fs.s3.awsAccessKeyId", awsAccessKeyId);
             conf.set("fs.s3.awsSecretAccessKey", awsSecretAccessKey);
             conf.set("bucket", s3bucket);
