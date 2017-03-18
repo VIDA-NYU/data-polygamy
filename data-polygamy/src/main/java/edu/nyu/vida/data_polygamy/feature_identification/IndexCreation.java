@@ -375,12 +375,13 @@ public class IndexCreation {
         //icConf.set("mapreduce.task.timeout", "1800000");
         machineConf.setMachineConfiguration(icConf);
 
-        icConf.set("mapreduce.reduce.memory.mb", "120000");
-        icConf.set("mapreduce.reduce.java.opts", "-Xmx110000m");
+        //icConf.set("mapreduce.reduce.memory.mb", "120000");
+        //icConf.set("mapreduce.reduce.java.opts", "-Xmx110000m");
+        icConf.set("mapreduce.reduce.memory.mb", "50000");
+        icConf.set("mapreduce.reduce.java.opts", "-Xmx40000m");
         icConf.set("mapreduce.task.timeout", "12000000");
         
         if (s3) {
-            machineConf.setMachineConfiguration(icConf);
             icConf.set("fs.s3.awsAccessKeyId", awsAccessKeyId);
             icConf.set("fs.s3.awsSecretAccessKey", awsSecretAccessKey);
             icConf.set("bucket", s3bucket);

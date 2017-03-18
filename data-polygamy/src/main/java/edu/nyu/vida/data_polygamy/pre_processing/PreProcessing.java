@@ -289,6 +289,7 @@ public class PreProcessing {
         if (s3) {
             conf.set("fs.s3.awsAccessKeyId", awsAccessKeyId);
             conf.set("fs.s3.awsSecretAccessKey", awsSecretAccessKey);
+            conf.set("bucket", s3bucket);
         }
         
         Job job = new Job(conf);
