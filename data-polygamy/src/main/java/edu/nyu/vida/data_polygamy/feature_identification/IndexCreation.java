@@ -376,7 +376,6 @@ public class IndexCreation {
         machineConf.setMachineConfiguration(icConf);
         
         if (s3) {
-            machineConf.setMachineConfiguration(icConf);
             icConf.set("fs.s3.awsAccessKeyId", awsAccessKeyId);
             icConf.set("fs.s3.awsSecretAccessKey", awsSecretAccessKey);
             icConf.set("bucket", s3bucket);

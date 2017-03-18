@@ -432,9 +432,9 @@ public class Relationship {
         conf.set("mapreduce.task.io.sort.mb", "200");
         conf.set("mapreduce.task.io.sort.factor", "100");
         conf.set("mapreduce.task.timeout", "2400000");
+        machineConf.setMachineConfiguration(conf);
         
         if (s3) {
-            machineConf.setMachineConfiguration(conf);
             conf.set("fs.s3.awsAccessKeyId", awsAccessKeyId);
             conf.set("fs.s3.awsSecretAccessKey", awsSecretAccessKey);
             conf.set("bucket", s3bucket);

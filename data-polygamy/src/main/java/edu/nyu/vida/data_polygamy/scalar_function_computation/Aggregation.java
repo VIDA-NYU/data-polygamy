@@ -307,7 +307,7 @@ public class Aggregation {
         machineConf.setMachineConfiguration(aggConf);
         
         if (s3) {
-            machineConf.setMachineConfiguration(aggConf);
+            aggConf.set("bucket", s3bucket);
             aggConf.set("fs.s3.awsAccessKeyId", awsAccessKeyId);
             aggConf.set("fs.s3.awsSecretAccessKey", awsSecretAccessKey);
         }
