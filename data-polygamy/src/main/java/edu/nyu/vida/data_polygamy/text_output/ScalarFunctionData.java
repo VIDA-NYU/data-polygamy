@@ -218,7 +218,7 @@ public class ScalarFunctionData {
         conf.set("mapreduce.task.timeout", "12000000");
         
         if (s3) {
-            machineConf.setMachineConfiguration(conf);
+            //machineConf.setMachineConfiguration(conf);
             conf.set("fs.s3.awsAccessKeyId", awsAccessKeyId);
             conf.set("fs.s3.awsSecretAccessKey", awsSecretAccessKey);
             conf.set("bucket", s3bucket);
