@@ -41,6 +41,11 @@ public class FeatureDataMapper extends Mapper<AttributeResolutionWritable, Topol
                 generateFileName(dataset));
     }
     
+    @Override
+    public void cleanup(Context context) throws IOException, InterruptedException {
+        out.close();
+    }
+    
     private String generateFileName(String dataset) {
         return (dataset + "/data");
     }
