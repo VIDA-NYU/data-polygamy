@@ -260,11 +260,11 @@ public class FeatureData {
         System.out.println(jobName + "\t" + (System.currentTimeMillis() - start));
         
         // moving files to right place
-        //for (String dataset: shortDatasetIndex) {
-        //    String from = s3bucket + FrameworkUtils.indexTextDir + "/tmp/" + dataset + "/";
-        //    String to = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "/";
-        //    FrameworkUtils.renameFile(from, to, s3conf, s3);
-        //}
+        for (String dataset: shortDatasetIndex) {
+            String from = s3bucket + FrameworkUtils.indexTextDir + "/tmp/" + dataset + "/";
+            String to = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "/";
+            FrameworkUtils.renameFile(from, to, s3conf, s3);
+        }
         
     }
 
