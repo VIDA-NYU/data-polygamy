@@ -374,6 +374,10 @@ public class IndexCreation {
         icConf.set("mapreduce.task.io.sort.factor", "100");
         //icConf.set("mapreduce.task.timeout", "1800000");
         machineConf.setMachineConfiguration(icConf);
+
+        icConf.set("mapreduce.reduce.memory.mb", "120000");
+        icConf.set("mapreduce.reduce.java.opts", "-Xmx110000m");
+        icConf.set("mapreduce.task.timeout", "12000000");
         
         if (s3) {
             machineConf.setMachineConfiguration(icConf);

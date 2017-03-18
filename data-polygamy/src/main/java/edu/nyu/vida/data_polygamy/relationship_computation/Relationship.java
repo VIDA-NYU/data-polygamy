@@ -432,6 +432,12 @@ public class Relationship {
         conf.set("mapreduce.task.io.sort.mb", "200");
         conf.set("mapreduce.task.io.sort.factor", "100");
         conf.set("mapreduce.task.timeout", "2400000");
+
+        conf.set("mapreduce.map.memory.mb", "12000");
+        conf.set("mapreduce.map.java.opts", "-Xmx11000m");
+
+        conf.set("mapreduce.reduce.memory.mb", "20000");
+        conf.set("mapreduce.reduce.java.opts", "-Xmx12000m");
         
         if (s3) {
             machineConf.setMachineConfiguration(conf);

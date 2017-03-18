@@ -305,6 +305,10 @@ public class Aggregation {
         aggConf.set("mapreduce.task.io.sort.mb", "200");
         aggConf.set("mapreduce.task.io.sort.factor", "100");
         machineConf.setMachineConfiguration(aggConf);
+
+        aggConf.set("mapreduce.reduce.memory.mb", "10000");
+        aggConf.set("mapreduce.reduce.java.opts", "-Xmx9000m");
+        aggConf.set("mapreduce.task.timeout", "9000000");
         
         if (s3) {
             machineConf.setMachineConfiguration(aggConf);
