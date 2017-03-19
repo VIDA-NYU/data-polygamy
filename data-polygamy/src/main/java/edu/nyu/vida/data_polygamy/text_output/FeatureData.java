@@ -199,7 +199,9 @@ public class FeatureData {
         Machine machineConf = new Machine(machine, nbNodes);
         
         String jobName = "output-to-text";
-        String indexOutputDir = s3bucket + FrameworkUtils.indexTextDir + "/";
+        String indexOutputDir = s3bucket + FrameworkUtils.indexTextDir + "/tmp/";
+        
+        FrameworkUtils.removeFile(indexOutputDir, s3conf, s3);
         
         conf.set("mapreduce.tasktracker.map.tasks.maximum", String.valueOf(machineConf.getMaximumTasks()));
         conf.set("mapreduce.tasktracker.reduce.tasks.maximum", String.valueOf(machineConf.getMaximumTasks()));
