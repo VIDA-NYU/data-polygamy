@@ -199,9 +199,7 @@ public class ScalarFunctionData {
         Machine machineConf = new Machine(machine, nbNodes);
         
         String jobName = "output-to-text";
-        String aggregateOutputDir = s3bucket + FrameworkUtils.aggregatesTextDir + "/tmp/";
-        
-        FrameworkUtils.removeFile(aggregateOutputDir, s3conf, s3);
+        String aggregateOutputDir = s3bucket + FrameworkUtils.aggregatesTextDir + "/";
         
         conf.set("mapreduce.tasktracker.map.tasks.maximum", String.valueOf(machineConf.getMaximumTasks()));
         conf.set("mapreduce.tasktracker.reduce.tasks.maximum", String.valueOf(machineConf.getMaximumTasks()));
@@ -260,11 +258,11 @@ public class ScalarFunctionData {
         System.out.println(jobName + "\t" + (System.currentTimeMillis() - start));
         
         // moving files to right place
-        for (String dataset: shortDatasetIndex) {
-            String from = s3bucket + FrameworkUtils.aggregatesTextDir + "/tmp/" + dataset + "/";
-            String to = s3bucket + FrameworkUtils.aggregatesTextDir + "/" + dataset + "/";
-            FrameworkUtils.renameFile(from, to, s3conf, s3);
-        }
+        //for (String dataset: shortDatasetIndex) {
+        //    String from = s3bucket + FrameworkUtils.aggregatesTextDir + "/tmp/" + dataset + "/";
+        //    String to = s3bucket + FrameworkUtils.aggregatesTextDir + "/" + dataset + "/";
+        //    FrameworkUtils.renameFile(from, to, s3conf, s3);
+        //}
         
     }
 
