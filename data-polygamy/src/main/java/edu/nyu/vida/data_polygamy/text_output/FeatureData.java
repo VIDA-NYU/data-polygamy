@@ -199,9 +199,7 @@ public class FeatureData {
         Machine machineConf = new Machine(machine, nbNodes);
         
         String jobName = "output-to-text";
-        String indexOutputDir = s3bucket + FrameworkUtils.indexTextDir + "/tmp/";
-        
-        FrameworkUtils.removeFile(indexOutputDir, s3conf, s3);
+        String indexOutputDir = s3bucket + FrameworkUtils.indexTextDir + "/";
         
         conf.set("mapreduce.tasktracker.map.tasks.maximum", String.valueOf(machineConf.getMaximumTasks()));
         conf.set("mapreduce.tasktracker.reduce.tasks.maximum", String.valueOf(machineConf.getMaximumTasks()));
@@ -256,11 +254,11 @@ public class FeatureData {
         System.out.println(jobName + "\t" + (System.currentTimeMillis() - start));
         
         // moving files to right place
-        for (String dataset: shortDatasetIndex) {
-            String from = s3bucket + FrameworkUtils.indexTextDir + "/tmp/" + dataset + "/";
-            String to = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "/";
-            FrameworkUtils.renameFile(from, to, s3conf, s3);
-        }
+        //for (String dataset: shortDatasetIndex) {
+        //    String from = s3bucket + FrameworkUtils.indexTextDir + "/tmp/" + dataset + "/";
+        //    String to = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "/";
+        //    FrameworkUtils.renameFile(from, to, s3conf, s3);
+        //}
         
     }
 
