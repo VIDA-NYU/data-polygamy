@@ -199,7 +199,9 @@ public class ScalarFunctionData {
         Machine machineConf = new Machine(machine, nbNodes);
         
         String jobName = "output-to-text";
-        String aggregateOutputDir = s3bucket + FrameworkUtils.aggregatesTextDir + "/";
+        String aggregateOutputDir = s3bucket + FrameworkUtils.aggregatesTextDir + "/tmp/";
+        
+        FrameworkUtils.removeFile(aggregateOutputDir, s3conf, s3);
         
         conf.set("mapreduce.tasktracker.map.tasks.maximum", String.valueOf(machineConf.getMaximumTasks()));
         conf.set("mapreduce.tasktracker.reduce.tasks.maximum", String.valueOf(machineConf.getMaximumTasks()));
