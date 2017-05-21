@@ -1940,7 +1940,7 @@ public class FrameworkUtils {
         
         @Override
         public String toString() {
-            String result = spatial + "," + isOutlier + ",";
+            String result = dataset + "," + spatial + "," + isOutlier + ",";
             result += String.valueOf(start) + "," + String.valueOf(end) + ","; 
             for (int i = 0; i < timeSeries.length; i++)
                 result += timeSeries[i] + ",";
