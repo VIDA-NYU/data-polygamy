@@ -256,11 +256,11 @@ public class ScalarFunctionData {
         System.out.println(jobName + "\t" + (System.currentTimeMillis() - start));
         
         // moving files to right place
-        //for (String dataset: shortDatasetIndex) {
-        //    String from = s3bucket + FrameworkUtils.aggregatesTextDir + "/tmp/" + dataset + "/";
-        //    String to = s3bucket + FrameworkUtils.aggregatesTextDir + "/" + dataset + "/";
-        //    FrameworkUtils.renameFile(from, to, s3conf, s3);
-        //}
+        for (String dataset: shortDatasetIndex) {
+            String from = s3bucket + FrameworkUtils.aggregatesTextDir + "/tmp/" + dataset + "/";
+            String to = s3bucket + FrameworkUtils.aggregatesTextDir + "/" + dataset + "/";
+            FrameworkUtils.renameFile(from, to, s3conf, s3);
+        }
         
     }
 
