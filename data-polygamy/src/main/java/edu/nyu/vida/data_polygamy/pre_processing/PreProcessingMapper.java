@@ -109,14 +109,14 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
         attributeIndex.put((nbParameters-1), -1);
         aggregateFunctions.put((nbParameters-1), Function.COUNT);
         
-        nbParameters++;
+        //nbParameters++;
         
         // count gradient
-        aggregates.put((nbParameters-1),
-                (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.COUNT_GRADIENT)
-                + "-" + parameterNames[0].trim());
-        attributeIndex.put((nbParameters-1), -2);
-        aggregateFunctions.put((nbParameters-1), Function.COUNT_GRADIENT);
+        //aggregates.put((nbParameters-1),
+        //        (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.COUNT_GRADIENT)
+        //        + "-" + parameterNames[0].trim());
+        //attributeIndex.put((nbParameters-1), -2);
+        //aggregateFunctions.put((nbParameters-1), Function.COUNT_GRADIENT);
         
         for (int i = 0; i < inputTest.length; i++) {
             
@@ -155,13 +155,13 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             attributeIndex.put((nbParameters-1), i);
             aggregateFunctions.put((nbParameters-1), Function.AVERAGE);
             
-            nbParameters++;
+            //nbParameters++;
             
-            aggregates.put((nbParameters-1),
-                    (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.GRADIENT)
-                    + "-" + parameterNames[i].trim());
-            attributeIndex.put((nbParameters-1), i);
-            aggregateFunctions.put((nbParameters-1), Function.GRADIENT);
+            //aggregates.put((nbParameters-1),
+            //        (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.GRADIENT)
+            //        + "-" + parameterNames[i].trim());
+            //attributeIndex.put((nbParameters-1), i);
+            //aggregateFunctions.put((nbParameters-1), Function.GRADIENT);
             
         }
         
@@ -344,13 +344,13 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
             }
             
             // count gradient
-            if (index == -2) {
-                CountGradient agg = new CountGradient();
-                agg.addValue(floatVal, FrameworkUtils.getDeltaSinceEpoch(
-                        temporal.get(0), temporalResolution));
-                output.add(agg);
-                continue;
-            }
+            //if (index == -2) {
+            //    CountGradient agg = new CountGradient();
+            //    agg.addValue(floatVal, FrameworkUtils.getDeltaSinceEpoch(
+            //            temporal.get(0), temporalResolution));
+            //    output.add(agg);
+            //    continue;
+            //}
             
             // others
             try {
