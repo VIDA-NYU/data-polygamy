@@ -412,7 +412,11 @@ public class TopologicalIndex implements Serializable {
 					    int index = FrameworkUtils.getTimeSteps(this.tempRes,
 					            this.stTime, time);
 					    byte[] spatialEvents = events.get(spatial);
-                        spatialEvents[index-1] = FrameworkUtils.negativeEvent;
+					    if (spatialEvents[index-1] == FrameworkUtils.positiveEvent) {
+                            spatialEvents[index-1] = FrameworkUtils.nonEvent;
+                        } else {
+                            spatialEvents[index-1] = FrameworkUtils.negativeEvent;
+                        }
                         events.set(spatial, spatialEvents);
 					    
 					    if (print) {
@@ -461,7 +465,11 @@ public class TopologicalIndex implements Serializable {
                         int index = FrameworkUtils.getTimeSteps(this.tempRes,
                                 this.stTime, time);
                         byte[] spatialEvents = events.get(spatial);
-                        spatialEvents[index-1] = FrameworkUtils.positiveEvent;
+                        if (spatialEvents[index-1] == FrameworkUtils.negativeEvent) {
+                            spatialEvents[index-1] = FrameworkUtils.nonEvent;
+                        } else {
+                            spatialEvents[index-1] = FrameworkUtils.positiveEvent;
+                        }
                         events.set(spatial, spatialEvents);
                         
                         if (print) {
