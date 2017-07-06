@@ -316,6 +316,10 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         float nMatchEvents = stats.getMatchEvents();
         float nMatchPosEvents = stats.getMatchPosEvents();
         float nMatchNegEvents = stats.getMatchNegEvents();
+        float nPosFirstPosSecond = stats.getPosFirstPosSecond();
+        float nNegFirstNegSecond = stats.getNegFirstNegSecond();
+        float nPosFirstNegSecond = stats.getPosFirstNegSecond();
+        float nNegFirstPosSecond = stats.getNegFirstPosSecond();
         float nPosFirstNonSecond = stats.getPosFirstNonSecond();
         float nNegFirstNonSecond = stats.getNegFirstNonSecond();
         float nNonFirstPosSecond = stats.getNonFirstPosSecond();
@@ -366,7 +370,8 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
                 emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
                         nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond);
+                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
             }
             
             break;
@@ -407,7 +412,8 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
                 emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
                         nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond);
+                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
             }
         
             break;
@@ -447,7 +453,8 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
                 emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
                         nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond);
+                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
             }
             
             break;
@@ -459,7 +466,9 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             float pValue, float nMatchEvents, float nMatchPosEvents,
             float nMatchNegEvents, float nPosFirstNonSecond,
             float nNegFirstNonSecond, float nNonFirstPosSecond,
-            float nNonFirstNegSecond)
+            float nNonFirstNegSecond, float nPosFirstPosSecond,
+            float nNegFirstNegSecond, float nPosFirstNegSecond,
+            float nNegFirstPosSecond)
                     throws IOException, InterruptedException {
         if (outputIds) {
             keyWritable = new Text(key.getFirstDataset() + "," + key.getFirstAttribute() +
@@ -471,7 +480,9 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         }
         valueWritable = new Text(score + "," + strength + "," + pValue + ","
                 + nMatchEvents + "," + nMatchPosEvents + "," + nMatchNegEvents + "," + nPosFirstNonSecond
-                + "," + nNegFirstNonSecond + "," + nNonFirstPosSecond + "," + nNonFirstNegSecond);
+                + "," + nNegFirstNonSecond + "," + nNonFirstPosSecond + "," + nNonFirstNegSecond
+                + "," + nPosFirstPosSecond + "," + nNegFirstNegSecond + "," + nPosFirstNegSecond
+                + "," + nNegFirstPosSecond);
         out.write(keyWritable, valueWritable, fileName);
     }
     
@@ -572,6 +583,10 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         int nMatchEvents = 0;
         int nMatchPosEvents = 0;
         int nMatchNegEvents = 0;
+        int nPosFirstPosSecond = 0;
+        int nNegFirstNegSecond = 0;
+        int nPosFirstNegSecond = 0;
+        int nNegFirstPosSecond = 0;
         int nPosFirstNonSecond = 0;
         int nNegFirstNonSecond = 0;
         int nNonFirstPosSecond = 0;
@@ -595,6 +610,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             case FrameworkUtils.posEventsMatch: // both positive
                 nMatchEvents++;
                 nMatchPosEvents++;
+                nPosFirstPosSecond++;
                 //output.addMatchPosEvents(eventDateTime);
                 break;
             case FrameworkUtils.nonEventPosEventMatch: // one positive, one non-event
@@ -606,6 +622,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             case FrameworkUtils.negEventsMatch: // both negative
                 nMatchEvents++;
                 nMatchPosEvents++;
+                nNegFirstNegSecond++;
                 //output.addMatchPosEvents(eventDateTime);
                 break;
             case FrameworkUtils.nonEventNegEventMatch: // one negative, one non-event
@@ -617,6 +634,10 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             case FrameworkUtils.negEventPosEventMatch: // one negative, one positive
                 nMatchEvents++;
                 nMatchNegEvents++;
+                if (timeSeries1Int[i] == FrameworkUtils.positiveEvent)
+                    nPosFirstNegSecond++;
+                else
+                    nNegFirstPosSecond++;
                 //output.addMatchNegEvents(eventDateTime);
                 break;
             default:
@@ -629,6 +650,10 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
                 nMatchEvents,
                 nMatchPosEvents,
                 nMatchNegEvents,
+                nPosFirstPosSecond,
+                nNegFirstNegSecond,
+                nPosFirstNegSecond,
+                nNegFirstPosSecond,
                 nPosFirstNonSecond,
                 nNegFirstNonSecond,
                 nNonFirstPosSecond,

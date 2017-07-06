@@ -2410,6 +2410,10 @@ public class FrameworkUtils {
         private int nMatchEvents = 0;
         private int nMatchPosEvents = 0;
         private int nMatchNegEvents = 0;
+        private int nPosFirstPosSecond = 0;
+        private int nNegFirstNegSecond = 0;
+        private int nPosFirstNegSecond = 0;
+        private int nNegFirstPosSecond = 0;
         private int nPosFirstNonSecond = 0;
         private int nNegFirstNonSecond = 0;
         private int nNonFirstPosSecond = 0;
@@ -2434,6 +2438,10 @@ public class FrameworkUtils {
                 int nMatchEvents,
                 int nMatchPosEvents,
                 int nMatchNegEvents,
+                int nPosFirstPosSecond,
+                int nNegFirstNegSecond,
+                int nPosFirstNegSecond,
+                int nNegFirstPosSecond,
                 int nPosFirstNonSecond,
                 int nNegFirstNonSecond,
                 int nNonFirstPosSecond,
@@ -2441,6 +2449,10 @@ public class FrameworkUtils {
             this.setMatchEvents(nMatchEvents);
             this.setMatchPosEvents(nMatchPosEvents);
             this.setMatchNegEvents(nMatchNegEvents);
+            this.setPosFirstPosSecond(nPosFirstPosSecond);
+            this.setNegFirstNegSecond(nNegFirstNegSecond);
+            this.setPosFirstNegSecond(nPosFirstNegSecond);
+            this.setNegFirstPosSecond(nNegFirstPosSecond);
             this.setPosFirstNonSecond(nPosFirstNonSecond);
             this.setNegFirstNonSecond(nNegFirstNonSecond);
             this.setNonFirstPosSecond(nNonFirstPosSecond);
@@ -2501,6 +2513,38 @@ public class FrameworkUtils {
 
         public void setMatchNegEvents(int nMatchNegEvents) {
             this.nMatchNegEvents = nMatchNegEvents;
+        }
+        
+        public int getPosFirstPosSecond() {
+            return nPosFirstPosSecond;
+        }
+
+        public void setPosFirstPosSecond(int nPosFirstPosSecond) {
+            this.nPosFirstPosSecond = nPosFirstPosSecond;
+        }
+
+        public int getNegFirstNegSecond() {
+            return nNegFirstNegSecond;
+        }
+
+        public void setNegFirstNegSecond(int nNegFirstNegSecond) {
+            this.nNegFirstNegSecond = nNegFirstNegSecond;
+        }
+
+        public int getPosFirstNegSecond() {
+            return nPosFirstNegSecond;
+        }
+
+        public void setPosFirstNegSecond(int nPosFirstNegSecond) {
+            this.nPosFirstNegSecond = nPosFirstNegSecond;
+        }
+
+        public int getNegFirstPosSecond() {
+            return nNegFirstPosSecond;
+        }
+
+        public void setNegFirstPosSecond(int nNegFirstPosSecond) {
+            this.nNegFirstPosSecond = nNegFirstPosSecond;
         }
 
         public int getPosFirstNonSecond() {
@@ -2563,6 +2607,10 @@ public class FrameworkUtils {
             this.nMatchEvents += stats.getMatchEvents();
             this.nMatchPosEvents += stats.getMatchPosEvents();
             this.nMatchNegEvents += stats.getMatchNegEvents();
+            this.nPosFirstPosSecond += stats.getPosFirstPosSecond();
+            this.nNegFirstNegSecond += stats.getNegFirstNegSecond();
+            this.nPosFirstNegSecond += stats.getPosFirstNegSecond();
+            this.nNegFirstPosSecond += stats.getNegFirstPosSecond();
             this.nNegFirstNonSecond += stats.getNegFirstNonSecond();
             this.nPosFirstNonSecond += stats.getPosFirstNonSecond();
             this.nNonFirstPosSecond += stats.getNonFirstPosSecond();
