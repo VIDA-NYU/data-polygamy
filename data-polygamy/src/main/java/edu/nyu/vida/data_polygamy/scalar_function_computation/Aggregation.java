@@ -161,6 +161,8 @@ public class Aggregation {
     	HashMap<String,ArrayList<String>> preProcessingDataset =
     	        new HashMap<String,ArrayList<String>>();
     	HashMap<String,String> datasetId = new HashMap<String,String>();
+    	HashMap<String, Boolean> multiplePreProcessing =
+    	        new HashMap<String, Boolean>();
     	
     	boolean removeExistingFiles = cmd.hasOption("f");
     	String[] datasetArgs = cmd.getOptionValues("g");
@@ -176,6 +178,11 @@ public class Aggregation {
                 continue;
             }
             preProcessingDataset.put(dataset, tempPreProcessing);
+            if (tempPreProcessing.size() == 1) {
+                multiplePreProcessing.put(dataset, false);
+            } else {
+                multiplePreProcessing.put(dataset, true);
+            }
             
             shortDataset.add(dataset);
             datasetTempAtt.put(dataset, ((datasetArgs[i+1] == "null") ? null : datasetArgs[i+1]));
@@ -287,6 +294,8 @@ public class Aggregation {
                     datasetTempAtt.get(dataset));
             aggConf.set("dataset-" + id + "-spatial-att",
                     datasetSpatialAtt.get(dataset));
+            aggConf.set("dataset-" + id + "-multiple",
+                    String.valueOf(multiplePreProcessing.get(dataset)));
             
             if (s3)
                 aggConf.set("dataset-" + id,

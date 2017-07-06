@@ -30,6 +30,7 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
     int invalidSpatial = -1;
     int invalidTemporal = -1;
     int datasetId = -1;
+    boolean multiplePreProcessing = false;
     
     int temporalResolution, spatialResolution;
     boolean sameResolution = false;
@@ -82,7 +83,7 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
         
         String[] datasetNames = conf.get("dataset-name","").split(",");
         String[] datasetIds = conf.get("dataset-id","").split(",");
-        for (int i = 0; i < datasetNames.length; i++)
+        for (int i = 0; i < datasetNames.length; i++) 
             datasetToId.put(datasetNames[i], datasetIds[i]);
         
         FileSplit fileSplit = (FileSplit) context.getInputSplit();
@@ -107,6 +108,8 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
                     "-temporal-att","0"));
             spatialIndex = Integer.parseInt(conf.get("dataset-" + datasetIdStr +
                     "-spatial-att", "0"));
+            multiplePreProcessing = Boolean.parseBoolean(
+                    conf.get("dataset-" + datasetIdStr + "-multiple", "false"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -114,8 +117,16 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
         
         String[] temporalResolutionArray =
                 FrameworkUtils.getAggTempResolutions(currentTemporal);
-        String[] spatialResolutionArray =
-                FrameworkUtils.getAggSpatialResolutions(currentSpatial);
+        String[] spatialResolutionArray = new String[1];
+        
+        // if data has both nbhd and zip, choose nbhd to translate to city
+        if (multiplePreProcessing && (currentSpatial == FrameworkUtils.ZIP)) {
+            spatialResolutionArray[0] =
+                    FrameworkUtils.getAggSpatialResolutions(currentSpatial)[0];
+        } else {
+            spatialResolutionArray =
+                    FrameworkUtils.getAggSpatialResolutions(currentSpatial);
+        }
         
         int size = temporalResolutionArray.length * spatialResolutionArray.length;
         
