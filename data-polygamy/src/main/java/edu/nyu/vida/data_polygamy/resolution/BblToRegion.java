@@ -16,35 +16,47 @@ import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-public class BblToNbhd implements SpatialResolution {
+public class BblToRegion implements SpatialResolution {
     
     private int[] spatialPos;
     
     private String dataBbl;
-    private String dataNbhd;
+    private String dataRegions;
+    boolean useMapping = false;
     
-    private ArrayList<Integer> nbhdRegionNames = new ArrayList<Integer>();
+    private ArrayList<Integer> regionNames = new ArrayList<Integer>();
     private HashMap<Long, Integer> bblRegions =
             new HashMap<Long, Integer>();
     private GridIndex grid = new GridIndex(100, 100);
     
-    public BblToNbhd(int[] spatialPos, Configuration conf) {
+    public BblToRegion(int[] spatialPos, String region, Configuration conf) {
         
     	String bucket = conf.get("bucket", "");
     	dataBbl = bucket + "bbl";
-        dataNbhd = bucket + "neighborhood";
+        dataRegions = bucket + "neighborhood";
+        
+        if (region.equals("nbhd")) {
+            dataRegions = bucket + "neighborhood";
+        } else if (region.equals("zip")) {
+            useMapping = true;
+            dataRegions = bucket + "zipcode";
+        } else {
+            System.out.println("Invalid region.");
+            System.exit(-1);
+        }
+        
         
         this.spatialPos = spatialPos;
         
         try {
             if (bucket.equals("")) {
                 FileSystem fs = FileSystem.get(new Configuration());
-                readNbhdData(fs.open(new Path(dataNbhd)));
+                readRegionsData(fs.open(new Path(dataRegions)));
                 readBblData(fs.open(new Path(dataBbl)));
             } else {
-                Path nbhdPath = new Path(dataNbhd);
+                Path nbhdPath = new Path(dataRegions);
                 FileSystem fs = FileSystem.get(nbhdPath.toUri(), conf);
-                readNbhdData(fs.open(nbhdPath));
+                readRegionsData(fs.open(nbhdPath));
                 Path bblPath = new Path(dataBbl);
                 fs = FileSystem.get(bblPath.toUri(), conf);
                 readBblData(fs.open(bblPath));
@@ -55,9 +67,11 @@ public class BblToNbhd implements SpatialResolution {
     }
     
   //@SuppressWarnings("unchecked")
-    private void readNbhdData(FSDataInputStream fis) throws IOException {
+    private void readRegionsData(FSDataInputStream fis) throws IOException {
         
         ArrayList<Path2D.Double> allPolygons = new ArrayList<Path2D.Double>();
+        
+        int id = 0;
         
         try {
             BufferedReader buff = new BufferedReader(new InputStreamReader(fis));
@@ -88,7 +102,11 @@ public class BblToNbhd implements SpatialResolution {
                 polygon.closePath();
               
                 allPolygons.add((Path2D.Double) polygon);
-                nbhdRegionNames.add(Integer.parseInt(region));
+                if (useMapping) {
+                    regionNames.add(id);
+                    id++;
+                } else
+                    regionNames.add(Integer.parseInt(region));
                 
                 line = buff.readLine();
             }
@@ -141,7 +159,7 @@ public class BblToNbhd implements SpatialResolution {
                 
                 int r = grid.getRegion(x, y);
                 if(r != -1) {
-                    bblRegions.put(Long.parseLong(region), nbhdRegionNames.get(r));
+                    bblRegions.put(Long.parseLong(region), regionNames.get(r));
                 }
                 
                 line = buff.readLine();

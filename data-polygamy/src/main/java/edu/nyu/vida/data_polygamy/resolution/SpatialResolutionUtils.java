@@ -53,11 +53,10 @@ public class SpatialResolutionUtils {
         switch (spatialResolution) {
         
         case FrameworkUtils.NBHD:
-            spatialTranslation = new BblToNbhd(spatialPos, conf);
+            spatialTranslation = new BblToRegion(spatialPos, "nbhd", conf);
             break;
         case FrameworkUtils.ZIP:
-            System.out.println("Bbl to Zip currently not supported.");
-            System.exit(-1);
+            spatialTranslation = new BblToRegion(spatialPos, "zip", conf);
             break;
         case FrameworkUtils.GRID:
             System.out.println("Bbl to Grid currently not supported.");
