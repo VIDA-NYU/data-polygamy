@@ -481,6 +481,10 @@ public class NoiseExp {
         int nMatchEvents = 0;
         int nMatchPosEvents = 0;
         int nMatchNegEvents = 0;
+        int nPosFirstPosSecond = 0;
+        int nNegFirstNegSecond = 0;
+        int nPosFirstNegSecond = 0;
+        int nNegFirstPosSecond = 0;
         int nPosFirstNonSecond = 0;
         int nNegFirstNonSecond = 0;
         int nNonFirstPosSecond = 0;
@@ -500,6 +504,7 @@ public class NoiseExp {
             case FrameworkUtils.posEventsMatch: // both positive
                 nMatchEvents++;
                 nMatchPosEvents++;
+                nPosFirstPosSecond++;
                 break;
             case FrameworkUtils.nonEventPosEventMatch: // one positive, one non-event
                 if (timeSeries1Int[j] == FrameworkUtils.positiveEvent)
@@ -510,6 +515,7 @@ public class NoiseExp {
             case FrameworkUtils.negEventsMatch: // both negative
                 nMatchEvents++;
                 nMatchPosEvents++;
+                nNegFirstNegSecond++;
                 break;
             case FrameworkUtils.nonEventNegEventMatch: // one negative, one non-event
                 if (timeSeries1Int[j] == FrameworkUtils.negativeEvent)
@@ -520,6 +526,10 @@ public class NoiseExp {
             case FrameworkUtils.negEventPosEventMatch: // one negative, one positive
                 nMatchEvents++;
                 nMatchNegEvents++;
+                if (timeSeries1Int[i] == FrameworkUtils.positiveEvent)
+                    nPosFirstNegSecond++;
+                else
+                    nNegFirstPosSecond++;
                 break;
             default:
                 System.out.println("Something went wrong... Wrong case");
@@ -531,6 +541,10 @@ public class NoiseExp {
                 nMatchEvents,
                 nMatchPosEvents,
                 nMatchNegEvents,
+                nPosFirstPosSecond,
+                nNegFirstNegSecond,
+                nPosFirstNegSecond,
+                nNegFirstPosSecond,
                 nPosFirstNonSecond,
                 nNegFirstNonSecond,
                 nNonFirstPosSecond,
