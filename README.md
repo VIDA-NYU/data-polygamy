@@ -324,7 +324,7 @@ To download the results for, say, taxi and weather with salient features:
 
     $ hdfs dfs -getmerge relationships/taxi-weather/hour-city-events-restricted output
     
-For each relationship (pair of scalar functions), the following values are outputted (in this order): *relationship score*, *relationship strength*, *p-value*, *number of matched events*, *number of matched positive events*, *number of matched negative events*, *number of positive events on the first scalar function only*, *number of negative events on the first scalar function only*, *number of positive events on the second scalar function only*, and *number of negative events on the second scalar function only*.
+For each relationship (pair of scalar functions), the following values are outputted (in this order): *relationship score*, *relationship strength*, *p-value*, *number of matched events*, *number of matched positive events*, *number of matched negative events*, *number of positive events on the first scalar function only*, *number of negative events on the first scalar function only*, *number of positive events on the second scalar function only*, *number of negative events on the second scalar function only*, *number of positive-positive relationships*, *number of negative-negative relationships*, *number of positive-negative relationships*, and *number of negative-positive relationships*.
 
 ### 5.6. Alternate Step: Correlation Computation
 
