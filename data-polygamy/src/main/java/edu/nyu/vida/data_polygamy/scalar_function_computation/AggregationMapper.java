@@ -117,7 +117,7 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
         
         String[] temporalResolutionArray =
                 FrameworkUtils.getAggTempResolutions(currentTemporal);
-        String[] spatialResolutionArray = new String[1];
+        String[] spatialResolutionArray;
         
         // if data has more than one spatial res., choose nbhd to translate to city
         if (multiplePreProcessing && (currentSpatial != FrameworkUtils.NBHD)) {
