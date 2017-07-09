@@ -121,8 +121,8 @@ public class AggregationMapper extends Mapper<MultipleSpatioTemporalWritable, Ag
         
         // if data has more than one spatial res., choose nbhd to translate to city
         if (multiplePreProcessing && (currentSpatial != FrameworkUtils.NBHD)) {
-            spatialResolutionArray[0] =
-                    FrameworkUtils.getAggSpatialResolutions(currentSpatial)[0];
+            spatialResolutionArray =
+                    FrameworkUtils.getAggSpatialResolutions(currentSpatial);
         } else {
             spatialResolutionArray =
                     FrameworkUtils.getAggSpatialResolutions(currentSpatial);
