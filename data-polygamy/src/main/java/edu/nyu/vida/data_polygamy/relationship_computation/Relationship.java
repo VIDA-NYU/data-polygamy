@@ -439,11 +439,11 @@ public class Relationship {
         //conf.set("mapreduce.reduce.memory.mb", "20000");
         //conf.set("mapreduce.reduce.java.opts", "-Xmx12000m");
         machineConf.setMachineConfiguration(conf);
-        conf.set("mapreduce.map.memory.mb", "12000");
-        conf.set("mapreduce.map.java.opts", "-Xmx11000m");
-        conf.set("mapreduce.reduce.memory.mb", "50000");
-        conf.set("mapreduce.reduce.java.opts", "-Xmx40000m");
-        conf.set("mapreduce.task.timeout", "12000000");
+        //conf.set("mapreduce.map.memory.mb", "12000");
+        //conf.set("mapreduce.map.java.opts", "-Xmx11000m");
+        //conf.set("mapreduce.reduce.memory.mb", "50000");
+        //conf.set("mapreduce.reduce.java.opts", "-Xmx40000m");
+        //conf.set("mapreduce.task.timeout", "12000000");
         
         if (s3) {
             conf.set("fs.s3.awsAccessKeyId", awsAccessKeyId);
