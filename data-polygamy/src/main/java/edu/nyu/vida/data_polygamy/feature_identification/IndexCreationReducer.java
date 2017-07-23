@@ -224,8 +224,8 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         ArrayList<byte[]> events = index.queryEvents(this.th, false, att, regThreshold);
         
         for (int spatial = 0; spatial < events.size(); spatial++) {
-            if (!att.nodeSet.contains(spatial))
-                continue;
+            //if (!att.nodeSet.contains(spatial))
+            //    continue;
             
             valueWritable = new TopologyTimeSeriesWritable(
                     spatial,
@@ -251,8 +251,8 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
         events = index.queryEvents(this.th, true, att, rareThreshold);
         
         for (int spatial = 0; spatial < events.size(); spatial++) {
-            if (!att.nodeSet.contains(spatial))
-                continue;
+            //if (!att.nodeSet.contains(spatial))
+            //    continue;
             
             valueWritable = new TopologyTimeSeriesWritable(
                     spatial,
