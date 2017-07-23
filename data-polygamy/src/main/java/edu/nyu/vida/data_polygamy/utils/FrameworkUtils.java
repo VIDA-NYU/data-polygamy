@@ -2736,6 +2736,30 @@ public class FrameworkUtils {
         }
     }
     
+    public static void renameFile(ArrayList<String> from, ArrayList<String> to,
+            Configuration conf, boolean s3, String s3bucket) throws IOException {
+        if (s3) {
+            Path s3Path = new Path(s3bucket);
+            FileSystem fs = FileSystem.get(s3Path.toUri(), conf);
+            
+            for (int i = 0; i < from.size(); i++) {
+                Path pathFrom = new Path(from.get(i));
+                Path pathTo = new Path(to.get(i));
+                fs.rename(pathFrom, pathTo);
+            }
+            
+            fs.close();
+        } else {
+            FileSystem hdfs = FileSystem.get(new Configuration());
+            
+            for (int i = 0; i < from.size(); i++) {
+                Path pathFrom = new Path(hdfs.getHomeDirectory() + "/" + from.get(i));
+                Path pathTo = new Path(hdfs.getHomeDirectory() + "/" + to.get(i));
+                hdfs.rename(pathFrom, pathTo);
+            }
+        }
+    }
+    
     public static void createDir(String dir, Configuration conf, boolean s3) throws IOException {
         if (s3) {
         	Path path = new Path(dir);

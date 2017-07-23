@@ -144,6 +144,10 @@ public class Relationship {
         tmpOption.setRequired(false);
         options.addOption(tmpOption);
         
+        Option eraseOption = new Option("e", "erase", false, "erase all relationship files");
+        eraseOption.setRequired(false);
+        options.addOption(eraseOption);
+        
         Option awsAccessKeyIdOption = new Option("aws_id", "aws-id", true, "aws access key id; "
                 + "this is required if the execution is on aws");
         awsAccessKeyIdOption.setRequired(false);
@@ -238,6 +242,7 @@ public class Relationship {
     	boolean hasStrengthThreshold = cmd.hasOption("st");
     	boolean outputIds = cmd.hasOption("id");
     	boolean tmp = cmd.hasOption("tmp");
+    	boolean eraseAll = cmd.hasOption("e");
     	String scoreThreshold = hasScoreThreshold ? cmd.getOptionValue("sc") : "";
     	String strengthThreshold = hasStrengthThreshold ? cmd.getOptionValue("st") : "";
     	
@@ -342,6 +347,10 @@ public class Relationship {
             relationshipsDir = FrameworkUtils.relationshipsDir;
         }
         
+        if (eraseAll) {
+            FrameworkUtils.removeFile(s3bucket + relationshipsDir, s3conf, s3);
+        }
+        
         FrameworkUtils.createDir(s3bucket + relationshipsDir, s3conf, s3);
         
         String random = completeRandomization ? "complete" : "restricted";
@@ -370,12 +379,7 @@ public class Relationship {
                 datasetId2 = datasetId.get(dataset2);
                 
                 if (dataset1.equals(dataset2)) continue;
-                String correlationOutputFileName = "";
-                if (!tmp) {
-                    correlationOutputFileName = s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/";
-                } else {
-                    correlationOutputFileName = s3bucket + relationshipsDir + "/tmp/" + dataset1 + "-" + dataset2 + "/";
-                }
+                String correlationOutputFileName = s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/";
                 
                 if (removeExistingFiles) {
                     FrameworkUtils.removeFile(correlationOutputFileName, s3conf, s3);
@@ -403,7 +407,7 @@ public class Relationship {
         Machine machineConf = new Machine(machine, nbNodes);
         
         String jobName = "relationship" + "-" + random;
-        String relationshipOutputDir = s3bucket + relationshipsDir + "/tmp";
+        String relationshipOutputDir = s3bucket + relationshipsDir + "/tmp/";
         
         FrameworkUtils.removeFile(relationshipOutputDir, s3conf, s3);
         
@@ -501,6 +505,8 @@ public class Relationship {
         
         // moving files to right place
         if (!tmp) {
+            ArrayList<String> from = new ArrayList<String>();
+            ArrayList<String> to = new ArrayList<String>();
             for (int i = 0; i < firstGroup.size(); i++) {
                 for (int j = 0; j < secondGroup.size(); j++) {
                     
@@ -514,11 +520,11 @@ public class Relationship {
                     
                     if (dataset1.equals(dataset2)) continue;
                     
-                    String from = s3bucket + relationshipsDir + "/tmp/" + dataset1 + "-" + dataset2 + "/";  
-                    String to = s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/";
-                    FrameworkUtils.renameFile(from, to, s3conf, s3);
+                    from.add(s3bucket + relationshipsDir + "/tmp/" + dataset1 + "-" + dataset2 + "/");  
+                    to.add(s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/");
                 }
-            }  
+            }
+            FrameworkUtils.renameFile(from, to, s3conf, s3, s3bucket);
         }
     }
 
