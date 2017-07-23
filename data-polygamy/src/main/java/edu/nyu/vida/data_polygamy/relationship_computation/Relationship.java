@@ -140,6 +140,10 @@ public class Relationship {
         s3Option.setRequired(false);
         options.addOption(s3Option);
         
+        Option tmpOption = new Option("tmp", "tmp", false, "leave files in tmp dir");
+        tmpOption.setRequired(false);
+        options.addOption(tmpOption);
+        
         Option awsAccessKeyIdOption = new Option("aws_id", "aws-id", true, "aws access key id; "
                 + "this is required if the execution is on aws");
         awsAccessKeyIdOption.setRequired(false);
@@ -233,6 +237,7 @@ public class Relationship {
     	boolean hasScoreThreshold = cmd.hasOption("sc");
     	boolean hasStrengthThreshold = cmd.hasOption("st");
     	boolean outputIds = cmd.hasOption("id");
+    	boolean tmp = cmd.hasOption("tmp");
     	String scoreThreshold = hasScoreThreshold ? cmd.getOptionValue("sc") : "";
     	String strengthThreshold = hasStrengthThreshold ? cmd.getOptionValue("st") : "";
     	
@@ -365,7 +370,12 @@ public class Relationship {
                 datasetId2 = datasetId.get(dataset2);
                 
                 if (dataset1.equals(dataset2)) continue;
-                String correlationOutputFileName = s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/";
+                String correlationOutputFileName = "";
+                if (!tmp) {
+                    correlationOutputFileName = s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/";
+                } else {
+                    correlationOutputFileName = s3bucket + relationshipsDir + "/tmp/" + dataset1 + "-" + dataset2 + "/";
+                }
                 
                 if (removeExistingFiles) {
                     FrameworkUtils.removeFile(correlationOutputFileName, s3conf, s3);
@@ -393,7 +403,7 @@ public class Relationship {
         Machine machineConf = new Machine(machine, nbNodes);
         
         String jobName = "relationship" + "-" + random;
-        String relationshipOutputDir = s3bucket + relationshipsDir + "/tmp/";
+        String relationshipOutputDir = s3bucket + relationshipsDir + "/tmp";
         
         FrameworkUtils.removeFile(relationshipOutputDir, s3conf, s3);
         
@@ -490,24 +500,26 @@ public class Relationship {
         System.out.println(jobName + "\t" + (System.currentTimeMillis() - start));
         
         // moving files to right place
-        for (int i = 0; i < firstGroup.size(); i++) {
-            for (int j = 0; j < secondGroup.size(); j++) {
-                
-                if (Integer.parseInt(datasetId.get(firstGroup.get(i))) < Integer.parseInt(datasetId.get(secondGroup.get(j)))) {
-                    dataset1 = firstGroup.get(i);
-                    dataset2 = secondGroup.get(j);
-                } else {
-                    dataset1 = secondGroup.get(j);
-                    dataset2 = firstGroup.get(i);
+        if (!tmp) {
+            for (int i = 0; i < firstGroup.size(); i++) {
+                for (int j = 0; j < secondGroup.size(); j++) {
+                    
+                    if (Integer.parseInt(datasetId.get(firstGroup.get(i))) < Integer.parseInt(datasetId.get(secondGroup.get(j)))) {
+                        dataset1 = firstGroup.get(i);
+                        dataset2 = secondGroup.get(j);
+                    } else {
+                        dataset1 = secondGroup.get(j);
+                        dataset2 = firstGroup.get(i);
+                    }
+                    
+                    if (dataset1.equals(dataset2)) continue;
+                    
+                    String from = s3bucket + relationshipsDir + "/tmp/" + dataset1 + "-" + dataset2 + "/";  
+                    String to = s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/";
+                    FrameworkUtils.renameFile(from, to, s3conf, s3);
                 }
-                
-                if (dataset1.equals(dataset2)) continue;
-                
-                String from = s3bucket + relationshipsDir + "/tmp/" + dataset1 + "-" + dataset2 + "/";  
-                String to = s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/";
-                FrameworkUtils.renameFile(from, to, s3conf, s3);
-            }
-        }    
+            }  
+        }
     }
 
 }
