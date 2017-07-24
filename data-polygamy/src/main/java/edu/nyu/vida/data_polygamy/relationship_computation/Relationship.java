@@ -419,6 +419,7 @@ public class Relationship {
             conf.set("dataset-" + datasetId.get(shortDataset.get(i)) + "-agg-size",
                     Integer.toString(datasetAgg.get(shortDataset.get(i)).split(",").length));
         }
+        conf.set("tmp", String.valueOf(tmp));
         conf.set("dataset-keys", datasetIds);
         conf.set("dataset-names", datasetNames);
         conf.set("first-group", firstGroupStr);

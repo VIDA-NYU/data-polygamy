@@ -46,6 +46,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
     boolean hasStrengthThreshold = false;
     boolean removeNotSignificant = false;
     boolean outputIds = false;
+    boolean tmp = false;
     
     // spatial information
     SpatialGraph spatialGraph = new SpatialGraph();
@@ -204,6 +205,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         completeRandomization = Boolean.parseBoolean(conf.get("complete-random"));
         randomizationStr = conf.get("complete-random-str","");
         outputIds = conf.getBoolean("output-ids", false);
+        tmp = Boolean.parseBoolean(conf.get("tmp"));
         
         // nbhd grapgh
         nbhdGraph.init(FrameworkUtils.NBHD, conf);
@@ -367,11 +369,13 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             }
             
             pValue = pValue/((float)(repetitions));
-            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
-                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+            if (!tmp) {
+                if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                    emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                            nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                            nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                            nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+                }
             }
             
             break;
@@ -409,11 +413,13 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             }
             
             pValue = pValue/((float)(repetitions));
-            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
-                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+            if (!tmp) {
+                if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                    emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                            nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                            nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                            nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+                }
             }
         
             break;
@@ -450,11 +456,13 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             }
             
             pValue = pValue/((float)(repetitions));
-            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
-                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+            if (!tmp) {
+                if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                    emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                            nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                            nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                            nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+                }
             }
             
             break;
