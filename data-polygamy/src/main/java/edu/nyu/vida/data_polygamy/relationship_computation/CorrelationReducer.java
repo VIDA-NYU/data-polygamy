@@ -298,25 +298,18 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
          * Aligned Score and Strength
          */
         
-        // check if intersection is < n. permutations if and only if
-        // it is restricted randomization and the resolution is city
-        // if it is neighborhood, we have enough combinations
-        // if it is complete, we do not care (for now)
-        boolean checkIntersection =
-                (!completeRandomization) &&
-                (key.getSpatialResolution() == FrameworkUtils.CITY);
-        
         TimeSeriesStats stats = new TimeSeriesStats();
         for (int i = 0; i < size; i++) {
             elem = timeSeriesPerSpatial.get(i);
             TimeSeriesStats tempStats = getStats(temporal, elem[dataset1Key],
-                    elem[dataset2Key], false, checkIntersection); 
+                    elem[dataset2Key], false, !completeRandomization, size);
+            if (!tempStats.isIntersect()) continue;
             stats.add(tempStats);
         }
-        stats.computeScores();
         
         if (!stats.isIntersect())
-            return;
+            return;        
+        stats.computeScores();
         
         float alignedScore = stats.getRelationshipScore();
         float alignedStrength = stats.getRelationshipStrength();
@@ -512,12 +505,12 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             TopologyTimeSeriesWritable timeSeries2, boolean temporalPermutationTest) {
         
         return getStats(temporal, timeSeries1, timeSeries2, temporalPermutationTest,
-                false);
+                false, 0);
     }
     
     public static TimeSeriesStats getStats(int temporal, TopologyTimeSeriesWritable timeSeries1,
             TopologyTimeSeriesWritable timeSeries2, boolean temporalPermutationTest,
-            boolean checkIntersection) {
+            boolean checkIntersection, int size) {
         
         TimeSeriesStats output = new TimeSeriesStats();
         
@@ -606,7 +599,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         }
         
         if (checkIntersection) {
-            if ((indexEnd1 - indexStart1) < repetitions) {
+            if ((indexEnd1 - indexStart1)*size < repetitions) {
                 output.setIntersect(false);
                 return output;
             }
