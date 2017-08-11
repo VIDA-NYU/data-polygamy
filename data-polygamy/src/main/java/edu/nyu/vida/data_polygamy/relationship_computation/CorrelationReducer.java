@@ -86,7 +86,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
     //    in other words, a high p-value confirms H0)
     //  we reject H0 if p-value <= alpha
     float alpha = 0.05f;
-    int repetitions = 1000;
+    static int repetitions = 1000;
     
     ArrayList<TopologyTimeSeriesWritable[]> timeSeriesPerSpatial = new ArrayList<TopologyTimeSeriesWritable[]>();
     
@@ -298,10 +298,19 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
          * Aligned Score and Strength
          */
         
+        // check if intersection is < n. permutations if and only if
+        // it is restricted randomization and the resolution is city
+        // if it is neighborhood, we have enough combinations
+        // if it is complete, we do not care (for now)
+        boolean checkIntersection =
+                (!completeRandomization) &&
+                (key.getSpatialResolution() == FrameworkUtils.CITY);
+        
         TimeSeriesStats stats = new TimeSeriesStats();
         for (int i = 0; i < size; i++) {
             elem = timeSeriesPerSpatial.get(i);
-            TimeSeriesStats tempStats = getStats(temporal, elem[dataset1Key], elem[dataset2Key], false); 
+            TimeSeriesStats tempStats = getStats(temporal, elem[dataset1Key],
+                    elem[dataset2Key], false, checkIntersection); 
             stats.add(tempStats);
         }
         stats.computeScores();
@@ -502,6 +511,14 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
     public static TimeSeriesStats getStats(int temporal, TopologyTimeSeriesWritable timeSeries1,
             TopologyTimeSeriesWritable timeSeries2, boolean temporalPermutationTest) {
         
+        return getStats(temporal, timeSeries1, timeSeries2, temporalPermutationTest,
+                false);
+    }
+    
+    public static TimeSeriesStats getStats(int temporal, TopologyTimeSeriesWritable timeSeries1,
+            TopologyTimeSeriesWritable timeSeries2, boolean temporalPermutationTest,
+            boolean checkIntersection) {
+        
         TimeSeriesStats output = new TimeSeriesStats();
         
         if ((timeSeries1 == null) || (timeSeries2 == null))
@@ -586,6 +603,13 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         if (timeSeries1Int.length != timeSeries2Int.length) {
             System.out.println("Something went wrong... Different sizes");
             System.exit(-1);
+        }
+        
+        if (checkIntersection) {
+            if ((indexEnd1 - indexStart1) < repetitions) {
+                output.setIntersect(false);
+                return output;
+            }
         }
         
         int nMatchEvents = 0;
