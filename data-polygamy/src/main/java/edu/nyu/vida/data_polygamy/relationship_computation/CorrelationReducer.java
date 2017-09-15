@@ -14,7 +14,6 @@ import java.util.Random;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
@@ -46,7 +45,6 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
     boolean hasStrengthThreshold = false;
     boolean removeNotSignificant = false;
     boolean outputIds = false;
-    boolean tmp = false;
     
     // spatial information
     SpatialGraph spatialGraph = new SpatialGraph();
@@ -94,7 +92,6 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
     Text valueWritable = new Text();
     
     boolean s3 = true;
-    private MultipleOutputs<Text,Text> out;
     
     private void resolutionHandler(int spatialResolution, int temporalResolution) {
     	spatial = spatialResolution;
@@ -163,7 +160,6 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
     public void setup(Context context)
             throws IOException, InterruptedException {
         
-    	out = new MultipleOutputs<Text,Text>(context);
         conf = context.getConfiguration();
         
         String[] datasetIdsStr = conf.get("dataset-keys","").split(",");
@@ -205,7 +201,6 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         completeRandomization = Boolean.parseBoolean(conf.get("complete-random"));
         randomizationStr = conf.get("complete-random-str","");
         outputIds = conf.getBoolean("output-ids", false);
-        tmp = Boolean.parseBoolean(conf.get("tmp"));
         
         // nbhd grapgh
         nbhdGraph.init(FrameworkUtils.NBHD, conf);
@@ -266,11 +261,11 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         // initializing some variables
         dataset1 = key.getFirstDataset();
         dataset2 = key.getSecondDataset();
-        fileName = datasets.get(dataset1) + "-" + datasets.get(dataset2) + "/"
-                + utils.temporalResolutionStr(key.getTemporalResolution()) + "-"
-                + utils.spatialResolutionStr(key.getSpatialResolution()) + "-"
-                + ((key.getIsOutlier()) ? "outliers" : "events") + "-"
-                + randomizationStr + "/data";
+        fileName = datasets.get(dataset1) + "," + datasets.get(dataset2) + ","
+                + utils.temporalResolutionStr(key.getTemporalResolution()) + ","
+                + utils.spatialResolutionStr(key.getSpatialResolution()) + ","
+                + ((key.getIsOutlier()) ? "outliers" : "events") + ","
+                + randomizationStr;
         
         Iterator<TopologyTimeSeriesWritable> it = values.iterator();
         TopologyTimeSeriesWritable timeSeries;
@@ -371,13 +366,11 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             }
             
             pValue = pValue/((float)(repetitions));
-            if (!tmp) {
-                if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                    emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                            nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                            nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
-                            nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
-                }
+            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
             }
             
             break;
@@ -415,13 +408,11 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             }
             
             pValue = pValue/((float)(repetitions));
-            if (!tmp) {
-                if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                    emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                            nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                            nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
-                            nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
-                }
+            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
             }
         
             break;
@@ -458,13 +449,11 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
             }
             
             pValue = pValue/((float)(repetitions));
-            if (!tmp) {
-                if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                    emitKeyValue(outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                            nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                            nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
-                            nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
-                }
+            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
             }
             
             break;
@@ -472,7 +461,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         
     }
     
-    private void emitKeyValue(boolean outputIds, PairAttributeWritable key, float score, float strength, 
+    private void emitKeyValue(Context context, boolean outputIds, PairAttributeWritable key, float score, float strength, 
             float pValue, float nMatchEvents, float nMatchPosEvents,
             float nMatchNegEvents, float nPosFirstNonSecond,
             float nNegFirstNonSecond, float nNonFirstPosSecond,
@@ -485,7 +474,8 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
                     "," + key.getSecondDataset() + "," + key.getSecondAttribute() +
                     "," + key.getSpatialResolution() + "," + key.getTemporalResolution());
         } else {
-            keyWritable = new Text(header.get(dataset1).get(key.getFirstAttribute()) + "," +
+            keyWritable = new Text(fileName + "," +
+                        header.get(dataset1).get(key.getFirstAttribute()) + "," +
                         header.get(dataset2).get(key.getSecondAttribute()));
         }
         valueWritable = new Text(score + "," + strength + "," + pValue + ","
@@ -493,12 +483,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
                 + "," + nNegFirstNonSecond + "," + nNonFirstPosSecond + "," + nNonFirstNegSecond
                 + "," + nPosFirstPosSecond + "," + nNegFirstNegSecond + "," + nPosFirstNegSecond
                 + "," + nNegFirstPosSecond);
-        out.write(keyWritable, valueWritable, fileName);
-    }
-    
-    @Override
-    public void cleanup(Context context) throws IOException, InterruptedException {
-    	out.close();
+        context.write(keyWritable, valueWritable);
     }
     
     public static TimeSeriesStats getStats(int temporal, TopologyTimeSeriesWritable timeSeries1,

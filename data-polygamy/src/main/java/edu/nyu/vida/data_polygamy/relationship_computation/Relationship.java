@@ -87,11 +87,6 @@ public class Relationship {
 	    
 	    Options options = new Options();
 	    
-	    Option forceOption = new Option("f", "force", false, "force the computation of the relationship "
-	            + "even if files already exist");
-	    forceOption.setRequired(false);
-	    options.addOption(forceOption);
-	    
 	    Option scoreOption = new Option("sc", "score", true, "set threhsold for relationship score");
         scoreOption.setRequired(false);
         scoreOption.setArgName("SCORE THRESHOLD");
@@ -139,10 +134,6 @@ public class Relationship {
         Option s3Option = new Option("s3", "s3", false, "data on Amazon S3");
         s3Option.setRequired(false);
         options.addOption(s3Option);
-        
-        Option tmpOption = new Option("tmp", "tmp", false, "leave files in tmp dir");
-        tmpOption.setRequired(false);
-        options.addOption(tmpOption);
         
         Option eraseOption = new Option("e", "erase", false, "erase all relationship files");
         eraseOption.setRequired(false);
@@ -236,12 +227,10 @@ public class Relationship {
     	HashMap<String,String> datasetAgg = new HashMap<String,String>();
     	
     	boolean removeNotSignificant = cmd.hasOption("r");
-    	boolean removeExistingFiles = cmd.hasOption("f");
     	boolean completeRandomization = cmd.hasOption("c");
     	boolean hasScoreThreshold = cmd.hasOption("sc");
     	boolean hasStrengthThreshold = cmd.hasOption("st");
     	boolean outputIds = cmd.hasOption("id");
-    	boolean tmp = cmd.hasOption("tmp");
     	boolean eraseAll = cmd.hasOption("e");
     	String scoreThreshold = hasScoreThreshold ? cmd.getOptionValue("sc") : "";
     	String strengthThreshold = hasStrengthThreshold ? cmd.getOptionValue("st") : "";
@@ -356,14 +345,11 @@ public class Relationship {
         String random = completeRandomization ? "complete" : "restricted";
         
         String indexInputDirs = "";
-        String noRelationship = "";
         
         HashSet<String> dirs = new HashSet<String>();
         
         String dataset1;
         String dataset2;
-        String datasetId1;
-        String datasetId2;
         for (int i = 0; i < firstGroup.size(); i++) {
             for (int j = 0; j < secondGroup.size(); j++) {
                 
@@ -375,21 +361,8 @@ public class Relationship {
                     dataset2 = firstGroup.get(i);
                 }
                 
-                datasetId1 = datasetId.get(dataset1);
-                datasetId2 = datasetId.get(dataset2);
-                
-                if (dataset1.equals(dataset2)) continue;
-                String correlationOutputFileName = s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/";
-                
-                if (removeExistingFiles) {
-                    FrameworkUtils.removeFile(correlationOutputFileName, s3conf, s3);
-                }
-                if (!FrameworkUtils.fileExists(correlationOutputFileName, s3conf, s3)) {
-                    dirs.add(s3bucket + FrameworkUtils.indexDir + "/" + dataset1);
-                    dirs.add(s3bucket + FrameworkUtils.indexDir + "/" + dataset2);
-                } else {
-                    noRelationship += datasetId1 + "-" + datasetId2 + ","; 
-                }
+                dirs.add(s3bucket + FrameworkUtils.indexDir + "/" + dataset1);
+                dirs.add(s3bucket + FrameworkUtils.indexDir + "/" + dataset2);
             }
         }
         
@@ -407,8 +380,8 @@ public class Relationship {
         Machine machineConf = new Machine(machine, nbNodes);
         
         String jobName = "relationship" + "-" + random;
-        String relationshipOutputDir = s3bucket + relationshipsDir + "/tmp/";
         
+        String relationshipOutputDir = s3bucket + relationshipsDir;
         FrameworkUtils.removeFile(relationshipOutputDir, s3conf, s3);
         
         for (int i = 0; i < shortDataset.size(); i++) {
@@ -419,7 +392,6 @@ public class Relationship {
             conf.set("dataset-" + datasetId.get(shortDataset.get(i)) + "-agg-size",
                     Integer.toString(datasetAgg.get(shortDataset.get(i)).split(",").length));
         }
-        conf.set("tmp", String.valueOf(tmp));
         conf.set("dataset-keys", datasetIds);
         conf.set("dataset-names", datasetNames);
         conf.set("first-group", firstGroupStr);
@@ -429,9 +401,6 @@ public class Relationship {
         conf.set("complete-random-str", random);
         conf.set("main-dataset-id", datasetId.get(shortDataset.get(0)));
         conf.set("remove-not-significant", String.valueOf(removeNotSignificant));
-        if (noRelationship.length() > 0) {
-            conf.set("no-relationship", noRelationship.substring(0, noRelationship.length()-1));
-        }
         if (hasScoreThreshold) {
             conf.set("score-threshold", scoreThreshold);
         }
@@ -503,30 +472,6 @@ public class Relationship {
         job.submit();
         job.waitForCompletion(true);
         System.out.println(jobName + "\t" + (System.currentTimeMillis() - start));
-        
-        // moving files to right place
-        if (!tmp) {
-            ArrayList<String> from = new ArrayList<String>();
-            ArrayList<String> to = new ArrayList<String>();
-            for (int i = 0; i < firstGroup.size(); i++) {
-                for (int j = 0; j < secondGroup.size(); j++) {
-                    
-                    if (Integer.parseInt(datasetId.get(firstGroup.get(i))) < Integer.parseInt(datasetId.get(secondGroup.get(j)))) {
-                        dataset1 = firstGroup.get(i);
-                        dataset2 = secondGroup.get(j);
-                    } else {
-                        dataset1 = secondGroup.get(j);
-                        dataset2 = firstGroup.get(i);
-                    }
-                    
-                    if (dataset1.equals(dataset2)) continue;
-                    
-                    from.add(s3bucket + relationshipsDir + "/tmp/" + dataset1 + "-" + dataset2 + "/");  
-                    to.add(s3bucket + relationshipsDir + "/" + dataset1 + "-" + dataset2 + "/");
-                }
-            }
-            FrameworkUtils.renameFile(from, to, s3conf, s3, s3bucket);
-        }
     }
 
 }

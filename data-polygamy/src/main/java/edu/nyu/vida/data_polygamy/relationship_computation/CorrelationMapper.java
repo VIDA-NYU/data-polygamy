@@ -23,7 +23,6 @@ public class CorrelationMapper extends Mapper<AttributeResolutionWritable, Topol
     HashMap<Integer,Integer> datasetAggSize = new HashMap<Integer,Integer>();
     HashSet<Integer> firstGroup = new HashSet<Integer>();
     HashSet<Integer> secondGroup = new HashSet<Integer>();
-    HashSet<String> noRelationship = new HashSet<String>();
     
     PairAttributeWritable keyWritable = new PairAttributeWritable();
 
@@ -37,18 +36,6 @@ public class CorrelationMapper extends Mapper<AttributeResolutionWritable, Topol
         for (int i = 0; i < datasetIdsStr.length; i++) {
             datasetAggSize.put(Integer.parseInt(datasetIdsStr[i]),
                     Integer.parseInt(conf.get("dataset-" + datasetIdsStr[i] + "-agg-size","0")));
-        }
-        
-        if (conf.get("no-relationship", "").length() > 0) {
-            String[] noRelationshipStr = conf.get("no-relationship").split(",");
-            for (String relationship : noRelationshipStr) {
-                String[] ids = relationship.split("-");
-                if (Integer.parseInt(ids[0]) < Integer.parseInt(ids[1])) {
-                    noRelationship.add(relationship);
-                } else {
-                    noRelationship.add(ids[1] + "-" + ids[0]);
-                }
-            }
         }
         
         String[] firstGroupStr = conf.get("first-group","").split(",");
@@ -90,9 +77,6 @@ public class CorrelationMapper extends Mapper<AttributeResolutionWritable, Topol
             if (dataset < compareDataset) { // first position
                 dataset1 = dataset;
                 dataset2 = compareDataset;
-                String relationship = Integer.toString(dataset1) + "-" + Integer.toString(dataset2);
-                if (noRelationship.contains(relationship))
-                    continue;
                 for (int i = 0; i < compareAggSize; i++) {
                     pairs.add(attribute);
                     pairs.add(i);
@@ -100,9 +84,6 @@ public class CorrelationMapper extends Mapper<AttributeResolutionWritable, Topol
             } else { // second position
                 dataset1 = compareDataset;
                 dataset2 = dataset;
-                String relationship = Integer.toString(dataset1) + "-" + Integer.toString(dataset2);
-                if (noRelationship.contains(relationship))
-                    continue;
                 for (int i = 0; i < compareAggSize; i++) {
                     pairs.add(i);
                     pairs.add(attribute);
