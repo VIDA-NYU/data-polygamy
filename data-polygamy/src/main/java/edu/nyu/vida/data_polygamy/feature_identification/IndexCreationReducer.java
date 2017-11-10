@@ -221,7 +221,11 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                 regThreshold = idToRegThreshold.get(key.getDataset()).get(key.getAttribute());
             }
         }
-        ArrayList<byte[]> events = index.queryEvents(this.th, false, att, regThreshold);
+        ArrayList<float[]> minTh = new ArrayList<float[]>();
+        ArrayList<float[]> maxTh = new ArrayList<float[]>();
+        ArrayList<float[]> points = new ArrayList<float[]>();
+        ArrayList<byte[]> events = index.queryEvents(minTh, maxTh, points, this.th,
+                false, att, regThreshold);
         
         for (int spatial = 0; spatial < events.size(); spatial++) {
             //if (!att.nodeSet.contains(spatial))
@@ -231,6 +235,9 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                     spatial,
                     key.getDataset(),
                     events.get(spatial),
+                    minTh.get(spatial),
+                    maxTh.get(spatial),
+                    points.get(spatial),
                     index.stTime,
                     index.enTime,
                     false);
@@ -248,7 +255,10 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                 rareThreshold = idToRareThreshold.get(key.getDataset()).get(key.getAttribute());
             }
         }
-        events = index.queryEvents(this.th, true, att, rareThreshold);
+        minTh = new ArrayList<float[]>();
+        maxTh = new ArrayList<float[]>();
+        points = new ArrayList<float[]>();
+        events = index.queryEvents(minTh, maxTh, points, this.th, true, att, rareThreshold);
         
         for (int spatial = 0; spatial < events.size(); spatial++) {
             //if (!att.nodeSet.contains(spatial))
@@ -258,6 +268,9 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                     spatial,
                     key.getDataset(),
                     events.get(spatial),
+                    minTh.get(spatial),
+                    maxTh.get(spatial),
+                    points.get(spatial),
                     index.stTime,
                     index.enTime,
                     true);

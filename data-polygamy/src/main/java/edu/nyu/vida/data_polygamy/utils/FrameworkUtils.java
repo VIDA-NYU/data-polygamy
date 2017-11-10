@@ -1861,6 +1861,9 @@ public class FrameworkUtils {
         private int spatial;
         private int dataset;
         private byte[] timeSeries;
+        private float[] minTh;
+        private float[] maxTh;
+        private float[] points;
         private int start;
         private int end;
         private boolean isOutlier;
@@ -1869,6 +1872,9 @@ public class FrameworkUtils {
             this.spatial = 0;
             this.dataset = 0;
             this.timeSeries = new byte[0];
+            this.minTh = new float[0];
+            this.maxTh = new float[0];
+            this.points = new float[0];
             this.start = 0;
             this.end = 0;
             this.isOutlier = false;
@@ -1878,6 +1884,9 @@ public class FrameworkUtils {
             this.spatial = object.getSpatial();
             this.dataset = object.getDataset();
             this.timeSeries = Arrays.copyOf(object.getTimeSeries(), object.getTimeSeries().length);
+            this.minTh = Arrays.copyOf(object.getMinTh(), object.getMinTh().length);
+            this.maxTh = Arrays.copyOf(object.getMaxTh(), object.getMaxTh().length);
+            this.points = Arrays.copyOf(object.getPoints(), object.getPoints().length);
             this.start = object.getStart();
             this.end = object.getEnd();
             this.isOutlier = object.getIsOutlier();
@@ -1887,12 +1896,18 @@ public class FrameworkUtils {
                 int spatial,
                 int dataset,
                 byte[] timeSeries,
+                float[] minTh,
+                float[] maxTh,
+                float[] points,
                 int start,
                 int end,
                 boolean isOutlier) {
             this.spatial = spatial;
             this.dataset = dataset;
             this.timeSeries = timeSeries;
+            this.minTh = minTh;
+            this.maxTh = maxTh;
+            this.points = points;
             this.start = start;
             this.end = end;
             this.isOutlier = isOutlier;
@@ -1908,6 +1923,18 @@ public class FrameworkUtils {
         
         public byte[] getTimeSeries() {
             return this.timeSeries;
+        }
+        
+        public float[] getMinTh() {
+            return this.minTh;
+        }
+        
+        public float[] getMaxTh() {
+            return this.maxTh;
+        }
+        
+        public float[] getPoints() {
+            return this.points;
         }
         
         public int getStart() {
@@ -1946,6 +1973,22 @@ public class FrameworkUtils {
                 result += timeSeries[i] + ",";
             return result.substring(0, result.length()-1);
         }
+        
+        public String toStringFeatures(int tempRes) {
+            String result = spatial + "," + isOutlier + ",";
+            
+            int timeSteps = getTimeSteps(tempRes, start, end);
+            DateTime startTime = new DateTime(((long)start)*1000, DateTimeZone.UTC);
+            if (timeSteps != timeSeries.length) {
+                System.out.println("Something is wrong... Wrong time steps length");
+                System.exit(-1);
+            }
+            for (int i = 0; i < timeSteps; i++) {
+                long time = addTimeSteps(tempRes, i, startTime);
+                result += String.valueOf(time) + "," + points[i] + "," + minTh[i] + "," + maxTh[i] + ",";
+            }
+            return result.substring(0, result.length()-1);
+        }
 
         @Override
         public void readFields(DataInput in) throws IOException {
@@ -1954,6 +1997,15 @@ public class FrameworkUtils {
             timeSeries = new byte[in.readInt()];
             for (int i = 0; i < timeSeries.length; i++)
                 timeSeries[i] = in.readByte();
+            minTh = new float[in.readInt()];
+            for (int i = 0; i < minTh.length; i++)
+                minTh[i] = in.readFloat();
+            maxTh = new float[in.readInt()];
+            for (int i = 0; i < maxTh.length; i++)
+                maxTh[i] = in.readFloat();
+            points = new float[in.readInt()];
+            for (int i = 0; i < points.length; i++)
+                points[i] = in.readFloat();
             start = in.readInt();
             end = in.readInt();
             isOutlier = in.readBoolean();
@@ -1966,6 +2018,15 @@ public class FrameworkUtils {
             out.writeInt(timeSeries.length);
             for (int i = 0; i < timeSeries.length; i++)
                 out.writeByte(timeSeries[i]);
+            out.writeInt(minTh.length);
+            for (int i = 0; i < minTh.length; i++)
+                out.writeFloat(minTh[i]);
+            out.writeInt(maxTh.length);
+            for (int i = 0; i < maxTh.length; i++)
+                out.writeFloat(maxTh[i]);
+            out.writeInt(points.length);
+            for (int i = 0; i < points.length; i++)
+                out.writeFloat(points[i]);
             out.writeInt(start);
             out.writeInt(end);
             out.writeBoolean(isOutlier);
@@ -1988,6 +2049,9 @@ public class FrameworkUtils {
                     this.spatial,
                     this.dataset,
                     this.timeSeries,
+                    this.minTh,
+                    this.maxTh,
+                    this.points,
                     this.start,
                     this.end,
                     this.isOutlier);

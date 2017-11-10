@@ -231,11 +231,13 @@ public class TopologicalIndex implements Serializable {
         return 0;
 	}
     
-    public ArrayList<byte[]> queryEvents(float th, boolean outlier, Attribute att, String threshold) {
-        return queryEvents(th, outlier, att, threshold, false);
+    public ArrayList<byte[]> queryEvents(ArrayList<float[]> minTh, ArrayList<float[]> maxTh,
+            ArrayList<float[]> points, float th, boolean outlier, Attribute att, String threshold) {
+        return queryEvents(minTh, maxTh, points, th, outlier, att, threshold, false);
     }
 	
-	public ArrayList<byte[]> queryEvents(float th, boolean outlier, Attribute att, String threshold, boolean print) {
+	public ArrayList<byte[]> queryEvents(ArrayList<float[]> minTh, ArrayList<float[]> maxTh,
+	        ArrayList<float[]> points, float th, boolean outlier, Attribute att, String threshold, boolean print) {
 		
 	    att.minThreshold.clear();
 	    att.maxThreshold.clear();
@@ -247,6 +249,18 @@ public class TopologicalIndex implements Serializable {
 	        byte[] data = new byte[timeSteps];
 	        Arrays.fill(data, FrameworkUtils.nonEvent);
 	        results.add(data);
+	        
+	        float[] minData = new float[timeSteps];
+            Arrays.fill(minData, 0);
+            minTh.add(minData);
+            
+            float[] maxData = new float[timeSteps];
+            Arrays.fill(maxData, 0);
+            maxTh.add(maxData);
+            
+            float[] pointsData = new float[timeSteps];
+            Arrays.fill(pointsData, 0);
+            points.add(pointsData);
 	    }
 		
 		for(int t = 0;t < types.length;t ++) {
@@ -293,7 +307,13 @@ public class TopologicalIndex implements Serializable {
 						continue;
 					}
 					double eventTh = min?vals[vals.length - 1]:vals[0];
-					getEvents(results, functions.get(tempBin), index.get(tempBin), min, eventTh, print);
+					if (min) {
+					    getEvents(minTh, points, results, functions.get(tempBin),
+					            index.get(tempBin), min, eventTh, print);
+					} else {
+					    getEvents(maxTh, points, results, functions.get(tempBin),
+					            index.get(tempBin), min, eventTh, print);
+					}
 					perVals = new PersistencePoints();
 					
 					if (min) {
@@ -321,7 +341,11 @@ public class TopologicalIndex implements Serializable {
                 } else {
                     eventTh = Double.parseDouble(threshold);
                 }
-				getEvents(results, eventTh, index, min, att);
+			    if (min) {
+			        getEvents(minTh, points, results, eventTh, index, min, att);
+			    } else {
+			        getEvents(maxTh, points, results, eventTh, index, min, att);
+			    }
 			}
 		}
 		return results;
@@ -343,13 +367,13 @@ public class TopologicalIndex implements Serializable {
 		}
 	}
 	
-	void getEvents(ArrayList<byte[]> events, double eventTh,
+	void getEvents(ArrayList<float[]> th, ArrayList<float[]> points, ArrayList<byte[]> events, double eventTh,
 			Int2ObjectOpenHashMap<Feature[] > featureMap, boolean min, Attribute att) {
 		// getting events using merge tree
 		for (int tempBin : att.data.keySet()) {
 			Feature[] features = featureMap.get(tempBin);
 			GraphInput tf = functions.get(tempBin);
-			getEvents(events, tf, features, min, eventTh, false);
+			getEvents(th, points, events, tf, features, min, eventTh, false);
 			
 			if (min) {
                 att.minThreshold.put(tempBin, new Float(eventTh));
@@ -359,7 +383,9 @@ public class TopologicalIndex implements Serializable {
 		}
 	}
 	
-	private void getEvents(ArrayList<byte[]> events, GraphInput tf, Feature[] features, boolean min, double eventTh, boolean print) {
+	private void getEvents(ArrayList<float[]> th, ArrayList<float[]> points,
+	        ArrayList<byte[]> events, GraphInput tf,
+	        Feature[] features, boolean min, double eventTh, boolean print) {
 		float[] fnVertices = tf.getFnVertices();
 //		nv = 1;
 //		if (is2D) {
@@ -383,13 +409,16 @@ public class TopologicalIndex implements Serializable {
 		
 		for(Feature f: features) {
 			float pt = f.exFn;
+
 			if (min) {
 				if (f.sadFn < f.exFn) {
 					pt = f.sadFn;
 				}
+	            
 				//if (ratio >= thresholdRatio && pt == eventTh) {
                 //    continue;
                 //}
+				
 				if (pt > eventTh) {
                     continue;
                 }
@@ -404,13 +433,24 @@ public class TopologicalIndex implements Serializable {
 					}
 					set.add(vin);
 					pt = fnVertices[vin];
+					
+					int tid = vin / nv;
+                    int time = tf.getTime(tid);
+                    int spatial = vin % nv;
+                    
+                    int index = FrameworkUtils.getTimeSteps(this.tempRes,
+                            this.stTime, time);
+                    
+                    float[] thresholds = th.get(tid);
+                    thresholds[index-1] = (float) eventTh;
+                    th.set(spatial, thresholds);
+                    
+                    float[] p = points.get(tid);
+                    p[index-1] = pt;
+                    points.set(spatial, p);
+					
 					if(pt <= eventTh) {
-					    int tid = vin / nv;
-					    int time = tf.getTime(tid);
-					    int spatial = vin % nv;
 					    
-					    int index = FrameworkUtils.getTimeSteps(this.tempRes,
-					            this.stTime, time);
 					    byte[] spatialEvents = events.get(spatial);
 					    if (spatialEvents[index-1] == FrameworkUtils.positiveEvent) {
                             spatialEvents[index-1] = FrameworkUtils.nonEvent;
@@ -457,13 +497,23 @@ public class TopologicalIndex implements Serializable {
 
 					set.add(vin);
 					pt = fnVertices[vin];
+					
+					int tid = vin / nv;
+                    int time = tf.getTime(tid);
+                    int spatial = vin % nv;
+                    
+                    int index = FrameworkUtils.getTimeSteps(this.tempRes,
+                            this.stTime, time);
+                    
+                    float[] thresholds = th.get(tid);
+                    thresholds[index-1] = (float) eventTh;
+                    th.set(spatial, thresholds);
+                    
+                    float[] p = points.get(tid);
+                    p[index-1] = pt;
+                    points.set(spatial, p);
+					
 					if(pt >= eventTh) {
-					    int tid = vin / nv;
-                        int time = tf.getTime(tid);
-                        int spatial = vin % nv;
-                        
-                        int index = FrameworkUtils.getTimeSteps(this.tempRes,
-                                this.stTime, time);
                         byte[] spatialEvents = events.get(spatial);
                         if (spatialEvents[index-1] == FrameworkUtils.negativeEvent) {
                             spatialEvents[index-1] = FrameworkUtils.nonEvent;
