@@ -441,11 +441,11 @@ public class TopologicalIndex implements Serializable {
                     int index = FrameworkUtils.getTimeSteps(this.tempRes,
                             this.stTime, time);
                     
-                    float[] thresholds = th.get(tid);
+                    float[] thresholds = th.get(spatial);
                     thresholds[index-1] = (float) eventTh;
                     th.set(spatial, thresholds);
                     
-                    float[] p = points.get(tid);
+                    float[] p = points.get(spatial);
                     p[index-1] = pt;
                     points.set(spatial, p);
 					
@@ -505,11 +505,11 @@ public class TopologicalIndex implements Serializable {
                     int index = FrameworkUtils.getTimeSteps(this.tempRes,
                             this.stTime, time);
                     
-                    float[] thresholds = th.get(tid);
+                    float[] thresholds = th.get(spatial);
                     thresholds[index-1] = (float) eventTh;
                     th.set(spatial, thresholds);
                     
-                    float[] p = points.get(tid);
+                    float[] p = points.get(spatial);
                     p[index-1] = pt;
                     points.set(spatial, p);
 					
