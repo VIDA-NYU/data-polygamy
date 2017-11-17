@@ -38,7 +38,7 @@ public class FeatureDataMapper extends Mapper<AttributeResolutionWritable, Topol
         //        generateFileName(dataset));
         //out.write(new Text(key.toString()), new Text(value.toStringFeatures(key.getTemporalResolution())),
         //        generateFileName(dataset));
-        context.write(new Text(key.toString()), new Text(value.toStringFeatures(key.getTemporalResolution())));
+        context.write(new Text(key.toString()), new Text(value.toStringFeatures()));
     }
     
     @Override
