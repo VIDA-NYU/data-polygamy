@@ -22,7 +22,6 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.mapreduce.lib.output.LazyOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 import edu.nyu.vida.data_polygamy.utils.FrameworkUtils;
@@ -199,7 +198,8 @@ public class FeatureData {
         Machine machineConf = new Machine(machine, nbNodes);
         
         String jobName = "output-to-text";
-        String indexOutputDir = s3bucket + FrameworkUtils.indexTextDir + "/tmp/";
+        //String indexOutputDir = s3bucket + FrameworkUtils.indexTextDir + "/tmp/";
+        String indexOutputDir = s3bucket + FrameworkUtils.indexTextDir;
         
         FrameworkUtils.removeFile(indexOutputDir, s3conf, s3);
         
@@ -245,7 +245,7 @@ public class FeatureData {
         job.setNumReduceTasks(0);
    
         job.setInputFormatClass(SequenceFileInputFormat.class);
-        LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
+        job.setOutputFormatClass(TextOutputFormat.class);
    
         FileInputFormat.setInputDirRecursive(job, true);
         FileInputFormat.setInputPaths(job, indexDatasets.substring(0,
@@ -259,12 +259,12 @@ public class FeatureData {
         job.waitForCompletion(true);
         System.out.println(jobName + "\t" + (System.currentTimeMillis() - start));
         
-        // moving files to right place
+        /*// moving files to right place
         for (String dataset: shortDatasetIndex) {
             String from = s3bucket + FrameworkUtils.indexTextDir + "/tmp/" + dataset + "/";
             String to = s3bucket + FrameworkUtils.indexTextDir + "/" + dataset + "/";
             FrameworkUtils.renameFile(from, to, s3conf, s3);
-        }
+        }*/
         
     }
 

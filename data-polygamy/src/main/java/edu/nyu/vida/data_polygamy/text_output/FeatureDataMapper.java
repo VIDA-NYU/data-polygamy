@@ -7,22 +7,19 @@ import java.io.IOException;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.lib.input.FileSplit;
-import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 
-import edu.nyu.vida.data_polygamy.utils.FrameworkUtils;
 import edu.nyu.vida.data_polygamy.utils.FrameworkUtils.AttributeResolutionWritable;
 import edu.nyu.vida.data_polygamy.utils.FrameworkUtils.TopologyTimeSeriesWritable;
 
 public class FeatureDataMapper extends Mapper<AttributeResolutionWritable, TopologyTimeSeriesWritable, Text, Text> {
     
-    public static FrameworkUtils utils = new FrameworkUtils();
+    //public static FrameworkUtils utils = new FrameworkUtils();
     
-    String dataset = null;
+    //String dataset = null;
     
-    private MultipleOutputs<Text,Text> out;
+    //private MultipleOutputs<Text,Text> out;
     
-    @Override
+    /*@Override
     public void setup(Context context)
             throws IOException, InterruptedException {
         
@@ -30,8 +27,8 @@ public class FeatureDataMapper extends Mapper<AttributeResolutionWritable, Topol
         String[] fileSplitTokens = fileSplit.getPath().getParent().toString().split("/");
         dataset = fileSplitTokens[fileSplitTokens.length-1];
         
-        out = new MultipleOutputs<Text,Text>(context);
-    }
+        //out = new MultipleOutputs<Text,Text>(context);
+    }*/
     
     @Override
     public void map(AttributeResolutionWritable key, TopologyTimeSeriesWritable value, Context context)
@@ -39,17 +36,18 @@ public class FeatureDataMapper extends Mapper<AttributeResolutionWritable, Topol
         
         //out.write(new Text(key.toString()), new Text(value.toString()),
         //        generateFileName(dataset));
-        out.write(new Text(key.toString()), new Text(value.toStringFeatures(key.getTemporalResolution())),
-                generateFileName(dataset));
+        //out.write(new Text(key.toString()), new Text(value.toStringFeatures(key.getTemporalResolution())),
+        //        generateFileName(dataset));
+        context.write(new Text(key.toString()), new Text(value.toStringFeatures(key.getTemporalResolution())));
     }
     
     @Override
     public void cleanup(Context context) throws IOException, InterruptedException {
-        out.close();
+        //out.close();
     }
     
-    private String generateFileName(String dataset) {
+    /*private String generateFileName(String dataset) {
         return (dataset + "/data");
-    }
+    }*/
     
 }
