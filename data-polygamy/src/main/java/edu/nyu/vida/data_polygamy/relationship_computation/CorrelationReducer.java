@@ -472,7 +472,9 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         if (outputIds) {
             keyWritable = new Text(key.getFirstDataset() + "," + key.getFirstAttribute() +
                     "," + key.getSecondDataset() + "," + key.getSecondAttribute() +
-                    "," + key.getSpatialResolution() + "," + key.getTemporalResolution());
+                    "," + key.getSpatialResolution() + "," + key.getTemporalResolution() +
+                    "," + ((key.getIsOutlier()) ? 1 : 0) + "," +
+                    ((randomizationStr == "restricted") ? 0 : 1));
         } else {
             keyWritable = new Text(fileName + "," +
                         header.get(dataset1).get(key.getFirstAttribute()) + "," +
