@@ -149,6 +149,17 @@ public class PreProcessingMapper extends Mapper<LongWritable, Text, MultipleSpat
                 continue;
             }
             
+            if (parameterNameLowerCase.contains("number")) {
+                
+                aggregates.put((nbParameters-1),
+                        (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.SUM)
+                        + "-" + parameterNames[i].trim());
+                attributeIndex.put((nbParameters-1), i);
+                aggregateFunctions.put((nbParameters-1), Function.SUM);
+                
+                continue;
+            }
+            
             aggregates.put((nbParameters-1),
                     (nbParameters-1) + "-" + FrameworkUtils.functionToString(Function.AVERAGE)
                     + "-" + parameterNames[i].trim());
