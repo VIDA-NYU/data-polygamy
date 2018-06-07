@@ -1989,6 +1989,16 @@ public class FrameworkUtils {
             }
             return result.substring(0, result.length()-1);
         }
+        
+        public String toStringFeatures() {
+            String result = spatial + "," + isOutlier + ",";
+            result += String.valueOf(start) + "," + String.valueOf(end) + ","; 
+            
+            for (int i = 0; i < points.length; i++) {
+                result += points[i] + "," + minTh[i] + "," + maxTh[i] + ",";
+            }
+            return result.substring(0, result.length()-1);
+        }
 
         @Override
         public void readFields(DataInput in) throws IOException {

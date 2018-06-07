@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -221,11 +222,13 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                 regThreshold = idToRegThreshold.get(key.getDataset()).get(key.getAttribute());
             }
         }
+        ArrayList<byte[]> events = index.queryEvents(this.th, false, att, regThreshold);
+        
         ArrayList<float[]> minTh = new ArrayList<float[]>();
         ArrayList<float[]> maxTh = new ArrayList<float[]>();
         ArrayList<float[]> points = new ArrayList<float[]>();
-        ArrayList<byte[]> events = index.queryEvents(minTh, maxTh, points, this.th,
-                false, att, regThreshold);
+        getMinMaxPoints(att, values, tempRes, index.stTime, index.enTime, index.nv,
+                minTh, maxTh, points);
         
         for (int spatial = 0; spatial < events.size(); spatial++) {
             //if (!att.nodeSet.contains(spatial))
@@ -255,10 +258,13 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
                 rareThreshold = idToRareThreshold.get(key.getDataset()).get(key.getAttribute());
             }
         }
+        events = index.queryEvents(this.th, true, att, rareThreshold);
+        
         minTh = new ArrayList<float[]>();
         maxTh = new ArrayList<float[]>();
         points = new ArrayList<float[]>();
-        events = index.queryEvents(minTh, maxTh, points, this.th, true, att, rareThreshold);
+        getMinMaxPoints(att, values, tempRes, index.stTime, index.enTime, index.nv,
+                minTh, maxTh, points);
         
         for (int spatial = 0; spatial < events.size(); spatial++) {
             //if (!att.nodeSet.contains(spatial))
@@ -280,7 +286,62 @@ public class IndexCreationReducer extends Reducer<AttributeResolutionWritable, S
             //        generateFileName(idToDataset.get(key.getDataset())));
         }
     }
-    
+
+    private void getMinMaxPoints(Attribute att, Iterable<SpatioTemporalFloatWritable> values,
+            int tempRes, int stTime, int enTime, int nv,
+            ArrayList<float[]> minTh, ArrayList<float[]> maxTh, ArrayList<float[]> points) {
+        
+        int timeSteps = FrameworkUtils.getTimeSteps(tempRes, stTime, enTime);
+        
+        for (int i = 0; i < nv; i++) {
+            float[] minThData = new float[timeSteps];
+            Arrays.fill(minThData, 0);
+            minTh.add(minThData);
+            
+            float[] maxThData = new float[timeSteps];
+            Arrays.fill(maxThData, 0);
+            maxTh.add(maxThData);
+            
+            float[] pointsData = new float[timeSteps];
+            Arrays.fill(pointsData, 0);
+            points.add(pointsData);
+        }
+        
+        Iterator<SpatioTemporalFloatWritable> it = values.iterator();
+        SpatioTemporalFloatWritable st;
+        DateTime date;
+        while (it.hasNext()) {
+            st = it.next();
+            
+            int spatial = st.getSpatial();
+            int temporal = st.getTemporal();
+            float val = st.getValue();
+            
+            // for each temporal bin
+            date = new DateTime(((long)temporal)*1000, DateTimeZone.UTC);
+            int hash = (tempRes == FrameworkUtils.HOUR) ? date.getYear()*100 + date.getMonthOfYear() :
+                ((tempRes == FrameworkUtils.DAY) ? date.getYear()*100 + (date.getMonthOfYear()/4) : 1);
+           
+            int index = FrameworkUtils.getTimeSteps(tempRes, stTime, temporal);
+            
+            // min th
+            float[] minThData = minTh.get(spatial);
+            minThData[index-1] = att.minThreshold.get(hash);
+            minTh.set(spatial, minThData);
+            
+            // max th
+            float[] maxThData = maxTh.get(spatial);
+            maxThData[index-1] = att.maxThreshold.get(hash);
+            maxTh.set(spatial, maxThData);
+            
+            // points
+            float[] pointsData = points.get(spatial);
+            pointsData[index-1] = val;
+            points.set(spatial, pointsData);
+        }
+        
+    }
+
     /**
      * Reduce function if merge tree for the dataset must be created and stored.
      */
