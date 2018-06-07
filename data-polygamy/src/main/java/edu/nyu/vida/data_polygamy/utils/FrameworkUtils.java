@@ -2425,6 +2425,7 @@ public class FrameworkUtils {
         private float recall = 0;
         
         private boolean intersect = false;
+        private boolean enoughPoints = true;
         
         private DateTime start = null;
         private DateTime end = null;
@@ -2586,6 +2587,14 @@ public class FrameworkUtils {
         public void setIntersect(boolean intersect) {
             this.intersect = intersect;
         }
+        
+        public boolean hasEnoughPoints() {
+            return enoughPoints;
+        }
+        
+        public void setEnoughPoints(boolean enoughPoints) {
+            this.enoughPoints = enoughPoints;
+        }
 
         public float getRelationshipScore() {
             return relationshipScore;
@@ -2616,6 +2625,7 @@ public class FrameworkUtils {
             this.nNonFirstPosSecond += stats.getNonFirstPosSecond();
             this.nNonFirstNegSecond += stats.getNonFirstNegSecond();
             this.intersect = this.intersect | stats.isIntersect();
+            this.enoughPoints = this.enoughPoints | stats.hasEnoughPoints();
             
             /*for (String dt : stats.getPosEvents()) {
                 this.addMatchPosEvents(dt);
