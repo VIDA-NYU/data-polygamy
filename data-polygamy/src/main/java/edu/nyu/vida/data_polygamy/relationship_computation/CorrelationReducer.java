@@ -335,128 +335,141 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         
         //long start2 = System.currentTimeMillis();
         
-        switch(spatial) {
+        if (!stats.hasEnoughPoints()) {
+            
+            if (!removeNotSignificant) {
+                emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, 2, nMatchEvents,
+                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+            }
+            
+        } else {
         
-        case FrameworkUtils.GRID:
+            switch(spatial) {
             
-            for (int j = 0; j < repetitions; j++) {
-                pairs.clear();
-                pairs = (completeRandomization) ? spatialCompleteRandom() : toroidalShift();
+            case FrameworkUtils.GRID:
                 
-                stats = new TimeSeriesStats();
-                for (int i = 0; i < pairs.size(); i++) {
-                    Integer[] pair = pairs.get(i);
-                    stats.add(getStats(temporal, timeSeriesPerSpatial.get(pair[0])[dataset1Key],
-                            timeSeriesPerSpatial.get(pair[1])[dataset2Key], false));
+                for (int j = 0; j < repetitions; j++) {
+                    pairs.clear();
+                    pairs = (completeRandomization) ? spatialCompleteRandom() : toroidalShift();
+                    
+                    stats = new TimeSeriesStats();
+                    for (int i = 0; i < pairs.size(); i++) {
+                        Integer[] pair = pairs.get(i);
+                        stats.add(getStats(temporal, timeSeriesPerSpatial.get(pair[0])[dataset1Key],
+                                timeSeriesPerSpatial.get(pair[1])[dataset2Key], false));
+                    }
+                    stats.computeScores();
+                    
+                    float mcScore = stats.getRelationshipScore();
+                    //float mcStrength = stats.getRelationshipStrength();
+                    
+                    if (alignedScore > 0) {
+                        if (mcScore >= alignedScore)
+                            pValue += 1;
+                    }
+                    else {
+                        if (mcScore <= alignedScore)
+                            pValue += 1;
+                    }
+                    if (pValue > (alpha*repetitions)) break; // pruning
                 }
-                stats.computeScores();
                 
-                float mcScore = stats.getRelationshipScore();
-                //float mcStrength = stats.getRelationshipStrength();
-                
-                if (alignedScore > 0) {
-                    if (mcScore >= alignedScore)
-                        pValue += 1;
+                pValue = pValue/((float)(repetitions));
+                if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                    emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                            nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                            nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                            nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
                 }
-                else {
-                    if (mcScore <= alignedScore)
-                        pValue += 1;
-                }
-                if (pValue > (alpha*repetitions)) break; // pruning
-            }
-            
-            pValue = pValue/((float)(repetitions));
-            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
-                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
-            }
-            
-            break;
-            
-        case FrameworkUtils.CITY:
-            
-            if (timeSeriesPerSpatial.size() > 1) {
-                System.out.println("Something went wrong... There should be only one spatial element.");
-                System.exit(-1);
-            }
-            
-            elem = timeSeriesPerSpatial.get(0);
-            
-            for (int j = 0; j < repetitions; j++) {
-            	//long startCity = System.currentTimeMillis();
-                stats = new TimeSeriesStats();
-                stats.add(getStats(temporal, elem[dataset1Key], elem[dataset2Key], true));
                 
-                stats.computeScores();
+                break;
                 
-                float mcScore = stats.getRelationshipScore();
-                //float mcStrength = stats.getRelationshipStrength();
+            case FrameworkUtils.CITY:
                 
-                if (alignedScore > 0) {
-                    if (mcScore >= alignedScore)
-                        pValue += 1;
+                if (timeSeriesPerSpatial.size() > 1) {
+                    System.out.println("Something went wrong... There should be only one spatial element.");
+                    System.exit(-1);
                 }
-                else {
-                    if (mcScore <= alignedScore)
-                        pValue += 1;
+                
+                elem = timeSeriesPerSpatial.get(0);
+                
+                for (int j = 0; j < repetitions; j++) {
+                	//long startCity = System.currentTimeMillis();
+                    stats = new TimeSeriesStats();
+                    stats.add(getStats(temporal, elem[dataset1Key], elem[dataset2Key], true));
+                    
+                    stats.computeScores();
+                    
+                    float mcScore = stats.getRelationshipScore();
+                    //float mcStrength = stats.getRelationshipStrength();
+                    
+                    if (alignedScore > 0) {
+                        if (mcScore >= alignedScore)
+                            pValue += 1;
+                    }
+                    else {
+                        if (mcScore <= alignedScore)
+                            pValue += 1;
+                    }
+                    if (pValue > (alpha*repetitions)) break; // pruning
+                    //long endCity = System.currentTimeMillis();
+                    //if (j == 0) System.out.println("One repetition: " + (endCity-startCity) + " ms");
                 }
-                if (pValue > (alpha*repetitions)) break; // pruning
-                //long endCity = System.currentTimeMillis();
-                //if (j == 0) System.out.println("One repetition: " + (endCity-startCity) + " ms");
-            }
+                
+                pValue = pValue/((float)(repetitions));
+                if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                    emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                            nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                            nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                            nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+                }
             
-            pValue = pValue/((float)(repetitions));
-            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
-                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+                break;
+                
+            default:
+                
+                for (int j = 0; j < repetitions; j++) {
+                    //long startNbhd = System.currentTimeMillis();
+                    pairs.clear();
+                    pairs = (completeRandomization) ? spatialCompleteRandom() : bfsShift();
+                    
+                    stats = new TimeSeriesStats();
+                    for (int i = 0; i < pairs.size(); i++) {
+                        Integer[] pair = pairs.get(i);
+                        stats.add(getStats(temporal, timeSeriesPerSpatial.get(pair[0])[dataset1Key],
+                                timeSeriesPerSpatial.get(pair[1])[dataset2Key], false));
+                    }
+                    stats.computeScores();
+                    
+                    float mcScore = stats.getRelationshipScore();
+                    //float mcStrength = stats.getRelationshipStrength();
+                    
+                    if (alignedScore > 0) {
+                        if (mcScore >= alignedScore)
+                            pValue += 1;
+                    }
+                    else {
+                        if (mcScore <= alignedScore)
+                            pValue += 1;
+                    }
+                    if (pValue > (alpha*repetitions)) break; // pruning
+                    //long endNbhd = System.currentTimeMillis();
+                    //if (j == 0) System.out.println("One repetition: " + (endNbhd-startNbhd) + " ms");
+                }
+                
+                pValue = pValue/((float)(repetitions));
+                if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
+                    emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
+                            nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
+                            nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
+                            nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
+                }
+                
+                break;
             }
         
-            break;
-            
-        default:
-            
-            for (int j = 0; j < repetitions; j++) {
-                //long startNbhd = System.currentTimeMillis();
-                pairs.clear();
-                pairs = (completeRandomization) ? spatialCompleteRandom() : bfsShift();
-                
-                stats = new TimeSeriesStats();
-                for (int i = 0; i < pairs.size(); i++) {
-                    Integer[] pair = pairs.get(i);
-                    stats.add(getStats(temporal, timeSeriesPerSpatial.get(pair[0])[dataset1Key],
-                            timeSeriesPerSpatial.get(pair[1])[dataset2Key], false));
-                }
-                stats.computeScores();
-                
-                float mcScore = stats.getRelationshipScore();
-                //float mcStrength = stats.getRelationshipStrength();
-                
-                if (alignedScore > 0) {
-                    if (mcScore >= alignedScore)
-                        pValue += 1;
-                }
-                else {
-                    if (mcScore <= alignedScore)
-                        pValue += 1;
-                }
-                if (pValue > (alpha*repetitions)) break; // pruning
-                //long endNbhd = System.currentTimeMillis();
-                //if (j == 0) System.out.println("One repetition: " + (endNbhd-startNbhd) + " ms");
-            }
-            
-            pValue = pValue/((float)(repetitions));
-            if ((!removeNotSignificant) || ((pValue <= alpha) && (removeNotSignificant))) {
-                emitKeyValue(context, outputIds, key, alignedScore, alignedStrength, pValue, nMatchEvents,
-                        nMatchPosEvents, nMatchNegEvents, nPosFirstNonSecond,
-                        nNegFirstNonSecond, nNonFirstPosSecond, nNonFirstNegSecond,
-                        nPosFirstPosSecond, nNegFirstNegSecond, nPosFirstNegSecond, nNegFirstPosSecond);
-            }
-            
-            break;
         }
         
     }
@@ -587,8 +600,7 @@ public class CorrelationReducer extends Reducer<PairAttributeWritable, TopologyT
         
         if (checkIntersection) {
             if ((indexEnd1 - indexStart1)*size < repetitions) {
-                output.setIntersect(false);
-                return output;
+                output.setEnoughPoints(false);;
             }
         }
         
